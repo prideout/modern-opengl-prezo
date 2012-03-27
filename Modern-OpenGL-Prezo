@@ -41,10 +41,10 @@ Whirlwind Tour of 4.2 (15 slides)
      LUMINANCE -> RED etc
      Compressed formats
      16-32 Float / sRGB / Integer
-     Pixel Buffer Objects (great for streaming)
+     Pixel Buffer Objects (great for streaming). <-- there's also "texture buffers", no?
   Shader Interfacing - 3 slides
      Three ways of allocating handles to shader in/out/uniforms: (1) Let GL create handles (2) Assign at the API level (3) Assign at the shader level
-     Uniform Blocks
+     Uniform Blocks / Uniforms Buffers
      Shader Interfaces
   Queries - 1 slide
   Image Load/Store - 1 slide
@@ -54,8 +54,8 @@ Whirlwind Tour of 4.2 (15 slides)
   FBOs - 2 slides
      Definition - collection of renderbuffers (complicates context sharing)
      2 ways of allocating
-       From a texture, From a renderbuffer
-     Layered Framebuffers
+       From a texture, From a renderbuffer.  Z-only is valid (and FAST)
+     Layered / Mipmapped. Framebuffers
   NV Bindless extensions - 1 slide
 
 Demos & Code Walkthroughs
