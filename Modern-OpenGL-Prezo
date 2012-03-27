@@ -17,6 +17,7 @@ Brief History (16 slides)
   GLSL - 3 slides
     VS+FS             texture2D,ftransform            attribute/varying  gl_Position gl_VertexId gl_FragColor gl_FragData gl_ClipPlane gl_ModelviewProjection ....
     VS+GS+FS          texture2D,texelFetch            in/out layout      gl_Position gl_VertexId gl_FragColor gl_FragData gl_ClipDistance gl_PrimitiveId gl_FragColor gl_FragData ...
+     ^--- the buck stops here for Apple.
     VS+GS+TCS+TES+FS  texture,textureSize,imageAdd    in/out layout lowp gl_Position gl_VertexId gl_PrimitiveId gl_TessCoord ...
     gray out all optional stuff (FS in 2nd and 3rd eras, GS always, gl_Position in 3rd era)
   Deprecated Functions - 1 slide (word cloud?)
@@ -71,3 +72,8 @@ Evolving a Torus
   Barrel Distortion
   Barrel Distortion in Tess Shader
 
+Misc Notes
+----------
+#version 420
+https://gist.github.com/1987871
+https://gist.github.com/989e13b030560d02e6d1
