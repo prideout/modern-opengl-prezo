@@ -34,8 +34,9 @@ Brief History (16 slides)
     Uberbuffers (will talk about PBO's more later)
     DrawAuto    (will talk about Transform Feedback more later)
 
-Whirlwind Tour of 4.2 (15 slides)
+Whirlwind Tour of 4.2 (16 slides)
 ---------------------
+  Tessellation Shaders - 1 slide (lots of talk about streaming amplification, parametric evaluation rather than iterative subdivision)
   Texture Lookups in GLSL - 1 slide
   Texturing in the C API - 4 slides
      LUMINANCE -> RED etc
