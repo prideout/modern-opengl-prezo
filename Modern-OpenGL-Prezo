@@ -42,7 +42,7 @@ Whirlwind Tour of 4.2 (16 slides)
      LUMINANCE -> RED etc
      Compressed formats
      16-32 Float / sRGB / Integer
-     Pixel Buffer Objects (great for streaming). <-- there's also "texture buffers", no?
+     Pixel Buffer Objects (great for streaming). <-- there's also "texture buffers", no?  Explain ReadPixels-with-null.  Study DepthStencil and MS (impacts Florian)
   Shader Interfacing - 3 slides
      Three ways of allocating handles to shader in/out/uniforms: (1) Let GL create handles (2) Assign at the API level (3) Assign at the shader level
      Uniform Blocks / Uniforms Buffers
