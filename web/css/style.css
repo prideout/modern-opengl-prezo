@@ -98,10 +98,26 @@ body {
     //background-color: #999;
 }
 
+.items {
+    position: absolute;
+    height: 200px;
+    font-size: 48px;
+    top: 50%;
+    margin-top: -100px;
+    right: 32px;
+    font-weight: 900;
+    background-color: #eee;
+    list-style: none;
+    /*list-style-image:url('sqpurple.gif');*/
+    padding-right: 48px;
+}
+
 .bluish {
 /*    color: #37e;*/
     color: #76A68B;
 }
+
+.orangish { color: #BF5F56; }
 
 .title-line {
     position: absolute;
