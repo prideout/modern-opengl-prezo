@@ -1,0 +1,2 @@
+#!/bin/bash
+~/bin/wkhtmltopdf-amd64 --print-media-type --page-height 258 --page-width 189 -L 0 -B 0 -T 0 -R 0 -O Landscape http://localhost:8000 foo.pdf
