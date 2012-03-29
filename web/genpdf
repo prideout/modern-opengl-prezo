@@ -1,3 +1,11 @@
 #!/bin/bash
-# ~/bin/wkhtmltopdf-amd64 --print-media-type --page-height 258 --page-width 189 -L 0 -B 0 -T 0 -R 0 -O Landscape http://localhost:8000 foo.pdf
-~/bin/wkhtmltopdf.app/Contents/MacOS/wkhtmltopdf --print-media-type --page-height 258 --page-width 189 -L 0 -B 0 -T 0 -R 0 -O Landscape http://localhost:8000 foo.pdf
+
+if [[ $OSTYPE == "linux" ]]; then
+  HTML2PDF="~/bin/wkhtmltopdf-amd64"
+else
+  HTML2PDF="~/bin/wkhtmltopdf.app/Contents/MacOS/wkhtmltopdf"
+fi
+
+echo $HTML2PDF
+
+$HTML2PDF --print-media-type --page-height 258 --page-width 189 -L 0 -B 0 -T 0 -R 0 -O Landscape http://localhost:8000 foo.pdf
