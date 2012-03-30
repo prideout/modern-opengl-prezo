@@ -98,6 +98,23 @@ body {
     //background-color: #999;
 }
 
+div.figure {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.diagram {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+object.figure {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .items {
     position: absolute;
     height: 200px;
