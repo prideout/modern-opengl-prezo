@@ -51,12 +51,25 @@
                   data="images/PipelineDiagram-1.svg">
             <span/>
           </object>
-          <pre><code class="cpp" style="font-size:150%">// Vertex Shader
-void main() {
-    int i;
-}</code></pre>
         </div>
       </div>
+
+      <div class="CodePair-Left">
+        <pre><code class="cpp">// Vertex Shader
+void main() {
+    int i;
+    gl_Position = ftransform();
+}</code></pre>
+      </div>
+
+      <div class="CodePair-Right">
+        <pre><code class="cpp">// Fragment Shader
+void main() {
+    int j;
+    gl_FragColor = vec4(c);
+}</code></pre>
+      </div>
+
     </div>
 
     <footer>

@@ -68,9 +68,10 @@ td { vertical-align: top; }
 
 .chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
 
-
-
 /*  http://kuler.adobe.com/#themeID/1810428   */
+
+.bluish { color: #76A68B; }
+.orangish { color: #BF5F56; }
 
 body {
     background-color: #e0e0e0;
@@ -115,6 +116,24 @@ object.figure {
     margin-right: auto;
 }
 
+code {
+    border-radius: 15px;
+}
+
+.CodePair-Left {
+    position: absolute;
+    font-size: 150%;
+    left: 20px;
+    bottom: 0px;
+}
+
+.CodePair-Right {
+    position: absolute;
+    font-size: 150%;
+    right: 20px;
+    bottom: 0px;
+}
+
 .items {
     position: absolute;
     height: 200px;
@@ -129,12 +148,6 @@ object.figure {
     padding-right: 48px;
 }
 
-.bluish {
-/*    color: #37e;*/
-    color: #76A68B;
-}
-
-.orangish { color: #BF5F56; }
 
 .title-line {
     position: absolute;
