@@ -1,0 +1,3 @@
+#!/bin/bash
+google-chrome localhost:8000 --incognito &
+python -m SimpleHTTPServer
