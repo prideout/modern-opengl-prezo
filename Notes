@@ -1,7 +1,7 @@
 
 Design the slideshow to have speech accompaniment.  Limit the content of slides to Code, Diagrams, and Tables without Headings.  The audience should listen, not read.
 
-sudo pdfcrop --margins "0 -20 -1 -20" --clip Original.pdf Cropped.pdf
+pdfcrop --margins "0 -18 0 -18" --clip Original.pdf Cropped.pdf
 
 Overview (2 slides)
 --------
