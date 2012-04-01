@@ -24,7 +24,7 @@
 <path fill="none" stroke="black" d="M42,-504C48,-504 54,-510 54,-516"/>
 <polyline fill="none" stroke="black" points="54,-516 54,-528 "/>
 <path fill="none" stroke="black" d="M54,-528C54,-534 48,-540 42,-540"/>
-<text text-anchor="middle" x="27" y="-518.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">VS</text>
+<text text-anchor="middle" x="27" y="-518.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">VS</text>
 </g>
 <!-- TCS -->
 <g id="node4" class="node"><title>TCS</title>
@@ -41,7 +41,7 @@
 <path fill="none" stroke="black" d="M42,-432C48,-432 54,-438 54,-444"/>
 <polyline fill="none" stroke="black" points="54,-444 54,-456 "/>
 <path fill="none" stroke="black" d="M54,-456C54,-462 48,-468 42,-468"/>
-<text text-anchor="middle" x="27" y="-446.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">TCS</text>
+<text text-anchor="middle" x="27" y="-446.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">TCS</text>
 </g>
 <!-- VS&#45;&gt;TCS -->
 <g id="edge2" class="edge"><title>VS&#45;&gt;TCS</title>
@@ -63,12 +63,12 @@
 <path fill="none" stroke="black" d="M42,-72C48,-72 54,-78 54,-84"/>
 <polyline fill="none" stroke="black" points="54,-84 54,-96 "/>
 <path fill="none" stroke="black" d="M54,-96C54,-102 48,-108 42,-108"/>
-<text text-anchor="middle" x="27" y="-86.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">FS</text>
+<text text-anchor="middle" x="27" y="-86.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">FS</text>
 </g>
 <!-- Blend -->
 <g id="node7" class="node"><title>Blend</title>
 <polygon fill="#dc8888" stroke="black" points="54,-36 2.13163e-14,-36 0,-1.77636e-14 54,-3.55271e-15 54,-36"/>
-<text text-anchor="middle" x="27" y="-14.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">Blend</text>
+<text text-anchor="middle" x="27" y="-14.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">Blend</text>
 </g>
 <!-- FS&#45;&gt;Blend -->
 <g id="edge14" class="edge"><title>FS&#45;&gt;Blend</title>
@@ -90,12 +90,12 @@
 <path fill="none" stroke="black" d="M42,-216C48,-216 54,-222 54,-228"/>
 <polyline fill="none" stroke="black" points="54,-228 54,-240 "/>
 <path fill="none" stroke="black" d="M54,-240C54,-246 48,-252 42,-252"/>
-<text text-anchor="middle" x="27" y="-230.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">GS</text>
+<text text-anchor="middle" x="27" y="-230.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">GS</text>
 </g>
 <!-- Rast -->
 <g id="node6" class="node"><title>Rast</title>
 <polygon fill="#dc8888" stroke="black" points="54,-180 2.13163e-14,-180 0,-144 54,-144 54,-180"/>
-<text text-anchor="middle" x="27" y="-158.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">Rast</text>
+<text text-anchor="middle" x="27" y="-158.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">Rast</text>
 </g>
 <!-- GS&#45;&gt;Rast -->
 <g id="edge10" class="edge"><title>GS&#45;&gt;Rast</title>
@@ -105,7 +105,7 @@
 <!-- Tess -->
 <g id="node8" class="node"><title>Tess</title>
 <polygon fill="#dc8888" stroke="black" points="54,-396 2.13163e-14,-396 0,-360 54,-360 54,-396"/>
-<text text-anchor="middle" x="27" y="-374.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">Tess</text>
+<text text-anchor="middle" x="27" y="-374.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">Tess</text>
 </g>
 <!-- TCS&#45;&gt;Tess -->
 <g id="edge4" class="edge"><title>TCS&#45;&gt;Tess</title>
@@ -127,7 +127,7 @@
 <path fill="none" stroke="black" d="M42,-288C48,-288 54,-294 54,-300"/>
 <polyline fill="none" stroke="black" points="54,-300 54,-312 "/>
 <path fill="none" stroke="black" d="M54,-312C54,-318 48,-324 42,-324"/>
-<text text-anchor="middle" x="27" y="-302.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">TES</text>
+<text text-anchor="middle" x="27" y="-302.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">TES</text>
 </g>
 <!-- TES&#45;&gt;GS -->
 <g id="edge8" class="edge"><title>TES&#45;&gt;GS</title>

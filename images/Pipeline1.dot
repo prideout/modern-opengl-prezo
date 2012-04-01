@@ -9,7 +9,7 @@ digraph Pipeline1 {
   node [shape="box",
         style="rounded,filled",
         color="black",
-//      fontname="Corbel",
+        fontname="helvetica",
         fillcolor="#bcd5b0",
         fontcolor="#000000"];
 

@@ -24,12 +24,12 @@
 <path fill="none" stroke="black" d="M42,-216C48,-216 54,-222 54,-228"/>
 <polyline fill="none" stroke="black" points="54,-228 54,-240 "/>
 <path fill="none" stroke="black" d="M54,-240C54,-246 48,-252 42,-252"/>
-<text text-anchor="middle" x="27" y="-230.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">VS</text>
+<text text-anchor="middle" x="27" y="-230.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">VS</text>
 </g>
 <!-- Rast -->
 <g id="node3" class="node"><title>Rast</title>
 <polygon fill="#dc8888" stroke="black" points="54,-180 2.13163e-14,-180 0,-144 54,-144 54,-180"/>
-<text text-anchor="middle" x="27" y="-158.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">Rast</text>
+<text text-anchor="middle" x="27" y="-158.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">Rast</text>
 </g>
 <!-- VS&#45;&gt;Rast -->
 <g id="edge2" class="edge"><title>VS&#45;&gt;Rast</title>
@@ -51,12 +51,12 @@
 <path fill="none" stroke="black" d="M42,-72C48,-72 54,-78 54,-84"/>
 <polyline fill="none" stroke="black" points="54,-84 54,-96 "/>
 <path fill="none" stroke="black" d="M54,-96C54,-102 48,-108 42,-108"/>
-<text text-anchor="middle" x="27" y="-86.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">FS</text>
+<text text-anchor="middle" x="27" y="-86.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">FS</text>
 </g>
 <!-- Blend -->
 <g id="node4" class="node"><title>Blend</title>
 <polygon fill="#dc8888" stroke="black" points="54,-36 2.13163e-14,-36 0,-1.77636e-14 54,-3.55271e-15 54,-36"/>
-<text text-anchor="middle" x="27" y="-14.9" font-family="Times Roman,serif" font-size="14.00" fill="#000000">Blend</text>
+<text text-anchor="middle" x="27" y="-14.9" font-family="Helvetica,sans-Serif" font-size="14.00" fill="#000000">Blend</text>
 </g>
 <!-- FS&#45;&gt;Blend -->
 <g id="edge6" class="edge"><title>FS&#45;&gt;Blend</title>
