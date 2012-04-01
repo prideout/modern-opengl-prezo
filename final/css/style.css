@@ -121,6 +121,10 @@ code {
     // border: 2px solid #76a68b;
 }
 
+span.HIGH {
+    padding-top:2px;border:solid 1px #aa0;background-color:#440;
+}
+
 div.codewrapper {
     width:100%;
     font-size:80%;

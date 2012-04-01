@@ -26,15 +26,69 @@
     <header>
     </header>
 
+    <!-- Deprecated -->
+    <!-- Font: SteelFish or Coolvetica
+         Color: Kindled
+         Layout: Horizontal -->
+      <form action="http://www.wordle.net/advanced" method="POST">
+        <textarea name="wordcounts" style="display:none">
+          texture2D():50
+          ftransform():25
+          attribute:100
+          varying:100
+          gl-FragColor:50
+          gl-FragData:50
+          gl-ClipPlane:10
+          gl-ModelviewProjection:25
+          gl-ClipVertex:50
+          gl-Color:50
+          gl-SecondaryColor:10
+          gl-MultiTexCoord0:10
+          gl-MultiTexCoord1:10
+          gl-MultiTexCoord2:10
+          gl-MultiTexCoord3:10
+          gl-MultiTexCoord4:10
+          gl-MultiTexCoord5:10
+          gl-MultiTexCoord6:10
+          gl-MultiTexCoord7:10
+          gl-FogCoord:10
+        </textarea>
+        <input type="submit" value="deprecated wordcloud">
+      </form>
+
+      <form action="http://www.wordle.net/advanced" method="POST">
+        <textarea name="wordcounts" style="display:none">
+          gl-ClipDistance[]:10
+          texture():50
+          textureSize():50
+          textureQueryLod():50
+          texelFetch():50
+          bitfieldExtract():50
+          imageLoad():50
+          imageStore():50
+          imageAtomicAdd():50
+          in:100
+          out:100
+          gl-InvocationID:50
+          gl-Layer:50
+          gl-ViewportIndex:50
+          gl-PrimitiveIDIn:50
+          gl-TessLevelInner:75
+          gl-TessLevelOuter:75
+          layout:100
+        </textarea>
+        <input type="submit" value="modern wordcloud">
+      </form>
+
+    <!--
+       Target Audience: You used OpenGL back in the day and want to catch up.
+       Disclaimer: won't go through everything.  Not necessarily focused on GLSL or on techniques.  This isn't comprehensive either.
+       If this goes well then I might give more talks (GLSL for shading TD's, OpenGL Techniques)
+      -->
     <div class="slide">
       <p class="cover-page tk-raleway">
         <b class="bluish">Modern</b> OpenGL
       </p>
-      <!--
-         Target Audience: You used OpenGL back in the day and want to catch up.
-         Disclaimer: won't go through everything.  Not necessarily focused on GLSL or on techniques.  This isn't comprehensive either.
-         If this goes well then I might give more talks (GLSL for shading TD's, OpenGL Techniques)
-        -->
     </div>
 
     <!-- Summary -->
@@ -66,10 +120,11 @@ void main() {
             <div class="codewrapper">
               <pre><code class="glsl">// Fragment Shader
 uniform sampler2D Baboon;
+uniform vec3 LightDir;
 varying vec2 vTexCoord;
 varying vec3 vNormal;
 void main() {
-  float df = dot(vec3(0,0,1),vNormal);
+  float df = dot(LightDir,vNormal);
   vec3 c = df * texture2D(Baboon, vTexCoord).rgb;
   gl_FragColor = vec4(c, 1);
 }</code></pre>
@@ -93,9 +148,9 @@ void main() {
           <td style="width:40%">
             <div class="codewrapper">
               <pre><code class="glsl">// Vertex Shader
-in vec4 Position;
+<span class="HIGH">in</span> vec4 Position;
 in vec2 TexCoord;
-out vec4 vPosition;
+<span class="HIGH">out</span> vec4 vPosition;
 out vec2 vTexCoord;
 uniform mat4 ModelViewMatrix, MVP;
 void main() {
@@ -106,7 +161,7 @@ void main() {
             </div>
             <div class="codewrapper">
               <pre><code class="glsl">// Geometry Shader
-layout(triangles) in;
+<span class="HIGH">layout</span>(triangles) in;
 layout(triangle_strip, max_vertices = 3) out;
 in vec3 vPosition[3];
 in vec2 vTexCoord[3];
@@ -132,10 +187,11 @@ void main()
             <div class="codewrapper">
               <pre><code class="glsl">// Fragment Shader
 uniform sampler2D Baboon;
+uniform vec3 LightDir <span class="HIGH">= vec3(0,0,1)</span>;
 in vec2 gTexCoord;
 in vec3 gNormal;
 void main() {
-	float df = dot(vec3(0,0,1),gNormal);
+	float df = dot(LightDir,gNormal);
     vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
     gl_FragColor = vec4(c, 1);
 }</code></pre>
@@ -151,6 +207,7 @@ void main() {
     </div>
 
     <!-- Pipeline diagram VS TCS TESS TES GS FS -->
+    <!-- Not going to get this functionality on Lion! -->
     <div class="slide">
       <table style="width:100%;height:100%">
         <tr>
@@ -226,12 +283,16 @@ void main()
             </div>
             <div class="codewrapper">
               <pre><code class="glsl">// Fragment Shader
+# LOOK AT BARREL DISTORTATION.
+# USE CHRISTOPHE'S INTERFACES.
+# EXPLICIT BINDINGS.
 uniform sampler2D Baboon;
+uniform vec3 LightDir = vec3(0,0,1);
 in vec2 gTexCoord;
 in vec3 gNormal;
 void main() {
-	float df = dot(vec3(0,0,1),gNormal);
-    vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
+	float df = dot(LightDir,gNormal);
+    vec3 c = df*<span class="HIGH">texture</span>(Baboon, gTexCoord).rgb;
     gl_FragColor = vec4(c, 1);
 }</code></pre>
             </div>
@@ -243,6 +304,23 @@ void main() {
           </td>
         </tr>
       </table>
+    </div>
+
+    <div class="slide">
+      <a href="http://www.wordle.net/show/wrdl/5094008/Deprecated_GLSL" 
+         title="Wordle: Deprecated GLSL">
+        <img
+           src="http://www.wordle.net/thumb/wrdl/5094008/Deprecated_GLSL"
+           alt="Wordle: Deprecated GLSL"
+           style="padding:4px;border:1px solid #ddd">
+      </a>
+      <a href="http://www.wordle.net/show/wrdl/5094039/Modern_GLSL" 
+          title="Wordle: Modern GLSL">
+        <img
+           src="http://www.wordle.net/thumb/wrdl/5094039/Modern_GLSL"
+           alt="Wordle: Modern GLSL"
+           style="padding:4px;border:1px solid #ddd">
+      </a>
     </div>
 
     <footer>
