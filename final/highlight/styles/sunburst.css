@@ -12,7 +12,7 @@ pre code {
 pre .comment,
 pre .template_comment,
 pre .javadoc {
-  color: #aeaeae;
+  color: #aefeae;
   font-style: italic;
 }
 
@@ -106,8 +106,8 @@ pre .css .id {
 
 pre .annotation,
 pre .apache .sqbracket,
-pre .nginx .built_in {
-  color: #9B859D;
+pre .built_in {
+  color: #32AAEE;
 }
 
 pre .preprocessor {
