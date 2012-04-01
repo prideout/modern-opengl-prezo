@@ -26,10 +26,10 @@
     <header>
     </header>
 
-    <!-- Deprecated -->
-    <!-- Font: SteelFish or Coolvetica
-         Color: Kindled
-         Layout: Horizontal -->
+    <!-- WORDLE.NET
+         Font: SteelFish or Coolvetica, Color: Kindled, Layout: Horizontal -->
+    <div class="noprint">
+      <!-- Deprecated -->
       <form action="http://www.wordle.net/advanced" method="POST">
         <textarea name="wordcounts" style="display:none">
           texture2D():50
@@ -55,7 +55,6 @@
         </textarea>
         <input type="submit" value="deprecated wordcloud">
       </form>
-
       <form action="http://www.wordle.net/advanced" method="POST">
         <textarea name="wordcounts" style="display:none">
           gl-ClipDistance[]:10
@@ -79,6 +78,7 @@
         </textarea>
         <input type="submit" value="modern wordcloud">
       </form>
+    </div>
 
     <!--
        Target Audience: You used OpenGL back in the day and want to catch up.
@@ -309,7 +309,7 @@ void main() {
     <div class="slide">
       <a href="http://www.wordle.net/show/wrdl/5094008/Deprecated_GLSL" 
          style="position:absolute; display: block;
-                left:25px; top:-60px;"
+                left:25px; top:0px;"
          title="Wordle: Deprecated GLSL"><object type="image/svg+xml"
                 data="images/Deprecated-GLSL.svg">
         </object></a>
@@ -322,15 +322,17 @@ void main() {
                   -webkit-transform: rotate(90deg);">
         OLD
       </div>
-      <hr style="margin-top:360px;
-                 height:4px;
-                 border:0;
-                 background-color: #333;">
+      <div style="position:absolute; display: block;
+                  width:100%;
+                  height:4px;
+                  background-color: #333;                  
+                  left:0px; top:360px;">
+        &nbsp;
+      </div>
       <a href="http://www.wordle.net/show/wrdl/5094039/Modern_GLSL" 
          style="position:absolute; display: block;
                 left:25px; bottom:-50px;"
-         title="Wordle: Modern GLSL">
-        <object type="image/svg+xml"
+         title="Wordle: Modern GLSL"><object type="image/svg+xml"
                 data="images/Modern-GLSL.svg">
         </object>
       </a>

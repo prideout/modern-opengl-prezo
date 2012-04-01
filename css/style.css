@@ -217,6 +217,10 @@ div.codewrapper {
         border: 0; 
     }
 
+    .noprint {
+        display: none;
+    }
+
     @page { margin: 0.0cm; }
 
   /* * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; }
