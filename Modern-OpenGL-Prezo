@@ -21,7 +21,7 @@ Brief History (16 slides)
     gray out all optional stuff (FS in 2nd and 3rd eras, GS always, gl_Position in 3rd era)
   Deprecated Functions - 1 slide (word cloud?)
   Some things never change - 1 slide (word cloud?)
-    ClearColor, CullFace, PrimitiveMode, Blend, Depth Test (word cloud)
+    gl_Position, dfDx, gl_VertexID, ClearColor, CullFace, PrimitiveMode, Blend, Depth Test (word cloud)
   (New Functions?)
   Vertex Submission - 8 slides
     Immediate Mode
