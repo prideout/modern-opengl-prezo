@@ -6,6 +6,9 @@ hljs.LANGUAGES.glsl = function(){
   var GLSL_KEYWORDS = {
     'keyword': {
 
+      'layout': 1,
+      'in': 1,
+      'out': 1,
       'varying': 1,
       'uniform': 1,
       'sampler2D': 1,
@@ -38,6 +41,7 @@ hljs.LANGUAGES.glsl = function(){
       'gl_Normal': 1,
       'gl_Vertex': 1,
       'gl_FragColor': 1,
+      'gl_in': 1,
         
       'std': 1, 'string': 1, 'cin': 1, 'cout': 1, 'cerr': 1, 'clog': 1,
       'stringstream': 1, 'istringstream': 1, 'ostringstream': 1, 'auto_ptr': 1,
