@@ -1,0 +1,31 @@
+// dot -Tpdf -oPipeline1.pdf Pipeline1.dot
+// dot -Tsvg -oPipeline1.svg Pipeline1.dot
+
+digraph Pipeline1 {
+
+  // bgcolor="#5F534C";
+  // rankdir = LR;
+
+  node [shape="box",
+        style="rounded,filled",
+        color="black",
+//      fontname="Corbel",
+        fillcolor="#bcd5b0",
+        fontcolor="#000000"];
+
+  VS;
+  FS;
+
+  node [shape="box",
+        style="filled",
+        fillcolor="#dc8888"];
+
+  Rast;
+  Blend;
+
+  edge [color="#000000"]
+
+  VS -> Rast;
+  Rast -> FS;
+  FS -> Blend;
+}

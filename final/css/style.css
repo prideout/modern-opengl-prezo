@@ -121,6 +121,12 @@ code {
     // border: 2px solid #76a68b;
 }
 
+div.codewrapper {
+    width:100%;
+    font-size:80%;
+    margin-left:10px;
+}
+
 .CodePair-Left {
     position: absolute;
     font-size: 100%;
