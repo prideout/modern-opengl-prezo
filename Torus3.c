@@ -27,7 +27,7 @@ PezConfig PezGetConfig()
     config.Title = __FILE__;
     config.Width = 853;
     config.Height = 480;
-    config.Multisampling = false;
+    config.Multisampling = true;
     config.VerticalSync = true;
     return config;
 }

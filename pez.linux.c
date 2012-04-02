@@ -82,7 +82,6 @@ int main(int argc, char** argv)
                 worst_fbc = i, worst_num_samp = samples;
             XFree( vi );
         }
-        printf("philip %d!!\n", best_num_samp);
         fbc[0] = fbc[ best_fbc ];
     }
 
