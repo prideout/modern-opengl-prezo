@@ -2,13 +2,14 @@ CC=gcc
 CFLAGS=-std=c99 -Wall -c -Wc++-compat -O3
 LIBS=-lX11 -lGL -lpng
 DEMOS=\
+	Spiral1 \
 	Torus3 \
 
 SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=
 
-run: Torus3
-	./Torus3
+run: Spiral1
+	./Spiral1
 
 all: $(DEMOS)
 

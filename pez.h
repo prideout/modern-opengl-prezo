@@ -5,7 +5,6 @@ extern "C" {
 #endif
 
 #define PEZ_MAINLOOP 1
-#define PEZ_MOUSE_HANDLER 0
 #define PEZ_DROP_HANDLER 0
 #define GL3_PROTOTYPES
 
