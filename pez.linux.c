@@ -1,7 +1,8 @@
 // Pez was developed by Philip Rideout and released under the MIT License.
 
+#include <GL/glx.h>
+
 #include "pez.h"
-#include "glew.h"
 #include "bstrlib.h"
 #include <sys/time.h>
 #include <stdlib.h>
@@ -10,6 +11,10 @@
 #include <signal.h>
 #include <wchar.h>
 #include <Xm/MwmUtil.h>
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xmd.h>
 
 typedef struct PlatformContextRec
 {
@@ -77,6 +82,7 @@ int main(int argc, char** argv)
                 worst_fbc = i, worst_num_samp = samples;
             XFree( vi );
         }
+        printf("philip %d!!\n", best_num_samp);
         fbc[0] = fbc[ best_fbc ];
     }
 
@@ -151,23 +157,11 @@ int main(int argc, char** argv)
     }
 
     glXMakeCurrent(context.MainDisplay, context.MainWindow, glcontext);
-    
+
     PFNGLXSWAPINTERVALSGIPROC glXSwapIntervalSGI = (PFNGLXSWAPINTERVALSGIPROC) glXGetProcAddress((GLubyte*)"glXSwapIntervalSGI");
     if (glXSwapIntervalSGI) {
         glXSwapIntervalSGI(PezGetConfig().VerticalSync ? 1 : 0);
     }
-
-    GLenum err = glewInit();
-    if (GLEW_OK != err)
-        pezFatal("GLEW Error: %s\n", glewGetErrorString(err));
-
-    // Work around some GLEW issues:    
-    #define glewGetProcAddress(name) (*glXGetProcAddressARB)(name)
-    glPatchParameteri = (PFNGLPATCHPARAMETERIPROC)glewGetProcAddress((const GLubyte*)"glPatchParameteri");
-    glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC)glewGetProcAddress((const GLubyte*)"glBindVertexArray");
-    glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC)glewGetProcAddress((const GLubyte*)"glDeleteVertexArrays");
-    glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC)glewGetProcAddress((const GLubyte*)"glGenVertexArrays");
-    glIsVertexArray = (PFNGLISVERTEXARRAYPROC)glewGetProcAddress((const GLubyte*)"glIsVertexArray");
 
     // Reset OpenGL error state:
     glGetError();
@@ -190,7 +184,7 @@ int main(int argc, char** argv)
     // Perform user-specified intialization
     pezPrintString("OpenGL Version: %s\n", glGetString(GL_VERSION));
     PezInitialize();
-    bstring windowTitle = bmidstr(name, 5, blength(name) - 7);
+    bstring windowTitle = bmidstr(name, 0, blength(name) - 2);
     XStoreName(context.MainDisplay, context.MainWindow, bdata(windowTitle));
     bdestroy(windowTitle);
     bdestroy(name);

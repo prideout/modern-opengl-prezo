@@ -1,6 +1,3 @@
-// Clip Planes OpenGL Demo by Philip Rideout
-// Licensed under the Creative Commons Attribution 3.0 Unported License. 
-// http://creativecommons.org/licenses/by/3.0/
 
 #include <stdlib.h>
 #include "pez.h"
@@ -30,8 +27,8 @@ PezConfig PezGetConfig()
     config.Title = __FILE__;
     config.Width = 853;
     config.Height = 480;
-    config.Multisampling = true;
-    config.VerticalSync = false;
+    config.Multisampling = false;
+    config.VerticalSync = true;
     return config;
 }
 
@@ -113,7 +110,7 @@ void PezInitialize()
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CLIP_DISTANCE0);
-    glClearColor(0.5f, 0.6f, 0.7f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 }
 
 void PezUpdate(float seconds)

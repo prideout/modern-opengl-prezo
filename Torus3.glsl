@@ -71,9 +71,15 @@ uniform float Shininess = 50;
 
 vec4 amplify(float d, vec3 color)
 {
-    d = Scale * d + Offset + gl_FragCoord.z;
-    d = clamp(d, 0, 1);
-    d = 1 - exp2(-2*d*d);
+    float T = 0.05;
+    float E = fwidth(d);
+    if (d < T) {
+        d = 0;
+    } else if (d < T + E) {
+        d = (d - T) / E;
+    } else {
+        d = 1;
+    }
     return vec4(d*color, 1);
 }
 

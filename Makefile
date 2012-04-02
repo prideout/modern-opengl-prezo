@@ -2,20 +2,13 @@ CC=gcc
 CFLAGS=-std=c99 -Wall -c -Wc++-compat -O3
 LIBS=-lX11 -lGL -lpng
 DEMOS=\
-	GenCubeMap \
-	Lava \
-	SimpleText \
-	TextGrid \
-	ClipPlanes \
-	VoronoiPicking \
-	DistancePicking \
-	ToonShading \
+	Torus3 \
 
-SHARED=glew.o pez.o bstrlib.o pez.linux.o lodepng.o
-PREFIX=demo-
+SHARED=pez.o bstrlib.o pez.linux.o
+PREFIX=
 
-run: GenCubeMap
-	./GenCubeMap
+run: Torus3
+	./Torus3
 
 all: $(DEMOS)
 
