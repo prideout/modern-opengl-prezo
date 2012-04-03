@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include "pez.h"
 #include "vmath.h"
@@ -24,11 +23,23 @@ PezConfig PezGetConfig()
 {
     PezConfig config;
     config.Title = __FILE__;
-    config.Width = 853;
-    config.Height = 480;
+    config.Width = 853*3/2;
+    config.Height = 500*3/2; // 480;
     config.Multisampling = true;
     config.VerticalSync = true;
     return config;
+}
+
+// u and v in [0,2π] 
+// x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
+// y(u,v) = α (1-v/(2π)) sin(n v) (1 + cos(u)) + γ sin(n v)
+// z(u,v) = α (1-v/(2π)) sin(u) + β v/(2π)
+Point3 ParametricHorn(float u, float v, float alpha, float beta, float gamma, float n)
+{
+    float x = alpha * (1-v/TwoPi) * cos(n*v) * (1+cos(u)) + gamma * cos(n*v);
+    float y = alpha * (1-v/TwoPi) * sin(n*v) * (1+cos(u)) + gamma * sin(n*v);
+    float z = alpha * (1-v/TwoPi) * sin(u) + beta * v / TwoPi;
+    return (Point3){x, y, z};
 }
 
 static void CreateTorus(float major, float minor, int slices, int stacks)
@@ -44,13 +55,19 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
 
     GLfloat* position = positions;
     for (int slice = 0; slice < slices; slice++) {
-        float theta = slice * 2.0f * Pi / slices;
+        float v = slice * TwoPi / slices;
         for (int stack = 0; stack < stacks; stack++) {
-            float phi = stack * 2.0f * Pi / stacks;
-            float beta = major + minor * cos(phi);
-            *position++ = cos(theta) * beta;
-            *position++ = sin(theta) * beta;
-            *position++ = sin(phi) * minor;
+            float u = stack * TwoPi / stacks;
+            
+            float alpha = 0.8;   // 0.15 for horn, 1.0 for snail
+            float beta = 1;
+            float gamma = 0.1; // tightness
+            float n = 2;       // twists
+
+            Point3 p = ParametricHorn(u, v, alpha, beta, gamma, n);
+            *position++ = p.x;
+            *position++ = p.y;
+            *position++ = p.z;
         }
     }
 
@@ -64,7 +81,7 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
 
     free(positions);
 
-    Scene.IndexCount = slices * stacks * 6;
+    Scene.IndexCount = (slices-1) * stacks * 6;
     size = Scene.IndexCount * sizeof(GLushort);
     GLushort* indices = (GLushort*) malloc(size);
     GLushort* index = indices;
@@ -76,11 +93,6 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
             *index++ = v+j; *index++ = v+j+stacks; *index++ = v+next+stacks;
         }
         v += stacks;
-    }
-    for (int j = 0; j < stacks; j++) {
-        int next = (j + 1) % stacks;
-        *index++ = next; *index++ = v+next; *index++ = v+j;
-        *index++ = v+j; *index++ = j; *index++ = next;
     }
 
     glGenBuffers(1, &handle);
@@ -95,13 +107,13 @@ void PezInitialize()
     LoadProgram("VS", "GS", "FS");
 
     PezConfig cfg = PezGetConfig();
-    const float h = 5.0f;
+    const float h = 1.5f;
     const float w = h * cfg.Width / cfg.Height;
     const float z[2] = {65, 90};
     Scene.Projection = M4MakeFrustum(-w, w, -h, h, z[0], z[1]);
 
     const float MajorRadius = 8.0f, MinorRadius = 2.0f;
-    const int Slices = 40, Stacks = 10;
+    const int Slices = 80, Stacks = 20;
     CreateTorus(MajorRadius, MinorRadius, Slices, Stacks);
     Scene.Theta = 0;
 
@@ -111,12 +123,12 @@ void PezInitialize()
 
 void PezUpdate(float seconds)
 {
-    const float RadiansPerSecond = 0.5f;
+    const float RadiansPerSecond = 0.75f;
     Scene.Theta += seconds * RadiansPerSecond;
     
     // Create the model-view matrix:
     Scene.ModelMatrix = M4MakeRotationZ(Scene.Theta);
-    Point3 eye = {0, -75, 25};
+    Point3 eye = {0, -50, 50};
     Point3 target = {0, 0, 0};
     Vector3 up = {0, 1, 0};
     Scene.ViewMatrix = M4MakeLookAt(eye, target, up);

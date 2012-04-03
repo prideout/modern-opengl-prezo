@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-std=c99 -Wall -c -Wc++-compat -O3
+CFLAGS=-std=c99 -Wall -c -Wc++-compat -O3 -fextended-identifiers
 LIBS=-lX11 -lGL -lpng
 DEMOS=\
 	Spiral1 \

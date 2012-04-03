@@ -65,7 +65,7 @@ uniform float Shininess = 50;
 
 vec4 amplify(float d, vec3 color)
 {
-    float T = 0.05;
+    float T = 0.025; // <-- thickness
     float E = fwidth(d);
     if (d < T) {
         d = 0;
