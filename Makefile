@@ -9,7 +9,7 @@ SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=
 
 run: Spiral1
-	killall Spiral1
+	-killall Spiral1
 	./Spiral1
 
 all: $(DEMOS)
