@@ -65,14 +65,15 @@ Demos & Code Walkthroughs
 Layered Framebuffers
 Transform Feedback
 Fresnel Glass Buddha?
-Evolving a Torus
-  Simple lit torus with Facet normals in GS
-  Adding nice lines in the right place
-  Adding some clip planes
-  Adding a reflective sphere in the middle
-  HDR and tonemapping
-  Barrel Distortion
-  Barrel Distortion in Tess Shader
+
+Spiral1  Simple lit torus with Facet normals in GS
+Spiral2  Adding nice lines in the right place
+Spiral3  Adding some clip planes
+Spiral4  Parametric eval in the tess shader.
+Spiral5  Displacement mapping with henna height field
+
+Sphere1  Adding a reflective sphere in the middle
+Sphere2  HDR and tonemapping
 
 Misc Notes
 ----------
