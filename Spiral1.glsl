@@ -60,7 +60,7 @@ uniform vec3 LightPosition = vec3(0.25, 0.25, 1.0);
 uniform vec3 AmbientMaterial = vec3(0.04, 0.04, 0.04);
 uniform vec3 SpecularMaterial = vec3(0.5, 0.5, 0.5);
 uniform vec3 FrontMaterial = vec3(0.25, 0.5, 0.75);
-uniform vec3 BackMaterial = vec3(0.8, 0.75, 0.75);
+uniform vec3 BackMaterial = vec3(0.75, 0.75, 0.7);
 uniform float Shininess = 50;
 
 vec4 amplify(float d, vec3 color)
