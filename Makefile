@@ -3,14 +3,17 @@ CFLAGS=-std=c99 -Wall -c -Wc++-compat -O3 -fextended-identifiers
 LIBS=-lX11 -lGL -lpng
 DEMOS=\
 	Spiral1 \
-	Torus3 \
+	Spiral2 \
+	Spiral3 \
+	Spiral4 \
+	Spiral5 \
 
 SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=
 
-run: Spiral1
-	-killall Spiral1
-	./Spiral1
+run: Spiral5
+	-killall Spiral5
+	./Spiral5
 
 all: $(DEMOS)
 

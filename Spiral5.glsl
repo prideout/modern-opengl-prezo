@@ -14,10 +14,47 @@ void main()
     gl_Position = Projection * Modelview * Position;
 }
 
+-- TCS
+
+uniform float TessLevel = 2;
+
+layout(vertices = 3) out;
+in vec3 vPosition[];
+out vec3 tcPosition[];
+
+void main()
+{
+    tcPosition[gl_InvocationID] = vPosition[gl_InvocationID];
+    gl_TessLevelInner[0] = gl_TessLevelOuter[0] =
+    gl_TessLevelOuter[1] = gl_TessLevelOuter[2] = TessLevel;
+}
+
+-- TES
+
+layout(triangles, equal_spacing, ccw) in;
+
+in vec3 tcPosition[];
+out vec3 tePosition;
+out vec2 teDistance;
+uniform mat4 Projection;
+uniform mat4 Modelview;
+
+void main()
+{
+    vec3 p0 = gl_TessCoord.x * tcPosition[0];
+    vec3 p1 = gl_TessCoord.y * tcPosition[1];
+    vec3 p2 = gl_TessCoord.z * tcPosition[2];
+    tePosition = (p0 + p1 + p2);
+    teDistance = gl_TessCoord.xz;
+    gl_Position = Projection * Modelview * vec4(tePosition, 1);
+}
+
 -- GS
 
+out vec2 gDistance;
 out vec3 gNormal;
-in vec3 vPosition[3];
+in vec3 tePosition[3];
+in vec2 teDistance[3];
 
 uniform mat3 NormalMatrix;
 layout(triangles) in;
@@ -25,20 +62,16 @@ layout(triangle_strip, max_vertices = 3) out;
 
 void main()
 {
-    vec3 A = vPosition[0];
-    vec3 B = vPosition[1];
-    vec3 C = vPosition[2];
-    
+    vec3 A = tePosition[0];
+    vec3 B = tePosition[1];
+    vec3 C = tePosition[2];
     gNormal = NormalMatrix * normalize(cross(B - A, C - A));
     
-    gl_Position = gl_in[0].gl_Position;
-    EmitVertex();
-
-    gl_Position = gl_in[1].gl_Position;
-    EmitVertex();
-
-    gl_Position = gl_in[2].gl_Position;
-    EmitVertex();
+    for (int i = 0; i < 3; i++) {
+        gDistance = teDistance[i];
+        gl_Position = gl_in[i].gl_Position;
+        EmitVertex();
+    }
 
     EndPrimitive();
 }
@@ -59,6 +92,20 @@ uniform vec3 FrontMaterial = vec3(0.25, 0.5, 0.75);
 uniform vec3 BackMaterial = vec3(0.75, 0.75, 0.7);
 uniform float Shininess = 50;
 
+vec4 amplify(float d, vec3 color)
+{
+    float T = 0.025; // <-- thickness
+    float E = fwidth(d);
+    if (d < T) {
+        d = 0;
+    } else if (d < T + E) {
+        d = (d - T) / E;
+    } else {
+        d = 1;
+    }
+    return vec4(d*color, 1);
+}
+
 void main()
 {
     vec3 N = normalize(gNormal);
@@ -78,5 +125,6 @@ void main()
     if (gl_FrontFacing)
         lighting += sf * SpecularMaterial;
 
-    FragColor = vec4(lighting, 1);
+    float d = min(gDistance.x, gDistance.y);
+    FragColor = amplify(d, lighting);
 }

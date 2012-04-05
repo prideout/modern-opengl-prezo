@@ -2,19 +2,19 @@
 
 in vec4 Position;
 out vec3 vPosition;
-out float gl_ClipDistance[1];
 
 uniform mat4 Projection;
 uniform mat4 Modelview;
 uniform mat4 ViewMatrix;
 uniform mat4 ModelMatrix;
-uniform vec4 ClipPlane;
+
+uniform vec4 ClipPlane = vec4(1, 1, 0, 0.9);
 
 void main()
 {
     vPosition = Position.xyz;
-    gl_Position = Projection * Modelview * Position;
     gl_ClipDistance[0] = dot(ModelMatrix * Position, ClipPlane);
+    gl_Position = Projection * Modelview * Position;
 }
 
 -- GS
@@ -36,18 +36,18 @@ void main()
     gNormal = NormalMatrix * normalize(cross(B - A, C - A));
     
     gDistance = vec2(1, 0);
-    gl_Position = gl_in[0].gl_Position;
     gl_ClipDistance[0] = gl_in[0].gl_ClipDistance[0];
+    gl_Position = gl_in[0].gl_Position;
     EmitVertex();
 
     gDistance = vec2(0, 0);
-    gl_Position = gl_in[1].gl_Position;
     gl_ClipDistance[0] = gl_in[1].gl_ClipDistance[0];
+    gl_Position = gl_in[1].gl_Position;
     EmitVertex();
 
     gDistance = vec2(0, 1);
-    gl_Position = gl_in[2].gl_Position;
     gl_ClipDistance[0] = gl_in[2].gl_ClipDistance[0];
+    gl_Position = gl_in[2].gl_Position;
     EmitVertex();
 
     EndPrimitive();
@@ -65,13 +65,13 @@ const float Offset = -1.0;
 uniform vec3 LightPosition = vec3(0.25, 0.25, 1.0);
 uniform vec3 AmbientMaterial = vec3(0.04, 0.04, 0.04);
 uniform vec3 SpecularMaterial = vec3(0.5, 0.5, 0.5);
-uniform vec3 FrontMaterial = vec3(0.75, 0.75, 0.5);
-uniform vec3 BackMaterial = vec3(0.5, 0.5, 0.75);
+uniform vec3 FrontMaterial = vec3(0.25, 0.5, 0.75);
+uniform vec3 BackMaterial = vec3(0.75, 0.75, 0.7);
 uniform float Shininess = 50;
 
 vec4 amplify(float d, vec3 color)
 {
-    float T = 0.05;
+    float T = 0.025; // <-- thickness
     float E = fwidth(d);
     if (d < T) {
         d = 0;

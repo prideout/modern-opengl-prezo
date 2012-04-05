@@ -16,6 +16,7 @@ void main()
 
 -- GS
 
+out vec2 gDistance;
 out vec3 gNormal;
 in vec3 vPosition[3];
 
@@ -31,12 +32,15 @@ void main()
     
     gNormal = NormalMatrix * normalize(cross(B - A, C - A));
     
+    gDistance = vec2(1, 0);
     gl_Position = gl_in[0].gl_Position;
     EmitVertex();
 
+    gDistance = vec2(0, 0);
     gl_Position = gl_in[1].gl_Position;
     EmitVertex();
 
+    gDistance = vec2(0, 1);
     gl_Position = gl_in[2].gl_Position;
     EmitVertex();
 
@@ -59,6 +63,17 @@ uniform vec3 FrontMaterial = vec3(0.25, 0.5, 0.75);
 uniform vec3 BackMaterial = vec3(0.75, 0.75, 0.7);
 uniform float Shininess = 50;
 
+vec4 amplify(float d, vec3 color)
+{
+    float T = 0.025; // <-- thickness
+    if (d < T) {
+        d = 0;
+    } else {
+        d = 1;
+    }
+    return vec4(d*color, 1);
+}
+
 void main()
 {
     vec3 N = normalize(gNormal);
@@ -78,5 +93,6 @@ void main()
     if (gl_FrontFacing)
         lighting += sf * SpecularMaterial;
 
-    FragColor = vec4(lighting, 1);
+    float d = min(gDistance.x, gDistance.y);
+    FragColor = amplify(d, lighting);
 }

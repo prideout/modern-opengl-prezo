@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include "pez.h"
 #include "vmath.h"
@@ -11,11 +10,10 @@ struct SceneParameters {
     Matrix4 ViewMatrix;
     Matrix4 ModelMatrix;
     Matrix3 NormalMatrix;
-    Vector4 ClipPlane;
     GLfloat PackedNormalMatrix[9];
 } Scene;
 
-static GLuint LoadProgram(const char* vsKey, const char* gsKey, const char* fsKey);
+static GLuint LoadProgram(const char* vsKey, const char* tcsKey, const char* tesKey, const char* gsKey, const char* fsKey);
 static GLuint CurrentProgram();
 
 #define u(x) glGetUniformLocation(CurrentProgram(), x)
@@ -25,11 +23,23 @@ PezConfig PezGetConfig()
 {
     PezConfig config;
     config.Title = __FILE__;
-    config.Width = 853;
-    config.Height = 480;
+    config.Width = 800;
+    config.Height = 600;
     config.Multisampling = true;
     config.VerticalSync = true;
     return config;
+}
+
+// u and v in [0,2π] 
+// x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
+// y(u,v) = α (1-v/(2π)) sin(n v) (1 + cos(u)) + γ sin(n v)
+// z(u,v) = α (1-v/(2π)) sin(u) + β v/(2π)
+Point3 ParametricHorn(float u, float v, float alpha, float beta, float gamma, float n)
+{
+    float x = alpha * (1-v/TwoPi) * cos(n*v) * (1+cos(u)) + gamma * cos(n*v);
+    float y = alpha * (1-v/TwoPi) * sin(n*v) * (1+cos(u)) + gamma * sin(n*v);
+    float z = alpha * (1-v/TwoPi) * sin(u) + beta * v / TwoPi;
+    return (Point3){x, y, z};
 }
 
 static void CreateTorus(float major, float minor, int slices, int stacks)
@@ -45,13 +55,19 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
 
     GLfloat* position = positions;
     for (int slice = 0; slice < slices; slice++) {
-        float theta = slice * 2.0f * Pi / slices;
+        float v = slice * TwoPi / slices;
         for (int stack = 0; stack < stacks; stack++) {
-            float phi = stack * 2.0f * Pi / stacks;
-            float beta = major + minor * cos(phi);
-            *position++ = cos(theta) * beta;
-            *position++ = sin(theta) * beta;
-            *position++ = sin(phi) * minor;
+            float u = stack * TwoPi / stacks;
+            
+            float alpha = 0.8;   // 0.15 for horn, 1.0 for snail
+            float beta = 1;
+            float gamma = 0.1; // tightness
+            float n = 2;       // twists
+
+            Point3 p = ParametricHorn(u, v, alpha, beta, gamma, n);
+            *position++ = p.x;
+            *position++ = p.y;
+            *position++ = p.z;
         }
     }
 
@@ -65,7 +81,7 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
 
     free(positions);
 
-    Scene.IndexCount = slices * stacks * 6;
+    Scene.IndexCount = (slices-1) * stacks * 6;
     size = Scene.IndexCount * sizeof(GLushort);
     GLushort* indices = (GLushort*) malloc(size);
     GLushort* index = indices;
@@ -78,11 +94,6 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
         }
         v += stacks;
     }
-    for (int j = 0; j < stacks; j++) {
-        int next = (j + 1) % stacks;
-        *index++ = next; *index++ = v+next; *index++ = v+j;
-        *index++ = v+j; *index++ = j; *index++ = next;
-    }
 
     glGenBuffers(1, &handle);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle);
@@ -93,34 +104,31 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
 
 void PezInitialize()
 {
-    LoadProgram("VS", "GS", "FS");
+    LoadProgram("VS", "TCS", "TES", "GS", "FS");
 
     PezConfig cfg = PezGetConfig();
-    const float h = 5.0f;
+    const float h = 1.5f;
     const float w = h * cfg.Width / cfg.Height;
-    Scene.Projection = M4MakeFrustum(-w, w,   // left & right planes
-                                     -h, h,   // bottom & top planes
-                                     65, 90); // near & far planes
+    const float z[2] = {65, 90};
+    Scene.Projection = M4MakeFrustum(-w, w, -h, h, z[0], z[1]);
 
     const float MajorRadius = 8.0f, MinorRadius = 2.0f;
-    const int Slices = 40, Stacks = 10;
+    const int Slices = 80, Stacks = 20;
     CreateTorus(MajorRadius, MinorRadius, Slices, Stacks);
     Scene.Theta = 0;
-    Scene.ClipPlane = (Vector4){0, 1, 0, 7};
 
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CLIP_DISTANCE0);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 }
 
 void PezUpdate(float seconds)
 {
-    const float RadiansPerSecond = 0.5f;
+    const float RadiansPerSecond = 0.75f;
     Scene.Theta += seconds * RadiansPerSecond;
     
     // Create the model-view matrix:
     Scene.ModelMatrix = M4MakeRotationZ(Scene.Theta);
-    Point3 eye = {0, -75, 25};
+    Point3 eye = {0, -50, 50};
     Point3 target = {0, 0, 0};
     Vector3 up = {0, 1, 0};
     Scene.ViewMatrix = M4MakeLookAt(eye, target, up);
@@ -142,13 +150,10 @@ void PezRender()
     glUniformMatrix4fv(u("Modelview"), 1, 0, pModelview);
     glUniformMatrix4fv(u("Projection"), 1, 0, pProjection);
     glUniformMatrix3fv(u("NormalMatrix"), 1, 0, pNormalMatrix);
-    glUniform4fv(u("ClipPlane"), 1, &Scene.ClipPlane.x);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDrawElements(GL_TRIANGLES, Scene.IndexCount, GL_UNSIGNED_SHORT, 0);
-}
 
-void PezHandleMouse(int x, int y, int action)
-{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPatchParameteri(GL_PATCH_VERTICES, 3);
+    glDrawElements(GL_PATCHES, Scene.IndexCount, GL_UNSIGNED_SHORT, 0);
 }
 
 static GLuint CurrentProgram()
@@ -158,7 +163,7 @@ static GLuint CurrentProgram()
     return p;
 }
 
-static GLuint LoadProgram(const char* vsKey, const char* gsKey, const char* fsKey)
+static GLuint LoadProgram(const char* vsKey, const char* tcsKey, const char* tesKey, const char* gsKey, const char* fsKey)
 {
     GLchar spew[256];
     GLint compileSuccess;
@@ -174,25 +179,53 @@ static GLuint LoadProgram(const char* vsKey, const char* gsKey, const char* fsKe
     pezCheck(compileSuccess, "Can't compile vshader:\n%s", spew);
     glAttachShader(programHandle, vsHandle);
 
-    const char* gsSource = pezGetShader(gsKey);
-    pezCheck(gsSource != 0, "Can't find gshader: %s\n", gsKey);
-    GLuint gsHandle = glCreateShader(GL_GEOMETRY_SHADER);
-    glShaderSource(gsHandle, 1, &gsSource, 0);
-    glCompileShader(gsHandle);
-    glGetShaderiv(gsHandle, GL_COMPILE_STATUS, &compileSuccess);
-    glGetShaderInfoLog(gsHandle, sizeof(spew), 0, spew);
-    pezCheck(compileSuccess, "Can't compile gshader:\n%s", spew);
-    glAttachShader(programHandle, gsHandle);
+    if (tcsKey) {
+        const char* tcsSource = pezGetShader(tcsKey);
+        pezCheck(tcsSource != 0, "Can't find tcshader: %s\n", tcsKey);
+        GLuint tcsHandle = glCreateShader(GL_TESS_CONTROL_SHADER);
+        glShaderSource(tcsHandle, 1, &tcsSource, 0);
+        glCompileShader(tcsHandle);
+        glGetShaderiv(tcsHandle, GL_COMPILE_STATUS, &compileSuccess);
+        glGetShaderInfoLog(tcsHandle, sizeof(spew), 0, spew);
+        pezCheck(compileSuccess, "Can't compile tcshader:\n%s", spew);
+        glAttachShader(programHandle, tcsHandle);
+    }
 
-    const char* fsSource = pezGetShader(fsKey);
-    pezCheck(fsSource != 0, "Can't find fshader: %s\n", fsKey);
-    GLuint fsHandle = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fsHandle, 1, &fsSource, 0);
-    glCompileShader(fsHandle);
-    glGetShaderiv(fsHandle, GL_COMPILE_STATUS, &compileSuccess);
-    glGetShaderInfoLog(fsHandle, sizeof(spew), 0, spew);
-    pezCheck(compileSuccess, "Can't compile fshader:\n%s", spew);
-    glAttachShader(programHandle, fsHandle);
+    if (tesKey) {
+        const char* tesSource = pezGetShader(tesKey);
+        pezCheck(tesSource != 0, "Can't find teshader: %s\n", tesKey);
+        GLuint tesHandle = glCreateShader(GL_TESS_EVALUATION_SHADER);
+        glShaderSource(tesHandle, 1, &tesSource, 0);
+        glCompileShader(tesHandle);
+        glGetShaderiv(tesHandle, GL_COMPILE_STATUS, &compileSuccess);
+        glGetShaderInfoLog(tesHandle, sizeof(spew), 0, spew);
+        pezCheck(compileSuccess, "Can't compile teshader:\n%s", spew);
+        glAttachShader(programHandle, tesHandle);
+    }
+
+    if (gsKey) {
+        const char* gsSource = pezGetShader(gsKey);
+        pezCheck(gsSource != 0, "Can't find gshader: %s\n", gsKey);
+        GLuint gsHandle = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(gsHandle, 1, &gsSource, 0);
+        glCompileShader(gsHandle);
+        glGetShaderiv(gsHandle, GL_COMPILE_STATUS, &compileSuccess);
+        glGetShaderInfoLog(gsHandle, sizeof(spew), 0, spew);
+        pezCheck(compileSuccess, "Can't compile gshader:\n%s", spew);
+        glAttachShader(programHandle, gsHandle);
+    }
+
+    if (fsKey) {
+        const char* fsSource = pezGetShader(fsKey);
+        pezCheck(fsSource != 0, "Can't find fshader: %s\n", fsKey);
+        GLuint fsHandle = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fsHandle, 1, &fsSource, 0);
+        glCompileShader(fsHandle);
+        glGetShaderiv(fsHandle, GL_COMPILE_STATUS, &compileSuccess);
+        glGetShaderInfoLog(fsHandle, sizeof(spew), 0, spew);
+        pezCheck(compileSuccess, "Can't compile fshader:\n%s", spew);
+        glAttachShader(programHandle, fsHandle);
+    }
 
     glLinkProgram(programHandle);
     GLint linkSuccess;
