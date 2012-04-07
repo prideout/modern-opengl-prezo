@@ -30,18 +30,6 @@ PezConfig PezGetConfig()
     return config;
 }
 
-// u and v in [0,2π] 
-// x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
-// y(u,v) = α (1-v/(2π)) sin(n v) (1 + cos(u)) + γ sin(n v)
-// z(u,v) = α (1-v/(2π)) sin(u) + β v/(2π)
-Point3 ParametricHorn(float u, float v, float alpha, float beta, float gamma, float n)
-{
-    float x = alpha * (1-v/TwoPi) * cos(n*v) * (1+cos(u)) + gamma * cos(n*v);
-    float y = alpha * (1-v/TwoPi) * sin(n*v) * (1+cos(u)) + gamma * sin(n*v);
-    float z = alpha * (1-v/TwoPi) * sin(u) + beta * v / TwoPi;
-    return (Point3){x, y, z};
-}
-
 static void CreateTorus(float major, float minor, int slices, int stacks)
 {
     GLuint vao;
@@ -49,7 +37,7 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
     glBindVertexArray(vao);
 
     int vertexCount = slices * stacks * 3;
-    int vertexStride = sizeof(float) * 3;
+    int vertexStride = sizeof(float) * 2;
     GLsizeiptr size = vertexCount * vertexStride;
     GLfloat* positions = (GLfloat*) malloc(size);
 
@@ -58,16 +46,8 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
         float v = slice * TwoPi / slices;
         for (int stack = 0; stack < stacks; stack++) {
             float u = stack * TwoPi / (stacks - 1);
-            
-            float alpha = 0.8;   // 0.15 for horn, 1.0 for snail
-            float beta = 1;
-            float gamma = 0.1; // tightness
-            float n = 2;       // twists
-
-            Point3 p = ParametricHorn(u, v, alpha, beta, gamma, n);
-            *position++ = u;//p.x;
-            *position++ = v;//p.y;
-            *position++ = 0;//p.z;
+            *position++ = u;
+            *position++ = v;
         }
     }
 
@@ -76,9 +56,8 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
     glBindBuffer(GL_ARRAY_BUFFER, handle);
     glBufferData(GL_ARRAY_BUFFER, size, positions, GL_STATIC_DRAW);
     glEnableVertexAttribArray(a("Position"));
-    glVertexAttribPointer(a("Position"), 3, GL_FLOAT, GL_FALSE,
+    glVertexAttribPointer(a("Position"), 2, GL_FLOAT, GL_FALSE,
                           vertexStride, 0);
-
     free(positions);
 
     Scene.IndexCount = (slices-1) * (stacks-1) * 6;
