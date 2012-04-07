@@ -15,7 +15,7 @@ void main()
 
 -- TCS
 
-uniform float TessLevel = 2;
+uniform float TessLevel = 6;
 
 layout(vertices = 3) out;
 in vec2 vPosition[];
@@ -34,6 +34,7 @@ layout(triangles, equal_spacing, ccw) in;
 
 in vec2 tcPosition[];
 out vec3 tePosition;
+out vec3 teNormal;
 out vec2 teDistance;
 uniform mat4 Projection;
 uniform mat4 Modelview;
@@ -50,7 +51,22 @@ f[0] = alpha * (1-v/twopi) * cos(2*v) * (1+cos(u)) + 0.1 * cos(2*v)
 f[1] = alpha * (1-v/twopi) * sin(2*v) * (1+cos(u)) + 0.1 * sin(2*v)
 f[2] = alpha * (1-v/twopi) * sin(u) + v / twopi
 print f
+dfdu = Matrix([diff(f[i],u) for i in (0,1,2)])
+dfdv = Matrix([diff(f[i],v) for i in (0,1,2)])
+n = dfdu.cross(dfdv)
+print n
+for i in xrange(3): print simplify(n[i])
 #endif
+
+vec3 HornNormal(float u, float v, float alpha)
+{
+    float v2 = v*v;
+    float pi2 = pi*pi;
+    float x = -alpha*(-v/(2*pi) + 1)*(-alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*sin(2*v) - alpha*(-v/(2*pi) + 1)*(2*alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*cos(2*v) - alpha*(cos(u) + 1)*sin(2*v)/(2*pi) + 0.2*cos(2*v))*cos(u);
+    float y = alpha*(-v/(2*pi) + 1)*(-alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*cos(2*v) + alpha*(-v/(2*pi) + 1)*(-2*alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) - alpha*(cos(u) + 1)*cos(2*v)/(2*pi) - 0.2*sin(2*v))*cos(u);
+    float z = alpha*(-0.5*alpha*v2*cos(u) - 0.5*alpha*v2 + 2.0*pi*alpha*v*cos(u) + 2.0*pi*alpha*v - 2.0*pi2*alpha*cos(u) - 2.0*pi2*alpha + 0.1*pi*v - 0.2*pi2)*sin(u)/pi2;
+    return vec3(x, y, z);
+}
 
 // u and v in [0,2π] 
 // x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
@@ -74,6 +90,7 @@ void main()
     vec2 p = (p0 + p1 + p2);
 
     tePosition = ParametricHorn(p.x, p.y, alpha);
+    teNormal = HornNormal(p.x, p.y, alpha);
 
     teDistance = gl_TessCoord.xz;
     gl_Position = Projection * Modelview * vec4(tePosition, 1);
@@ -84,6 +101,7 @@ void main()
 out vec2 gDistance;
 out vec3 gNormal;
 in vec3 tePosition[3];
+in vec3 teNormal[3];
 in vec2 teDistance[3];
 
 uniform mat3 NormalMatrix;
@@ -92,12 +110,13 @@ layout(triangle_strip, max_vertices = 3) out;
 
 void main()
 {
-    vec3 A = tePosition[0];
-    vec3 B = tePosition[1];
-    vec3 C = tePosition[2];
-    gNormal = NormalMatrix * normalize(cross(B - A, C - A));
+    //vec3 A = tePosition[0];
+    //vec3 B = tePosition[1];
+    //vec3 C = tePosition[2];
+    //gNormal = NormalMatrix * normalize(cross(B - A, C - A));
     
     for (int i = 0; i < 3; i++) {
+        gNormal = NormalMatrix * -teNormal[i];
         gDistance = teDistance[i];
         gl_Position = gl_in[i].gl_Position;
         EmitVertex();

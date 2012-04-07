@@ -23,8 +23,8 @@ PezConfig PezGetConfig()
 {
     PezConfig config;
     config.Title = __FILE__;
-    config.Width = 800*2;
-    config.Height = 600*2;
+    config.Width = 800;
+    config.Height = 600;
     config.Multisampling = true;
     config.VerticalSync = true;
     return config;
@@ -92,7 +92,7 @@ void PezInitialize()
     Scene.Projection = M4MakeFrustum(-w, w, -h, h, z[0], z[1]);
 
     const float MajorRadius = 8.0f, MinorRadius = 2.0f;
-    const int Slices = 80, Stacks = 20;
+    const int Slices = 16, Stacks = 8;
     CreateTorus(MajorRadius, MinorRadius, Slices, Stacks);
     Scene.Theta = 0;
 
