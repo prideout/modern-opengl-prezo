@@ -37,13 +37,34 @@ out vec3 tePosition;
 out vec2 teDistance;
 uniform mat4 Projection;
 uniform mat4 Modelview;
+const float TwoPi = atan(1) * 8;
+
+// u and v in [0,2π] 
+// x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
+// y(u,v) = α (1-v/(2π)) sin(n v) (1 + cos(u)) + γ sin(n v)
+// z(u,v) = α (1-v/(2π)) sin(u) + β v/(2π)
+vec3 ParametricHorn(float u, float v, float alpha, float beta, float gamma, float n)
+{
+    float x = alpha * (1-v/TwoPi) * cos(n*v) * (1+cos(u)) + gamma * cos(n*v);
+    float y = alpha * (1-v/TwoPi) * sin(n*v) * (1+cos(u)) + gamma * sin(n*v);
+    float z = alpha * (1-v/TwoPi) * sin(u) + beta * v / TwoPi;
+    return vec3(x, y, z);
+}
 
 void main()
 {
+    float alpha = 0.8;   // 0.15 for horn, 1.0 for snail
+    float beta = 1;
+    float gamma = 0.1; // tightness
+    float n = 2;       // twists
+
     vec3 p0 = gl_TessCoord.x * tcPosition[0];
     vec3 p1 = gl_TessCoord.y * tcPosition[1];
     vec3 p2 = gl_TessCoord.z * tcPosition[2];
-    tePosition = (p0 + p1 + p2);
+    vec3 p = (p0 + p1 + p2);
+
+    tePosition = ParametricHorn(p.x, p.y, alpha, beta, gamma, n);
+
     teDistance = gl_TessCoord.xz;
     gl_Position = Projection * Modelview * vec4(tePosition, 1);
 }
@@ -126,4 +147,7 @@ void main()
 
     float d = min(gDistance.x, gDistance.y);
     FragColor = amplify(d, lighting);
+
+    //FragColor = vec4(0,0,0,0.5);
+    //FragColor.a = 0.5;
 }
