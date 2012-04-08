@@ -8,12 +8,13 @@ DEMOS=\
 	Spiral4 \
 	Spiral5 \
 	Spiral6 \
+	Spiral7 \
 
 SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=
 
-run: Spiral6
-	./Spiral6
+run: Spiral7
+	./Spiral7
 
 all: $(DEMOS)
 
