@@ -15,7 +15,7 @@ void main()
 
 -- TCS
 
-uniform float TessLevel = 3;
+uniform float TessLevel = 6;
 
 layout(vertices = 3) out;
 in vec2 vPosition[];
@@ -39,35 +39,6 @@ uniform mat4 Projection;
 uniform mat4 Modelview;
 const float pi = atan(1) * 4;
 
-// Here's how I computed the analytic normals for the Horn surface using sympy:
-//
-//    from sympy import *
-//    from sympy.matrices import *
-//    from sympy.functions import sin,cos
-//
-//    u, v, alpha = symbols('u v alpha')
-//    f, twopi = Matrix([None]*3), 2*pi
-//    twopi = 2*pi
-//    f[0] = alpha * (1-v/twopi) * cos(2*v) * (1+cos(u)) + 0.1 * cos(2*v)
-//    f[1] = alpha * (1-v/twopi) * sin(2*v) * (1+cos(u)) + 0.1 * sin(2*v)
-//    f[2] = alpha * (1-v/twopi) * sin(u) + v / twopi
-//    print f
-//    dfdu = Matrix([diff(f[i],u) for i in (0,1,2)])
-//    dfdv = Matrix([diff(f[i],v) for i in (0,1,2)])
-//    n = dfdu.cross(dfdv)
-//    print n
-//    for i in xrange(3): print simplify(n[i])
-//
-vec3 HornNormal(float u, float v, float alpha)
-{
-    float v2 = v*v;
-    float pi2 = pi*pi;
-    float x = -alpha*(-v/(2*pi) + 1)*(-alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*sin(2*v) - alpha*(-v/(2*pi) + 1)*(2*alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*cos(2*v) - alpha*(cos(u) + 1)*sin(2*v)/(2*pi) + 0.2*cos(2*v))*cos(u);
-    float y = alpha*(-v/(2*pi) + 1)*(-alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*cos(2*v) + alpha*(-v/(2*pi) + 1)*(-2*alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) - alpha*(cos(u) + 1)*cos(2*v)/(2*pi) - 0.2*sin(2*v))*cos(u);
-    float z = alpha*(-0.5*alpha*v2*cos(u) - 0.5*alpha*v2 + 2.0*pi*alpha*v*cos(u) + 2.0*pi*alpha*v - 2.0*pi2*alpha*cos(u) - 2.0*pi2*alpha + 0.1*pi*v - 0.2*pi2)*sin(u)/pi2;
-    return vec3(x, y, z);
-}
-
 // u and v in [0,2π] 
 // x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
 // y(u,v) = α (1-v/(2π)) sin(n v) (1 + cos(u)) + γ sin(n v)
@@ -78,6 +49,14 @@ vec3 ParametricHorn(float u, float v, float alpha)
     float y = alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) + 0.1*sin(2*v);
     float z = alpha*(-v/(2*pi) + 1)*sin(u) + v/(2*pi);
     return vec3(x, y, z);
+}
+
+vec3 HornNormal(float u, float v, float alpha, vec3 A)
+{
+    float du = 0.0001; float dv = 0.0001;
+    vec3 C = ParametricHorn(u + du, v, alpha);
+    vec3 B = ParametricHorn(u, v + dv, alpha);
+    return normalize(cross(B - A, C - A));
 }
 
 uniform float Time;
@@ -91,10 +70,10 @@ void main()
     vec2 p2 = gl_TessCoord.z * tcPosition[2];
     vec2 p = (p0 + p1 + p2);
 
-    tePosition = 1.25 * ParametricHorn(p.x, p.y, alpha);
-    teNormal = -HornNormal(p.x, p.y, alpha);
+    tePosition = ParametricHorn(p.x, p.y, alpha);
+    teNormal = HornNormal(p.x, p.y, alpha, tePosition);
 
-    gl_Position = Projection * Modelview * vec4(tePosition, 1);
+    gl_Position = Projection * Modelview * vec4(1.25 * tePosition, 1);
 }
 
 -- GS
