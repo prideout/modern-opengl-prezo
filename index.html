@@ -90,7 +90,7 @@
            Alas, Chrome's print-to-pdf shows a grid artifact. :( 
            style="color:#fff; background-image:
                   -webkit-radial-gradient(center center, circle cover, #dd2e72, #d22854)" -->
-      <div style="height:150px;display:block">&nbsp;</div>
+      <div style="height:200px;display:block">&nbsp;</div>
       <div class="sans"
            style="font-size:1250%;
                   text-align:center;
@@ -120,7 +120,7 @@
                   height:4px;
                   left:256px;
                   background-color: #222;
-                  top:450px;"></div>
+                  top:500px;"></div>
     </div>
     <!--div class="slide">
       <p class="cover-page tk-raleway">
@@ -343,6 +343,34 @@ void main() {
       </table>
     </div>
 
+    <!-- Forward Compatible -->
+    <div class="slide">
+      <div class="codewrapper" style="font-size:125%;width:95%">
+        <pre><code class="cpp">QGLFormat format;
+format.setVersion(4,0);
+format.setProfile(QGLFormat::CoreProfile);
+QGLWidget *myWidget = new QGLWidget(format);</code></pre>
+      </div>
+      <div class="codewrapper" style="font-size:125%;width:95%">
+        <pre><code class="cpp">int attribs[] = {
+    GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
+    GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+    GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+    NULL
+};
+GLXContext glc = glXCreateContextAttribs(diplay, config, NULL, True, attribs);</code></pre>
+      </div>
+      <div  class="tk-museo-sans"
+            style="font-size:800%;
+                   font-weight:900;
+                   margin-top:100px;
+                   color:#333;
+                   text-align:center">
+        Core Profile
+      </div>
+    </div>
+
+    <!-- This is a bit of a religious debate -->
     <div class="slide">
       <a href="http://www.wordle.net/show/wrdl/5094008/Deprecated_GLSL" 
          style="position:absolute; display: block;
@@ -382,6 +410,59 @@ void main() {
                   -webkit-transform: rotate(90deg);">
         NEW
       </div>
+    </div>
+
+    <!-- Pipeline diagram Transform Feedback (known as stream-out) -->
+    <div class="slide">
+      <table>
+        <tr style="width:100%;height:100%">
+          <td>
+            <div class="codewrapper" style="font-size:100%;width:95%">
+              <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
+const char* varyings[3] = { "vPosition", "vBirthTime", "vVelocity" };
+glTransformFeedbackVaryings(programHandle, 3, varyings,
+                            GL_INTERLEAVED_ATTRIBS);
+
+// Create VBO for input on even frames and output on odd frames:
+glGenBuffers(1, &amp;BufferA);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), &amp;seed_data[0], GL_STREAM_DRAW);
+
+// Create VBO for output on even frames and input on odd frames:
+glGenBuffers(1, &amp;BufferB);
+glBindBuffer(GL_ARRAY_BUFFER, BufferB);
+glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), 0, GL_STREAM_DRAW);</code></pre>
+            </div>
+            <div class="codewrapper" style="font-size:100%;width:95%">
+              <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);                     // Source VBO
+glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, BufferB); // Dest VBO
+glBeginTransformFeedback(GL_POINTS);
+glBindTexture(GL_TEXTURE_3D, VelocityTexture.Handle);
+glDrawArrays(GL_POINTS, 0, Count);
+glEndTransformFeedback();
+
+swap(BufferA, BufferB);
+
+glDisable(GL_RASTERIZER_DISCARD);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glDrawArrays(GL_POINTS, 0, Count);</code></pre></div>
+          </td>
+          <td rowspan="2">
+            <object type="image/svg+xml" class="figure"
+                    data="images/Pipeline4.svg">
+            </object>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="tk-museo-sans" style="font-size:300%;font-weight:800;text-align:center">
+              Transform Feedback
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </table>
     </div>
 
     <footer>

@@ -1,0 +1,42 @@
+// dot -Tpdf -oPipeline3.pdf Pipeline3.dot
+// dot -Tsvg -oPipeline3.svg Pipeline3.dot
+
+digraph Pipeline3 {
+
+  // bgcolor="#5F534C";
+  // rankdir = LR;
+
+  node [shape="box",
+        style="rounded,filled",
+        color="black",
+        fontname="helvetica",
+        fillcolor="#bcd5b0",
+        fontcolor="#000000"];
+
+  VS;
+  FS;
+  GS;
+  TCS;
+  TES;
+
+  node [shape="box",
+        style="filled",
+        fillcolor="#dc8888"];
+
+  Rast;
+  Blend;
+  Tess;
+
+  edge [color="#000000"]
+
+  VS -> TCS;
+  TCS -> Tess;
+  Tess -> TES;
+  TES -> GS;
+  GS -> Rast;
+  Rast -> FS;
+  FS -> Blend;
+
+  edge [penwidth=2.5,color="#505050"]
+  GS:w -> VS;
+}

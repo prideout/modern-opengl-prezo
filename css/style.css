@@ -82,7 +82,7 @@ body {
 /*  Half of an iPad3, allowing room for a status bar.
     iPad 3 is 2048 x 1536.  The status bar is 40 tall. */
 
-    width: 1024px; height: 748px;
+    width: 1024px; height: 791px;
     margin: 20px;
     position: relative;
     background-color: #fff;
@@ -209,11 +209,13 @@ div.codewrapper {
 
 @media print {
 
+    body {
+        background-color: #fff; /* should match slide's background-color */
+    }
+
     .slide {
         page-break-after: always;
-        //background-color: #fff;
         margin: 0px;
-        margin-top: 20px;
         border: 0; 
     }
 
