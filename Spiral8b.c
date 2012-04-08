@@ -96,9 +96,11 @@ void PezInitialize()
     Scene.Projection = M4MakeFrustum(-w, w, -h, h, z[0], z[1]);
 
     const float MajorRadius = 8.0f, MinorRadius = 2.0f;
-    const int Slices = 16, Stacks = 8;
+    const int Slices = 64, Stacks = 32;
     CreateTorus(MajorRadius, MinorRadius, Slices, Stacks);
     Scene.Time = 0;
+
+    LoadTexture("moon_DISP.png");
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);

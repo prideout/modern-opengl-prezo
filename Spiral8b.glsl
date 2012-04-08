@@ -15,7 +15,7 @@ void main()
 
 -- TCS
 
-uniform float TessLevel = 6;
+uniform float TessLevel = 12;
 
 layout(vertices = 3) out;
 in vec2 vPosition[];
@@ -32,9 +32,12 @@ void main()
 
 layout(triangles, equal_spacing, ccw) in;
 
+layout(binding=0) uniform sampler2D DispMap;
+
 in vec2 tcPosition[];
 out vec3 tePosition;
 out vec3 teNormal;
+out float teDisp;
 uniform mat4 Projection;
 uniform mat4 Modelview;
 const float pi = atan(1) * 4;
@@ -73,14 +76,21 @@ void main()
     tePosition = ParametricHorn(p.x, p.y, alpha);
     teNormal = HornNormal(p.x, p.y, alpha, tePosition);
 
-    gl_Position = Projection * Modelview * vec4(1.25 * tePosition, 1);
+    vec2 tc = vec2(p.x/(2*pi), p.y/(2*pi));
+    teDisp = texture(DispMap, vec2(1,5) * tc).r;
+    tePosition += (1-tc.y) * 0.04 * teDisp * teNormal;
+
+    gl_Position = Projection * Modelview * vec4(tePosition, 1);
 }
 
 -- GS
 
 out vec3 gNormal;
+out float gDisp;
+
 in vec3 tePosition[3];
 in vec3 teNormal[3];
+in float teDisp[3];
 
 uniform mat3 NormalMatrix;
 layout(triangles) in;
@@ -88,8 +98,14 @@ layout(triangle_strip, max_vertices = 3) out;
 
 void main()
 {
+    vec3 A = tePosition[0];
+    vec3 B = tePosition[1];
+    vec3 C = tePosition[2];
+    gNormal = NormalMatrix * normalize(cross(B - A, C - A));
+
     for (int i = 0; i < 3; i++) {
-        gNormal = NormalMatrix * teNormal[i];
+        //gNormal = NormalMatrix * teNormal[i];
+        gDisp = teDisp[i];
         gl_Position = gl_in[i].gl_Position;
         EmitVertex();
     }
@@ -100,6 +116,7 @@ void main()
 -- FS
 
 in vec3 gNormal;
+in float gDisp;
 out vec4 FragColor;
 
 uniform vec3 LightPosition = vec3(0.25, 0.25, 1.0);
@@ -123,10 +140,13 @@ void main()
     float sf = max(0.0, dot(N, H));
     sf = pow(sf, Shininess);
 
-    vec3 color = gl_FrontFacing ? FrontMaterial : BackMaterial;
+    float t = 0.4 + 0.6 * (1-gDisp);
+    vec3 color = mix(FrontMaterial, BackMaterial, t);
+    if (!gl_FrontFacing)
+        color = 0.5 * color.grb;
+
     vec3 lighting = AmbientMaterial + df * color;
-    if (gl_FrontFacing)
-        lighting += sf * SpecularMaterial;
+    lighting += sf * SpecularMaterial;
 
     FragColor = vec4(lighting,1);
 }
