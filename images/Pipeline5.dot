@@ -1,7 +1,7 @@
-// dot -Tpdf -oPipeline3.pdf Pipeline3.dot
-// dot -Tsvg -oPipeline4.svg Pipeline4.dot
+// dot -Tpdf -oPipeline5.pdf Pipeline5.dot
+// dot -Tsvg -oPipeline5.svg Pipeline5.dot
 
-digraph Pipeline4 {
+digraph Pipeline5 {
 
   // bgcolor="#5F534C";
   // rankdir = LR;
@@ -16,6 +16,8 @@ digraph Pipeline4 {
   VS;
   FS;
   GS;
+  TCS;
+  TES;
 
   node [shape="box",
         style="filled",
@@ -23,10 +25,14 @@ digraph Pipeline4 {
 
   Rast;
   Blend;
+  Tess;
 
   edge [color="#000000"]
 
-  VS -> GS;
+  VS -> TCS;
+  TCS -> Tess;
+  Tess -> TES;
+  TES -> GS;
   GS -> Rast;
   Rast -> FS;
   FS -> Blend;
