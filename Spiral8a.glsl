@@ -15,7 +15,7 @@ void main()
 
 -- TCS
 
-uniform float TessLevel = 10;
+uniform float TessLevel = 3;
 
 layout(vertices = 3) out;
 in vec2 vPosition[];

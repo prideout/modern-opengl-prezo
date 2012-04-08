@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <png.h>
 #include "pez.h"
 #include "vmath.h"
 
@@ -15,9 +16,12 @@ struct SceneParameters {
 
 static GLuint LoadProgram(const char* vsKey, const char* tcsKey, const char* tesKey, const char* gsKey, const char* fsKey);
 static GLuint CurrentProgram();
+static GLuint LoadTexture(const char* filename);
 
 #define u(x) glGetUniformLocation(CurrentProgram(), x)
 #define a(x) glGetAttribLocation(CurrentProgram(), x)
+#define OpenGLError GL_NO_ERROR == glGetError(),                        \
+        "%s:%d - OpenGL Error - %s", __FILE__, __LINE__, __FUNCTION__   \
 
 PezConfig PezGetConfig()
 {
@@ -216,4 +220,68 @@ static GLuint LoadProgram(const char* vsKey, const char* tcsKey, const char* tes
     pezCheck(linkSuccess, "Can't link shaders:\n%s", spew);
     glUseProgram(programHandle);
     return programHandle;
+}
+
+static GLuint LoadTexture(const char* filename)
+{
+    unsigned long w, h;
+    int color_type, bit_depth, row_stride;
+    png_bytep image;
+
+    if (true) {
+        FILE *fp = fopen(filename, "rb");
+        pezCheck(fp ? 1 : 0, "Can't find %s", filename);
+        unsigned char header[8];
+        fread(header, 1, 8, fp);
+        bool isPng = !png_sig_cmp(header, 0, 8);
+        pezCheck(isPng, "%s is not a valid PNG file.", filename);
+        png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        pezCheckPointer(png_ptr, "PNG error line %d", __LINE__);
+        png_infop info_ptr = png_create_info_struct(png_ptr);
+        pezCheckPointer(info_ptr, "PNG error line %d", __LINE__);
+        png_init_io(png_ptr, fp);
+        png_set_sig_bytes(png_ptr, 8);
+        png_read_info(png_ptr, info_ptr);
+        w = png_get_image_width(png_ptr, info_ptr);
+        h = png_get_image_height(png_ptr, info_ptr);
+        color_type = png_get_color_type(png_ptr, info_ptr);
+        bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+        pezPrintString("%s %dx%d bpp=%d ct=%d\n", filename, w, h, bit_depth, color_type);
+        png_read_update_info(png_ptr, info_ptr);
+        row_stride = png_get_rowbytes(png_ptr,info_ptr);
+        image = (png_bytep) malloc(h * row_stride);
+        png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * h);
+        png_bytep row = image;
+        for (int y = h-1; y >= 0; y--, row += row_stride) {
+            row_pointers[y] = row;
+        }
+        png_read_image(png_ptr, row_pointers);
+        free(row_pointers);
+        fclose(fp);
+        png_destroy_read_struct(&png_ptr, &info_ptr, png_infopp_NULL);
+    }
+
+    pezCheck(bit_depth == 8, "Bit depth must be 8.");
+
+    GLenum type = 0;
+    switch (color_type) {
+    case PNG_COLOR_TYPE_RGB:  type = GL_RGB;  break;
+    case PNG_COLOR_TYPE_RGBA: type = GL_RGBA; break;
+    case PNG_COLOR_TYPE_GRAY: type = GL_RED;  break;
+    default: pezFatal("Unknown color type: %d.", color_type);
+    }
+
+    GLuint handle;
+    glGenTextures(1, &handle);
+    glBindTexture(GL_TEXTURE_2D, handle);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, type, w, h, 0, type, GL_UNSIGNED_BYTE, image);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    pezCheck(OpenGLError);
+
+    free(image);
+    return handle;
 }
