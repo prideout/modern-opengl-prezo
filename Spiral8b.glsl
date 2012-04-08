@@ -76,11 +76,13 @@ void main()
     tePosition = ParametricHorn(p.x, p.y, alpha);
     teNormal = HornNormal(p.x, p.y, alpha, tePosition);
 
+    const float DispPresence = 0.05;
+
     vec2 tc = vec2(p.x/(2*pi), p.y/(2*pi));
     teDisp = texture(DispMap, vec2(1,5) * tc).r;
-    tePosition += (1-tc.y) * 0.04 * teDisp * teNormal;
+    tePosition += (1-tc.y) * DispPresence * teDisp * teNormal;
 
-    gl_Position = Projection * Modelview * vec4(tePosition, 1);
+    gl_Position = Projection * Modelview * vec4(1.25 * tePosition, 1);
 }
 
 -- GS
