@@ -128,35 +128,26 @@ int main(int argc, char** argv)
         XMoveWindow(context.MainDisplay, context.MainWindow, left, top);
     }
 
-    GLXContext glcontext;
-    if (0 && PEZ_FORWARD_COMPATIBLE_GL) {
-        GLXContext tempContext = glXCreateContext(context.MainDisplay, visinfo, NULL, True);
+    GLXContext glcontext = 0;
+    if (PEZ_FORWARD_COMPATIBLE_GL) {
         PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribs = (PFNGLXCREATECONTEXTATTRIBSARBPROC)glXGetProcAddress((GLubyte*)"glXCreateContextAttribsARB");
         if (!glXCreateContextAttribs) {
             pezFatal("Your platform does not support OpenGL 4.0.\n"
-                          "Try changing PEZ_FORWARD_COMPATIBLE_GL to 0.\n");
+                     "Try changing PEZ_FORWARD_COMPATIBLE_GL to 0.\n");
         }
-        int fbcount = 0;
-        GLXFBConfig *framebufferConfig = glXChooseFBConfig(context.MainDisplay, screenIndex, 0, &fbcount);
-        if (!framebufferConfig) {
-            pezFatal("Can't create a framebuffer for OpenGL 4.0.\n");
-        } else {
-            int attribs[] = {
-                GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
-                GLX_CONTEXT_MINOR_VERSION_ARB, 0,
-                GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
-                0
-            }; 
-            glcontext = glXCreateContextAttribs(context.MainDisplay, framebufferConfig[0], NULL, True, attribs);
-            glXMakeCurrent(context.MainDisplay, 0, 0);
-            glXDestroyContext(context.MainDisplay, tempContext);
-        } 
+        int attribs[] = {
+            GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
+            GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+            GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+            0
+        };
+        visinfo = glXGetVisualFromFBConfig(context.MainDisplay, fbc[0]);
+        glcontext = glXCreateContextAttribs(context.MainDisplay, fbc[0], NULL, True, attribs);
     } else {
         glcontext = glXCreateContext(context.MainDisplay, visinfo, NULL, True);
     }
 
     glXMakeCurrent(context.MainDisplay, context.MainWindow, glcontext);
-
     PFNGLXSWAPINTERVALSGIPROC glXSwapIntervalSGI = (PFNGLXSWAPINTERVALSGIPROC) glXGetProcAddress((GLubyte*)"glXSwapIntervalSGI");
     if (glXSwapIntervalSGI) {
         glXSwapIntervalSGI(PezGetConfig().VerticalSync ? 1 : 0);
