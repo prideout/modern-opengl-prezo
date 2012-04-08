@@ -40,24 +40,25 @@ uniform mat4 Projection;
 uniform mat4 Modelview;
 const float pi = atan(1) * 4;
 
-#if PYTHON
-from sympy import *
-from sympy.matrices import *
-from sympy.functions import sin,cos
-u, v, alpha = symbols('u v alpha')
-f, twopi = Matrix([None]*3), 2*pi
-twopi = 2*pi
-f[0] = alpha * (1-v/twopi) * cos(2*v) * (1+cos(u)) + 0.1 * cos(2*v)
-f[1] = alpha * (1-v/twopi) * sin(2*v) * (1+cos(u)) + 0.1 * sin(2*v)
-f[2] = alpha * (1-v/twopi) * sin(u) + v / twopi
-print f
-dfdu = Matrix([diff(f[i],u) for i in (0,1,2)])
-dfdv = Matrix([diff(f[i],v) for i in (0,1,2)])
-n = dfdu.cross(dfdv)
-print n
-for i in xrange(3): print simplify(n[i])
-#endif
-
+// Here's how I computed the analytic normals for the Horn surface using sympy:
+//
+//    from sympy import *
+//    from sympy.matrices import *
+//    from sympy.functions import sin,cos
+//
+//    u, v, alpha = symbols('u v alpha')
+//    f, twopi = Matrix([None]*3), 2*pi
+//    twopi = 2*pi
+//    f[0] = alpha * (1-v/twopi) * cos(2*v) * (1+cos(u)) + 0.1 * cos(2*v)
+//    f[1] = alpha * (1-v/twopi) * sin(2*v) * (1+cos(u)) + 0.1 * sin(2*v)
+//    f[2] = alpha * (1-v/twopi) * sin(u) + v / twopi
+//    print f
+//    dfdu = Matrix([diff(f[i],u) for i in (0,1,2)])
+//    dfdv = Matrix([diff(f[i],v) for i in (0,1,2)])
+//    n = dfdu.cross(dfdv)
+//    print n
+//    for i in xrange(3): print simplify(n[i])
+//
 vec3 HornNormal(float u, float v, float alpha)
 {
     float v2 = v*v;
@@ -90,7 +91,7 @@ void main()
     vec2 p = (p0 + p1 + p2);
 
     tePosition = ParametricHorn(p.x, p.y, alpha);
-    teNormal = HornNormal(p.x, p.y, alpha);
+    teNormal = -HornNormal(p.x, p.y, alpha);
 
     teDistance = gl_TessCoord.xz;
     gl_Position = Projection * Modelview * vec4(tePosition, 1);
@@ -110,13 +111,8 @@ layout(triangle_strip, max_vertices = 3) out;
 
 void main()
 {
-    //vec3 A = tePosition[0];
-    //vec3 B = tePosition[1];
-    //vec3 C = tePosition[2];
-    //gNormal = NormalMatrix * normalize(cross(B - A, C - A));
-    
     for (int i = 0; i < 3; i++) {
-        gNormal = NormalMatrix * -teNormal[i];
+        gNormal = NormalMatrix * teNormal[i];
         gDistance = teDistance[i];
         gl_Position = gl_in[i].gl_Position;
         EmitVertex();
