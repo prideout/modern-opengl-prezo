@@ -141,7 +141,6 @@ int main(int argc, char** argv)
             GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
             0
         };
-        visinfo = glXGetVisualFromFBConfig(context.MainDisplay, fbc[0]);
         glcontext = glXCreateContextAttribs(context.MainDisplay, fbc[0], NULL, True, attribs);
     } else {
         glcontext = glXCreateContext(context.MainDisplay, visinfo, NULL, True);

@@ -100,7 +100,10 @@ void PezInitialize()
     CreateTorus(MajorRadius, MinorRadius, Slices, Stacks);
     Scene.Time = 0;
 
+    glActiveTexture(GL_TEXTURE0);
     LoadTexture("moon_DISP.png");
+    glActiveTexture(GL_TEXTURE1);
+    LoadTexture("moon_NRM.png");
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -111,7 +114,7 @@ void PezUpdate(float seconds)
     const float RadiansPerSecond = 0.75f;
     Scene.Time += seconds;
 
-    float theta = Scene.Time * RadiansPerSecond;
+    float theta = 0; // Scene.Time * RadiansPerSecond;
    
     // Create the model-view matrix:
     Scene.ModelMatrix = M4MakeRotationZ(theta);

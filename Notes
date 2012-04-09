@@ -1,6 +1,10 @@
 
 Design the slideshow to have speech accompaniment.  Limit the content of slides to Code, Diagrams, and Tables without Headings.  The audience should listen, not read.
 
+python -m SimpleHTTPServer
+
+dot -oPipeline4.pdf -Tpdf Pipeline4.dot 
+
 pdfcrop --margins "0 -18 0 -18" --clip Original.pdf Cropped.pdf
 
 Overview (2 slides)
