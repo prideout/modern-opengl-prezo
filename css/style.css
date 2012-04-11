@@ -125,6 +125,12 @@ span.HIGH {
     padding-top:2px;border:solid 1px #aa0;background-color:#440;
 }
 
+span.DIVIDER {
+    color: #2080b0;
+    font-weight: 900;
+    font-style: italic;
+}
+
 div.codewrapper {
     width:100%;
     font-size:80%;

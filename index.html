@@ -566,6 +566,116 @@ glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
       </table>
     </div>
 
+    <!-- TYPE ELEMENTS -->
+    <div class="slide">
+      <style>
+
+table.bordered {
+margin:auto;
+margin-top:100px;
+font-size:200%;
+}
+
+.bordered {
+    border-radius: 16px;
+//    border: solid #ccc 1px;
+}
+
+.bordered tr:hover {
+    background: #fbf8e9;
+}    
+    
+.bordered td, .bordered th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;    
+}
+
+.bordered th {
+    background-color: #dce9f9;
+    border-top: none;
+}
+
+.bordered td:first-child, .bordered th:first-child {
+    border-left: none;
+}
+
+.bordered th:first-child {
+    border-radius: 16px 0 0 0;
+}
+
+.bordered tr {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 16px;
+}
+
+.bordered tr:first-child {
+    border: none;
+}
+      </style>
+      <table class="bordered tk-museo-sans">
+        <thead>
+          <tr>
+            <th>type</th>
+            <th>vertex input</th>
+            <th>varying</th>
+            <th>fragment output</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>scalar</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>scalar</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>scalar</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>no</td>
+        </tr>
+        <tr>
+          <td>scalar</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>no</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- BLOCKS -->
+    <div class="slide">
+      <object type="image/svg+xml" class="figure"
+              data="images/Blocks.svg">
+      </object>
+      <div class="codewrapper" style="font-size:120%;width:75%">
+        <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
+
+in myBlock {
+    vec3 Position;
+    vec3 Color;
+    float Opacity;
+} Out;
+
+<span class="DIVIDER">-- Geometry Shader</span>
+
+in myBlock {
+    vec3 Position;
+    vec3 Color;
+    float Opacity;
+} In;
+      </code></pre></div>
+    </div>
+
     <!-- WORDLE.NET
          Font: SteelFish or Coolvetica, Color: Kindled, Layout: Horizontal -->
     <!--div class="noprint">
