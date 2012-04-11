@@ -15,7 +15,7 @@ void main()
 
 -- TCS
 
-uniform float TessLevel = 12;
+uniform float TessLevel = 16;
 
 layout(vertices = 3) out;
 in vec2 vPosition[];
@@ -33,7 +33,6 @@ void main()
 layout(triangles, equal_spacing, ccw) in;
 
 layout(binding=0) uniform sampler2D DispMap;
-layout(binding=1) uniform sampler2D NormMap;
 
 in vec2 tcPosition[];
 out vec3 tePosition;
@@ -55,6 +54,16 @@ vec3 ParametricHorn(float u, float v, float alpha)
     return vec3(x, y, z);
 }
 
+vec3 HornNormal(float u, float v, float alpha, vec3 A)
+{
+    float du = 0.0001; float dv = 0.0001;
+    vec3 C = ParametricHorn(u + du, v, alpha);
+    vec3 B = ParametricHorn(u, v + dv, alpha);
+    return normalize(cross(B - A, C - A));
+}
+
+const float Scale = 1.25;
+
 void main()
 {
     float alpha = 0.8;
@@ -65,31 +74,15 @@ void main()
     vec2 p = (p0 + p1 + p2);
 
     tePosition = ParametricHorn(p.x, p.y, alpha);
- 
-    float u = p.x; float v = p.y;
-    float du = 0.0001; float dv = 0.0001;
-    vec3 C = ParametricHorn(u + du, v, alpha);
-    vec3 B = ParametricHorn(u, v + dv, alpha);
-    vec3 A = tePosition;
-    vec3 tangent = normalize(B - A);
-    vec3 binormal = normalize(C - A);
-    teNormal = normalize(cross(tangent, binormal));
-    //teNormal = HornNormal(p.x, p.y, alpha, tePosition); // object space
+    teNormal = HornNormal(p.x, p.y, alpha, tePosition);
 
     const float DispPresence = 0.05;
-
     vec2 uv = vec2(p.x/(2*pi), p.y/(2*pi));
     vec2 tc = vec2(1,5) * uv;
     teDisp = texture(DispMap, tc).r;
-
-    vec3 N = 2.0 * texture(NormMap, tc).rgb - 1.0; // tangent space (deformed)
-
-    mat3 basis = mat3(binormal, tangent, teNormal);
-    //teNormal = normalize(basis * N);
-
     tePosition += (1-uv.y) * DispPresence * teDisp * teNormal;
 
-    gl_Position = Projection * Modelview * vec4(1.25 * tePosition, 1);
+    gl_Position = Projection * Modelview * vec4(Scale * tePosition, 1);
 }
 
 -- GS
@@ -113,7 +106,6 @@ void main()
     gNormal = NormalMatrix * normalize(cross(B - A, C - A));
 
     for (int i = 0; i < 3; i++) {
-        //gNormal = NormalMatrix * teNormal[i];
         gDisp = teDisp[i];
         gl_Position = gl_in[i].gl_Position;
         EmitVertex();

@@ -59,7 +59,7 @@ vec3 HornNormal(float u, float v, float alpha, vec3 A)
     return normalize(cross(B - A, C - A));
 }
 
-uniform float Time;
+const float Scale = 1.25;
 
 void main()
 {
@@ -73,7 +73,7 @@ void main()
     tePosition = ParametricHorn(p.x, p.y, alpha);
     teNormal = HornNormal(p.x, p.y, alpha, tePosition);
 
-    gl_Position = Projection * Modelview * vec4(1.25 * tePosition, 1);
+    gl_Position = Projection * Modelview * vec4(Scale * tePosition, 1);
 }
 
 -- GS
