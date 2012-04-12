@@ -33,7 +33,7 @@ hljs.LANGUAGES.glsl = function(){
       'thread_local': 1
     },
     'built_in': {
-
+        /*
       'gl_Position': 1,
       'gl_MultiTexCoord0': 1,
       'gl_ModelViewMatrix': 1,
@@ -42,7 +42,7 @@ hljs.LANGUAGES.glsl = function(){
       'gl_Vertex': 1,
       'gl_FragColor': 1,
       'gl_in': 1,
-        
+        */
       'std': 1, 'string': 1, 'cin': 1, 'cout': 1, 'cerr': 1, 'clog': 1,
       'stringstream': 1, 'istringstream': 1, 'ostringstream': 1, 'auto_ptr': 1,
       'deque': 1, 'list': 1, 'queue': 1, 'stack': 1, 'vector': 1, 'map': 1,

@@ -697,23 +697,106 @@ table.bordered {
       <object type="image/svg+xml" class="figure"
               data="images/Blocks2.svg">
       </object>
-      <div class="codewrapper" style="font-size:100%;width:50%">
-        <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
+      <table style="width:90%">
+        <tr>
+          <td style="width:50%">
+            <div class="codewrapper">
+              <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
 
-in myBlock {
+out MyBlock {
     vec3 Position;
-    vec3 Color;
+    vec3 Color[2];
     float Opacity;
 } Out;
 
 <span class="DIVIDER">-- Geometry Shader</span>
 
-in myBlock {
+in MyBlock {
     vec3 Position;
-    vec3 Color;
+    vec3 Color[2];
     float Opacity;
+} In[];</code></pre></div>
+          </td>
+          <td>
+            <div class="codewrapper">
+              <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
+
+// Built-ins:
+out gl_PerVertex {
+    vec4 gl_Position;
+    float gl_PointSize;
+    float gl_ClipDistance[];
+};
+
+// User-defined:
+in MyBlock {
+    float w;
 } In;
-      </code></pre></div>
+
+void main()
+{
+    gl_Position = vec4(1, 0, 0, In.w);
+}
+</code></pre></div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="codewrapper">
+              <pre><code class="cpp"><span class="DIVIDER">// Application code</span>
+GLuint i = glGetAttribLocation(program, "MyBlock.w");
+</code></pre></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- BINDING SHTUFF -->
+    <div class="slide" style="font-size:200%">
+      <table style="width:90%">
+        <tr>
+          <td style="width:50%">
+            <div class="codewrapper">
+              <pre><code class="cpp">// Let the compiler decide
+GLuint i = glGetAttribLocation(program, "MyBlock.w");              </code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <table style="width:90%">
+        <tr>
+          <td style="width:50%">
+            <div class="codewrapper">
+              <pre><code class="cpp">// Specify in application code
+glCompileShader(vsHandle);
+glAttachShader(programHandle, vsHandle);
+glBindAttribLocation(programHandle, 3, "MyBlock.w");
+glLinkProgram(programHandle);              </code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <table style="width:90%">
+        <tr>
+          <td style="width:50%">
+            <div class="codewrapper">
+              <pre><code class="glsl">// Declare in GLSL
+in MyBlock {
+    layout(location = 3) vec3 w;
+}              </code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+            <div  class="tk-museo-sans"
+                  style="font-size:240%;
+                         font-weight:900;
+                         color:#333;
+                         text-align:center">
+              Binding Vertex Attributes
+            </div>
     </div>
 
     <!-- WORDLE.NET
