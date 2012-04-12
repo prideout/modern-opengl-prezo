@@ -697,7 +697,7 @@ table.bordered {
       <object type="image/svg+xml" class="figure"
               data="images/Blocks2.svg">
       </object>
-      <table style="width:90%">
+      <table style="width:90%;margin:auto">
         <tr>
           <td style="width:50%">
             <div class="codewrapper">
@@ -752,36 +752,38 @@ GLuint i = glGetAttribLocation(program, "MyBlock.w");
     </div>
 
     <!-- BINDING SHTUFF -->
-    <div class="slide" style="font-size:200%">
-      <table style="width:90%">
+    <div class="slide" style="font-size:130%">
+      <table style="width:90%;margin:auto">
         <tr>
           <td style="width:50%">
-            <div class="codewrapper">
+            <div class="centerwrapper">
               <pre><code class="cpp">// Let the compiler decide
-GLuint i = glGetAttribLocation(program, "MyBlock.w");              </code></pre>
+GLuint foo = glGetAttribLocation(program, "MyBlock.w");              </code></pre>
             </div>
           </td>
         </tr>
       </table>
 
-      <table style="width:90%">
+      <table style="width:90%;margin:auto">
         <tr>
           <td style="width:50%">
-            <div class="codewrapper">
+            <div class="centerwrapper">
               <pre><code class="cpp">// Specify in application code
+GLuint foo = 3;
+
 glCompileShader(vsHandle);
 glAttachShader(programHandle, vsHandle);
-glBindAttribLocation(programHandle, 3, "MyBlock.w");
+glBindAttribLocation(programHandle, foo, "MyBlock.w");
 glLinkProgram(programHandle);              </code></pre>
             </div>
           </td>
         </tr>
       </table>
 
-      <table style="width:90%">
+      <table style="width:90%;margin:auto">
         <tr>
           <td style="width:50%">
-            <div class="codewrapper">
+            <div class="centerwrapper">
               <pre><code class="glsl">// Declare in GLSL
 in MyBlock {
     layout(location = 3) vec3 w;
@@ -790,13 +792,28 @@ in MyBlock {
           </td>
         </tr>
       </table>
-            <div  class="tk-museo-sans"
-                  style="font-size:240%;
-                         font-weight:900;
-                         color:#333;
-                         text-align:center">
-              Binding Vertex Attributes
-            </div>
+      <div  class="tk-museo-sans"
+            style="font-size:240%;
+                   font-weight:900;
+                   color:#333;
+                   text-align:center">
+        Binding Vertex Attributes
+      </div>
+
+      <table style="width:90%;margin:auto">
+        <tr>
+          <td style="width:50%">
+            <div class="centerwrapper">
+              <pre><code class="cpp">GLuint vao;
+glGenVertexArrays(1, &vao);
+glBindVertexArray(vao);
+glBindBuffer(GL_ARRAY_BUFFER, vbo);
+glVertexAttribPointer(foo, 1, GL_FLOAT, GL_FALSE, stride, 0);
+glEnableVertexAttribArray(foo);</code></pre></div>
+          </td>
+        </tr>
+      </table>
+
     </div>
 
     <!-- WORDLE.NET
