@@ -751,8 +751,8 @@ GLuint i = glGetAttribLocation(program, "MyBlock.w");
       </table>
     </div>
 
-    <!-- BINDING SHTUFF -->
-    <div class="slide" style="font-size:130%">
+    <!-- BINDING VERTEX ATTRIBS -->
+    <div class="slide" style="font-size:120%">
       <table style="width:90%;margin:auto">
         <tr>
           <td style="width:50%">
@@ -813,7 +813,104 @@ glEnableVertexAttribArray(foo);</code></pre></div>
           </td>
         </tr>
       </table>
+    </div>
 
+    <!-- Fragment Outputs -->
+    <div class="slide" style="font-size:120%">
+      <table style="width:90%;margin:auto">
+        <tr>
+          <td style="width:50%">
+            <div class="centerwrapper">
+              <pre><code class="cpp">// Let the compiler decide
+GLuint colorNumber = glGetFragDataLocation(program, "MyColorVariable");
+</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <table style="width:90%;margin:auto">
+        <tr>
+          <td style="width:50%">
+            <div class="centerwrapper">
+              <pre><code class="cpp">// Specify in application code
+GLuint colorNumber = 3;
+glBindFragDataLocation(programHandle, colorNumber, "MyColorVariable");
+</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <table style="width:90%;margin:auto">
+        <tr>
+          <td style="width:50%">
+            <div class="centerwrapper">
+              <pre><code class="glsl">// Declare in GLSL
+layout(location = 3) out vec4 factor;</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div  class="tk-museo-sans"
+            style="font-size:240%;
+                   font-weight:900;
+                   color:#333;
+                   text-align:center">
+        Binding Fragment Outputs
+      </div>
+      <table style="width:90%;margin:auto">
+        <tr>
+          <td style="width:50%">
+            <div class="centerwrapper">
+              <pre><code class="cpp"> // Beware, a level of indirection!
+glBindFramebuffer(GL_DRAW_FRAMEBUFFER, myFbo);
+
+GLenum buffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
+glDrawBuffers(2, &buffers[0]);</code></pre>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- DODO BIRD -->
+    <div class="slide tk-museo-sans"
+         style="font-size:500%;
+                font-weight:900;
+                text-align:center;
+                color:#333;">
+      <br/>
+      gl_FragColor
+      <br/>
+      gl_FragData[<i>n</i>]
+      <br/><br/> 
+      <img src="images/dodo-bird.gif" alt="extinct"/>
+
+      <!--
+      gl_SampleMask
+      layout(early_fragment_tests) in;
+      layout (depth_greater) out float gl_FragDepth; // relates to gl_FragCoord.z
+                                                     // assume it may be modified such that its value will only increase
+        -->
+    </div>
+
+    <!-- Depth -->
+    <div class="slide tk-museo-sans"
+         style="font-size:200%;
+                font-weight:900;
+                color:#333;">
+      <table style="margin-left:150px;margin-top:170px"><tr><td>
+      <br/>
+      in vec4 gl_FragCoord;
+      <br/>
+      <br/>
+      out float gl_FragDepth;
+      <br/>
+      <div style="display:block;width:90%;height:5px;background-color:#333333;margin-top:40px;margin-bottom:40px"></div>
+      layout(early_fragment_tests) in;
+      <br/>
+      <br/>
+      layout (depth_greater) out float gl_FragDepth;
+      </td></tr></table>
     </div>
 
     <!-- WORDLE.NET
