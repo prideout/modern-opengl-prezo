@@ -1,0 +1,335 @@
+<!--
+   Target Audience: You used OpenGL back in the day and want to catch up.
+   Disclaimer: won't go through everything.  Not necessarily focused on GLSL or on techniques.  This isn't comprehensive either.
+   If this goes well then I might give more talks (GLSL for shading TD's, OpenGL Techniques)
+  -->
+<div class="slide">
+  <!-- Sweet hot-pink Gradient stolen from @mojombo's prezos
+       Alas, Chrome's print-to-pdf shows a grid artifact. :( 
+       style="color:#fff; background-image:
+              -webkit-radial-gradient(center center, circle cover, #dd2e72, #d22854)" -->
+  <div style="height:200px;display:block">&nbsp;</div>
+  <div class="sans"
+       style="font-size:1250%;
+              text-align:center;
+              color:#222;
+              line-height:1;
+              font-weight:900;">
+    MODERN
+  </div>
+  <div class="tk-museo-sans"
+       style="font-size:830%;
+              text-align:center;
+              line-height:1;
+              margin-top: -30px;
+              color:#222;
+              font-weight:300;">
+    OPENGL
+  </div>
+  <div class="tk-museo-sans"
+       style="font-size:400%;
+              text-align:center;
+              color:#222;
+              font-weight:200;">
+    A P R I L &nbsp; &nbsp; 2 0 1 2
+  </div>
+  <div style="position:absolute; display: block;
+              width:525px;
+              height:4px;
+              left:256px;
+              background-color: #222;
+              top:500px;"></div>
+</div>
+<!--div class="slide">
+  <p class="cover-page tk-raleway">
+    <b class="bluish">Modern</b> OpenGL
+  </p>
+</div-->
+
+<!-- Summary -->
+<div class="slide">
+  <ul class="items tk-museo-sans">
+    <li>1  Evolution of the OpenGL Pipe</li>
+    <li>2  Whirlwind Tour of OpenGL 4.2</li>
+    <li>3  Demos & Code Walkthroughs</li>
+  </ul>
+</div>
+
+<!-- Pipeline diagram VS FS -->
+<div class="slide">
+  <table style="width:100%;height:100%">
+    <tr>
+      <td style="width:40%">
+        <div class="codewrapper">
+          <pre><code class="glsl">// Vertex Shader
+varying vec4 vPosition;
+varying vec2 vTexCoord;
+varying vec3 vNormal;
+void main() {
+vPosition = gl_ModelViewMatrix * gl_Vertex;
+vNormal = gl_NormalMatrix * gl_Normal;
+vTexCoord = gl_MultiTexCoord0.st;
+gl_Position = ftransform();
+}</code></pre>
+        </div>
+        <div class="codewrapper">
+          <pre><code class="glsl">// Fragment Shader
+uniform sampler2D Baboon;
+uniform vec3 LightDir;
+varying vec2 vTexCoord;
+varying vec3 vNormal;
+void main() {
+float df = dot(LightDir,vNormal);
+vec3 c = df * texture2D(Baboon, vTexCoord).rgb;
+gl_FragColor = vec4(c, 1);
+}</code></pre>
+        </div>
+      </td>
+      <td style="width:40%">
+      </td>
+      <td>
+        <object type="image/svg+xml" class="figure"
+                data="images/Pipeline1.svg">
+        </object>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- Pipeline diagram VS GS FS -->
+<div class="slide">
+  <table style="width:100%;height:100%">
+    <tr>
+      <td style="width:40%">
+        <div class="codewrapper">
+          <pre><code class="glsl">// Vertex Shader
+<span class="HIGH">in</span> vec4 Position;
+in vec2 TexCoord;
+<span class="HIGH">out</span> vec4 vPosition;
+out vec2 vTexCoord;
+uniform mat4 ModelViewMatrix, MVP;
+void main() {
+vPosition = ModelViewMatrix * Position;
+vTexCoord = TexCoord;
+gl_Position = MVP * Position;
+}</code></pre>
+        </div>
+        <div class="codewrapper">
+          <pre><code class="glsl">// Geometry Shader
+<span class="HIGH">layout</span>(triangles) in;
+layout(triangle_strip, max_vertices = 3) out;
+in vec3 vPosition[3];
+in vec2 vTexCoord[3];
+out vec3 gNormal;
+out vec2 gTexCoord;
+
+void main()
+{
+vec3 A = vPosition[2] - vPosition[0];
+vec3 B = vPosition[1] - vPosition[0];
+gNormal = normalize(cross(A, B));
+
+for (int j = 0; j &lt; 3; j++) {
+    gTexCoord = vTexCoord[j];
+    gl_Position = gl_in[j].gl_Position;
+    EmitVertex();
+}
+EndPrimitive();
+}</code></pre>
+        </div>
+      </td>
+      <td style="width:40%">
+        <div class="codewrapper">
+          <pre><code class="glsl">// Fragment Shader
+uniform sampler2D Baboon;
+uniform vec3 LightDir <span class="HIGH">= vec3(0,0,1)</span>;
+in vec2 gTexCoord;
+in vec3 gNormal;
+void main() {
+float df = dot(LightDir,gNormal);
+vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
+gl_FragColor = vec4(c, 1);
+}</code></pre>
+        </div>
+      </td>
+      <td>
+        <object type="image/svg+xml" class="figure"
+                data="images/Pipeline2.svg">
+        </object>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- Pipeline diagram VS TCS TESS TES GS FS -->
+<!-- Not going to get this functionality on Lion! -->
+<div class="slide">
+  <table style="width:100%;height:100%">
+    <tr>
+      <td style="width:40%">
+        <div class="codewrapper">
+          <pre><code class="glsl">// Vertex Shader
+in vec4 Position;
+in vec2 TexCoord;
+out vec4 vPosition;
+out vec2 vTexCoord;
+uniform mat4 ModelViewMatrix, MVP;
+void main() {
+vPosition = ModelViewMatrix * Position;
+vTexCoord = TexCoord;
+gl_Position = MVP * Position;
+}</code></pre>
+        </div>
+        <div class="codewrapper">
+          <pre><code class="glsl">// Tessellation Control Shader
+layout(triangles) in;
+layout(triangle_strip, max_vertices = 3) out;
+in vec3 vPosition[3];
+in vec2 vTexCoord[3];
+out vec3 gNormal;
+out vec2 gTexCoord;
+
+void main()
+{
+for (int j = 0; j &lt; 3; j++) {
+    gTexCoord = vTexCoord[j];
+    gl_Position = gl_in[j].gl_Position;
+    EmitVertex();
+}
+EndPrimitive();
+}</code></pre>
+        </div>
+        <div class="codewrapper">
+          <pre><code class="glsl">// Tessellation Evaluation Shader
+uniform sampler2D Baboon;
+in vec2 gTexCoord;
+in vec3 gNormal;
+
+void main() {
+float df = dot(vec3(0,0,1),gNormal);
+vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
+gl_FragColor = vec4(c, 1);
+}</code></pre>
+        </div>
+      </td>
+      <td style="width:40%">
+        <div class="codewrapper">
+          <pre><code class="glsl">// Geometry Shader
+layout(triangles) in;
+layout(triangle_strip, max_vertices = 3) out;
+in vec3 vPosition[3];
+in vec2 vTexCoord[3];
+out vec3 gNormal;
+out vec2 gTexCoord;
+
+void main()
+{
+vec3 A = vPosition[2] - vPosition[0];
+vec3 B = vPosition[1] - vPosition[0];
+gNormal = normalize(cross(A, B));
+
+for (int j = 0; j &lt; 3; j++) {
+    gTexCoord = vTexCoord[j];
+    gl_Position = gl_in[j].gl_Position;
+    EmitVertex();
+}
+EndPrimitive();
+}</code></pre>
+        </div>
+        <div class="codewrapper">
+          <pre><code class="glsl">// Fragment Shader
+# LOOK AT BARREL DISTORTATION.
+# USE CHRISTOPHE'S INTERFACES.
+# EXPLICIT BINDINGS.
+uniform sampler2D Baboon;
+uniform vec3 LightDir = vec3(0,0,1);
+in vec2 gTexCoord;
+in vec3 gNormal;
+void main() {
+float df = dot(LightDir,gNormal);
+vec3 c = df*<span class="HIGH">texture</span>(Baboon, gTexCoord).rgb;
+gl_FragColor = vec4(c, 1);
+}</code></pre>
+        </div>
+      </td>
+      <td>
+        <object type="image/svg+xml" class="figure"
+                data="images/Pipeline3.svg">
+        </object>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- Forward Compatible -->
+<div class="slide">
+  <table style="width:100%;height:100%">
+    <tr><td align="center">
+        <div class="codewrapper" style="font-size:120%;width:90%;text-align:left;margin-top:50px">
+          <pre><code class="cpp">QGLFormat format;
+format.setVersion(4,0);
+format.setProfile(QGLFormat::CoreProfile);
+QGLWidget *myWidget = new QGLWidget(format);</code></pre>
+        </div>
+        <div class="codewrapper" style="font-size:120%;width:90%;text-align:left;margin-top:50px">
+          <pre><code class="cpp">int attribs[] = {
+GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
+GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+NULL
+};
+GLXContext glc = glXCreateContextAttribs(diplay, config, NULL, True, attribs);</code></pre>
+        </div>
+        <div  class="tk-museo-sans"
+              style="font-size:800%;
+                     font-weight:900;
+                     color:#333;
+                     margin-top:100px;
+                     text-align:center">
+          Core Profile
+        </div>
+    </td></tr>
+  </table>
+</div>
+
+<!-- This is a bit of a religious debate -->
+<div class="slide">
+  <a href="http://www.wordle.net/show/wrdl/5094008/Deprecated_GLSL" 
+     style="position:absolute; display: block;
+            left:25px; top:20px;"
+     title="Wordle: Deprecated GLSL"><object type="image/svg+xml"
+            data="images/Deprecated-GLSL.svg">
+    </object></a>
+  <div class="tk-museo-sans"
+       style="position:absolute; display: block;
+              font-size:800%;
+              font-weight:900;
+              left:800px; top:90px;
+              -webkit-transform-origin: 800 90;
+              -webkit-transform: rotate(90deg);">
+    OLD
+  </div>
+  <div style="position:absolute; display: block;
+              width:100%;
+              height:4px;
+              background-color: #333;                  
+              left:0px; top:360px;">
+    &nbsp;
+  </div>
+  <a href="http://www.wordle.net/show/wrdl/5094039/Modern_GLSL" 
+     style="position:absolute; display: block;
+            left:25px; bottom:50px;"
+     title="Wordle: Modern GLSL"><object type="image/svg+xml"
+            data="images/Modern-GLSL.svg">
+    </object>
+  </a>
+  <div class="tk-museo-sans"
+       style="position:absolute; display: block;
+              font-size:800%;
+              font-weight:900;
+              left:780px; top:480px;
+              -webkit-transform-origin: 780 480;
+              -webkit-transform: rotate(90deg);">
+    NEW
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="slide">
+  <style>
+table.bordered {
+margin:auto;
+margin-top:100px;
+font-size:150%;
+color: #555555;
+}
+
+.bordered tr:hover {
+background: #fbf8e9;
+}    
+
+.bordered td, .bordered th {
+padding: 10px;
+text-align: center;    
+border-radius: 0px 0px 0 0;
+}
+
+.bordered th:first-child {
+border-radius: 16px 0 0 0;
+}
+
+.bordered th:last-child {
+border-radius: 0 16px 0 0;
+}
+
+.bordered th {
+background-color: #dce9f9;
+color: #111111;
+}
+
+.bordered tr {
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+}
+
+.bordered thead > tr:first-child {
+border-left: none;
+border-right: none;
+}
+
+.bordered tr > td:first-child {
+font-weight: 700;
+}
+
+  </style>
+  <table style="width:100%;height:100%"><tr><td style="align:center">
+  <table class="bordered tk-museo-sans">
+    <thead>
+      <tr>
+        <th></th>
+        <th>vert in</th>
+        <th>varying</th>
+        <th>frag out</th>
+        <th>uniform</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>scalar</td>
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr>
+      <td>vector</td>
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr>
+      <td>matrix</td>
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr>
+      <td>array</td>
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr>
+      <td>structure</td>
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr style="background-color:#fbf8e9">
+      <td>samplers</td>
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr style="background-color:#fbf8e9">
+      <td>images</td>
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr style="background-color:#fbf8e9">
+      <td>atomic counters</td>
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+    <tr>
+      <td>block</td>
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+      <td style="color:#700000">&#x2716;</td> <!-- no  -->
+      <td style="color:#007000">&#x2714;</td> <!-- yes -->
+    </tr>
+  </table>
+  <!-- Cool Mac fonts in inkscape: nanum pen script, STHeiti -->
+  <!-- Cool Mac Fonts Avaiable in Inkscape: nanum pen script, STHeiti -->
+  <img src="images/TypesTable2.svg"
+       alt="Notes"
+       style="position:absolute;
+              left:0px;
+              top:40px;
+              display:block" />
+  </td></tr></table>
+</div>

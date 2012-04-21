@@ -1,0 +1,40 @@
+<!-- DODO BIRD -->
+<div class="slide tk-museo-sans"
+     style="font-size:500%;
+            font-weight:900;
+            text-align:center;
+            color:#333;">
+  <br/>
+  gl_FragColor
+  <br/>
+  gl_FragData[<i>n</i>]
+  <br/><br/> 
+  <img src="images/dodo-bird.gif" alt="extinct"/>
+
+  <!--
+  gl_SampleMask
+  layout(early_fragment_tests) in;
+  layout (depth_greater) out float gl_FragDepth; // relates to gl_FragCoord.z
+                                                 // assume it may be modified such that its value will only increase
+    -->
+</div>
+
+<!-- Depth -->
+<div class="slide tk-museo-sans"
+     style="font-size:200%;
+            font-weight:900;
+            color:#333;">
+  <table style="margin-left:150px;margin-top:170px"><tr><td>
+  <br/>
+  in vec4 gl_FragCoord;
+  <br/>
+  <br/>
+  out float gl_FragDepth;
+  <br/>
+  <div style="display:block;width:90%;height:5px;background-color:#333333;margin-top:40px;margin-bottom:40px"></div>
+  layout(early_fragment_tests) in;
+  <br/>
+  <br/>
+  layout (depth_greater) out float gl_FragDepth;
+  </td></tr></table>
+</div>

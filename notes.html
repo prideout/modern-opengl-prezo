@@ -1,0 +1,101 @@
+<div class="noprint tk-museo-sans" style="font-size:100%;font-weight:800;margin:20px">
+
+Live Demo
+
+<pre>
+Spiral1  -- facet normals in GS
+Spiral2  -- lines in GS
+Spiral3  -- AA lines
+Spiral4a -- Pass-Through Tess Shaders
+Sprial4b -- Parametric Eval in Tess Shaders
+Spiral5a -- Animation in Tess Shaders
+Spiral5b -- Instancing in TessShaders
+Spiral6a -- Make it big, Add texture loader
+Spiral6b -- Displacement Mapping
+
+TODO
+----
+Propagate quads from 4a to other examples + sympy
+Fork off TextureLoader and ProgramCompiler into Separate C file
+Get rid of packednormal, etc
+Remove Spiral6a
+Combine 2 and 3 into Spiral2ab
+
+</pre>
+</div>
+
+<div class="noprint tk-museo-sans" style="font-size:100%;font-weight:800;margin:20px">
+
+Slides
+
+<pre>
+D - done
+T - to be done
+* - needs work
+: - on deck
+
+# intro
+D Title
+D Outline
+D Circa 2004
+D Circa 2009
+* Circa 2012
+D Core Profile
+D Religion: Old vs New
+
+# tbd
+T No more immed mode or DL's - ShareLists
+T Draw Calls, including DrawArraysIndirect and DrawAuto
+T Instancing
+T VAOs
+T Integer Formats
+T Uberbuffers (will talk about PBO's more later)
+
+# types-table
+D Table of GLSL Types
+
+# shader-interfaces
+T Subroutines
+D Blocks
+D Binding Vertex Attribs
+D Binding Fragment Outputs
+
+# fragment-shaders
+D Old Fragment Ouputs - Don't use!
+D Dealing with Depth
+T Read and Draw FBO Binding Points (search gmail for "Color Index")
+T New Blending Funcs
+
+# transform-feedback
+D Transform Feedback: Old Style - Interleaved - UsesQuery - StreamOut
+D Transform Feedback: Old Style - Separate - UsesQuery
+: Transform Feedback: New Style - Mixed - QueryFree - DrawAuto
+T Transform Feedback MultiStream
+T Transform Feedback for Debugging
+
+# tbd
+T Texture Lookups in GLSL
+T Texturing in the C API - LUMINANCE -> RED etc
+T Texturing in the C API - Compressed formats
+T Texturing in the C API - 16-32 Float / sRGB / Integer
+T Texturing in the C API - Texture Buffers
+
+# tbd
+T Pixel Buffer Objects (great for streaming; explain double-buffering). Explain ReadPixels-with-null.
+T Uniform Locations
+T Uniform Blocks
+T Uniform Buffers
+     
+# tbd
+T FBO - Definition - collection of renderbuffers (complicates context sharing)
+T FBO - 2 ways of allocating - From texture, From renderbuffer. Z-only is valid (and FAST)
+T FBO - Layered / Mipmapped.
+
+# tbd
+T Image Load/Store
+T NV Bindless extensions
+T Queries
+T Two ways of doing MRT - Individual color attachments, or individual FBOs
+
+</pre>
+</div>
