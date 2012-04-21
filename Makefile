@@ -5,17 +5,15 @@ DEMOS=\
 	Spiral1 \
 	Spiral2 \
 	Spiral3 \
-	Spiral4 \
-	Spiral5 \
-	Spiral6 \
-	Spiral7a Spiral7b \
-	Spiral8a Spiral8b \
+	Spiral4a Spiral4b \
+	Spiral5a Spiral5b \
+	Spiral6a Spiral6b \
 
 SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=
 
-run: Spiral7b
-	./Spiral7b
+run: Spiral4a
+	./Spiral4a
 
 all: $(DEMOS)
 
