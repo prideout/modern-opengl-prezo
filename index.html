@@ -372,200 +372,6 @@ GLXContext glc = glXCreateContextAttribs(diplay, config, NULL, True, attribs);</
       </div>
     </div>
 
-    <!-- OLD Transform Feedback, Interleaved (known as stream-out to game devs) -->
-    <div class="slide">
-      <table>
-        <tr style="width:100%;height:100%">
-          <td>
-            <div class="codewrapper" style="font-size:80%;width:95%">
-              <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
-const char* varyings[3] = { "vPosition", "vBirthTime", "vVelocity" };
-glTransformFeedbackVaryings(programHandle, 3, varyings,
-                            GL_INTERLEAVED_ATTRIBS);
-
-// Create a query object for transform feedback:
-glGenQueries(1, &amp;PrimsWritten);
-
-// Create VBO for input on even frames and output on odd frames:
-glGenBuffers(1, &amp;BufferA);
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);
-glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), &amp;seed_data[0], GL_STREAM_DRAW);
-
-// Create VBO for output on even frames and input on odd frames:
-glGenBuffers(1, &amp;BufferB);
-glBindBuffer(GL_ARRAY_BUFFER, BufferB);
-glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), 0, GL_STREAM_DRAW);</code></pre>
-            </div>
-            <div class="codewrapper" style="font-size:80%;width:95%">
-              <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);                     // Source VBO
-glVertexAttribPointer(...);
-glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, BufferB); // Dest VBO
-glBeginTransformFeedback(GL_POINTS);
-glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, PrimsWritten);
-glDrawArrays(GL_POINTS, 0, inCount);
-glEndTransformFeedback();
-glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
-glGetQueryObjectuiv(Query, GL_QUERY_RESULT, &amp;outCount);
-
-swap(BufferA, BufferB);
-
-glDisable(GL_RASTERIZER_DISCARD);
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);
-glVertexAttribPointer(...);
-glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
-          </td>
-          <td style="width:10%"></td>
-          <td rowspan="2">
-            <object type="image/svg+xml" class="figure"
-                    data="images/Pipeline4.svg">
-            </object>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="tk-museo-sans" style="font-size:200%;font-weight:800;text-align:center">
-              <span>Old</span> Transform Feedback (Interleaved)
-            </div>
-          </td>
-          <td></td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- OLD Transform Feedback, Separate -->
-    <div class="slide">
-      <table>
-        <tr style="width:100%;height:100%">
-          <td>
-            <div class="codewrapper" style="font-size:75%;width:100%">
-              <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
-const char* varyings[2] = { "vPosition", "vBirthTime" };
-glTransformFeedbackVaryings(programHandle, 2, varyings,
-                            <span class="HIGH">GL_SEPARATE_ATTRIBS</span>);
-
-// Create a query object for transform feedback:
-glGenQueries(1, &amp;PrimsWritten);
-
-// Create VBOs for input on even frames and output on odd frames:
-glGenBuffers(1, &amp;Buffer0A);
-glBindBuffer(GL_ARRAY_BUFFER, Buffer0A);
-glGenBuffers(1, &amp;Buffer1A);
-glBindBuffer(GL_ARRAY_BUFFER, Buffer1A);
-
-// Create VBOs for output on even frames and input on odd frames:
-glGenBuffers(1, &amp;Buffer0B);
-glBindBuffer(GL_ARRAY_BUFFER, Buffer0B);
-glGenBuffers(1, &amp;Buffer1B);
-glBindBuffer(GL_ARRAY_BUFFER, Buffer1B);</code></pre>
-            </div>
-            <div class="codewrapper" style="font-size:75%;width:100%">
-              <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
-
-glBindBuffer(GL_ARRAY_BUFFER, Buffer0A);                     // Source VBO
-glVertexAttribPointer(...);
-glBindBuffer(GL_ARRAY_BUFFER, Buffer1A);                     // Source VBO
-glVertexAttribPointer(...);
-glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, Buffer0B); // Dest VBO
-glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 1, Buffer1B); // Dest VBO
-glBeginTransformFeedback(GL_POINTS);
-glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, PrimsWritten);
-glDrawArrays(GL_POINTS, 0, inCount);
-glEndTransformFeedback();
-glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
-glGetQueryObjectuiv(Query, GL_QUERY_RESULT, &amp;outCount);
-
-swap(Buffer0A, Buffer0B);
-swap(Buffer1A, Buffer1B);
-
-glDisable(GL_RASTERIZER_DISCARD);
-glBindBuffer(GL_ARRAY_BUFFER, Buffer0A);
-glVertexAttribPointer(...);
-glBindBuffer(GL_ARRAY_BUFFER, Buffer1A);
-glVertexAttribPointer(...);
-glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
-          </td>
-          <td style="width:10%"></td>
-          <td rowspan="2">
-            <object type="image/svg+xml" class="figure"
-                    data="images/Pipeline4.svg">
-            </object>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="tk-museo-sans"
-                 style="position:absolute; display: block;
-                        left:550px; bottom:50px;
-                        font-size:200%;
-                        font-weight:800;">
-              <span>Old</span> Transform Feedback (Separate)
-            </div>
-          </td>
-          <td></td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- NEW Transform Feedback -->
-    <div class="slide">
-      <table>
-        <tr style="width:100%;height:100%">
-          <td>
-            <div class="codewrapper" style="font-size:80%;width:100%">
-              <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
-const char* varyings[4] = { "vPosition", "<span class="HIGH">gl_NextBuffer</span>", "vBirthTime", "vVelocity" };
-glTransformFeedbackVaryings(programHandle, 4, varyings,
-                            <span class="HIGH">GL_INTERLEAVED_ATTRIBS</span>);
-
-// Create a query object for transform feedback:
-glGenQueries(1, &amp;PrimsWritten);
-
-// Create VBO for input on even frames and output on odd frames:
-glGenBuffers(1, &amp;BufferA);
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);
-glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), &amp;seed_data[0], GL_STREAM_DRAW);
-
-// Create VBO for output on even frames and input on odd frames:
-glGenBuffers(1, &amp;BufferB);
-glBindBuffer(GL_ARRAY_BUFFER, BufferB);
-glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), 0, GL_STREAM_DRAW);</code></pre>
-            </div>
-            <div class="codewrapper" style="font-size:80%;width:100%">
-              <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);                     // Source VBO
-glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, BufferB); // Dest VBO
-glBeginTransformFeedback(GL_POINTS);
-glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, PrimsWritten);
-glDrawArrays(GL_POINTS, 0, inCount);
-glEndTransformFeedback();
-glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
-glGetQueryObjectuiv(Query, GL_QUERY_RESULT, &amp;outCount);
-
-swap(BufferA, BufferB);
-
-glDisable(GL_RASTERIZER_DISCARD);
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);
-glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
-          </td>
-          <td style="width:10%"></td>
-          <td rowspan="2">
-            <object type="image/svg+xml" class="figure"
-                    data="images/Pipeline5.svg">
-            </object>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="tk-museo-sans" style="font-size:300%;font-weight:800;text-align:center">
-              <span>New</span> Transform Feedback
-            </div>
-          </td>
-          <td></td>
-        </tr>
-      </table>
-    </div>
-
     <!-- TYPE ELEMENTS -->
     <div class="slide">
       <style>
@@ -922,6 +728,200 @@ glDrawBuffers(2, &buffers[0]);</code></pre>
       </td></tr></table>
     </div>
 
+    <!-- OLD Transform Feedback, Interleaved (known as stream-out to game devs) -->
+    <div class="slide">
+      <table>
+        <tr style="width:100%;height:100%">
+          <td>
+            <div class="codewrapper" style="font-size:80%;width:95%">
+              <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
+const char* varyings[3] = { "vPosition", "vBirthTime", "vVelocity" };
+glTransformFeedbackVaryings(programHandle, 3, varyings,
+                            GL_INTERLEAVED_ATTRIBS);
+
+// Create a query object for transform feedback:
+glGenQueries(1, &amp;PrimsWritten);
+
+// Create VBO for input on even frames and output on odd frames:
+glGenBuffers(1, &amp;BufferA);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), &amp;seed_data[0], GL_STREAM_DRAW);
+
+// Create VBO for output on even frames and input on odd frames:
+glGenBuffers(1, &amp;BufferB);
+glBindBuffer(GL_ARRAY_BUFFER, BufferB);
+glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), 0, GL_STREAM_DRAW);</code></pre>
+            </div>
+            <div class="codewrapper" style="font-size:80%;width:95%">
+              <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);                     // Source VBO
+glVertexAttribPointer(...);
+glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, BufferB); // Dest VBO
+glBeginTransformFeedback(GL_POINTS);
+glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, PrimsWritten);
+glDrawArrays(GL_POINTS, 0, inCount);
+glEndTransformFeedback();
+glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
+glGetQueryObjectuiv(Query, GL_QUERY_RESULT, &amp;outCount);
+
+swap(BufferA, BufferB);
+
+glDisable(GL_RASTERIZER_DISCARD);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glVertexAttribPointer(...);
+glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
+          </td>
+          <td style="width:10%"></td>
+          <td rowspan="2">
+            <object type="image/svg+xml" class="figure"
+                    data="images/Pipeline4.svg">
+            </object>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="tk-museo-sans" style="font-size:200%;font-weight:800;text-align:center">
+              <span>Old</span> Transform Feedback (Interleaved)
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- OLD Transform Feedback, Separate -->
+    <div class="slide">
+      <table>
+        <tr style="width:100%;height:100%">
+          <td>
+            <div class="codewrapper" style="font-size:75%;width:100%">
+              <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
+const char* varyings[2] = { "vPosition", "vBirthTime" };
+glTransformFeedbackVaryings(programHandle, 2, varyings,
+                            <span class="HIGH">GL_SEPARATE_ATTRIBS</span>);
+
+// Create a query object for transform feedback:
+glGenQueries(1, &amp;PrimsWritten);
+
+// Create VBOs for input on even frames and output on odd frames:
+glGenBuffers(1, &amp;Buffer0A);
+glBindBuffer(GL_ARRAY_BUFFER, Buffer0A);
+glGenBuffers(1, &amp;Buffer1A);
+glBindBuffer(GL_ARRAY_BUFFER, Buffer1A);
+
+// Create VBOs for output on even frames and input on odd frames:
+glGenBuffers(1, &amp;Buffer0B);
+glBindBuffer(GL_ARRAY_BUFFER, Buffer0B);
+glGenBuffers(1, &amp;Buffer1B);
+glBindBuffer(GL_ARRAY_BUFFER, Buffer1B);</code></pre>
+            </div>
+            <div class="codewrapper" style="font-size:75%;width:100%">
+              <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
+
+glBindBuffer(GL_ARRAY_BUFFER, Buffer0A);                     // Source VBO
+glVertexAttribPointer(...);
+glBindBuffer(GL_ARRAY_BUFFER, Buffer1A);                     // Source VBO
+glVertexAttribPointer(...);
+glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, Buffer0B); // Dest VBO
+glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 1, Buffer1B); // Dest VBO
+glBeginTransformFeedback(GL_POINTS);
+glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, PrimsWritten);
+glDrawArrays(GL_POINTS, 0, inCount);
+glEndTransformFeedback();
+glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
+glGetQueryObjectuiv(Query, GL_QUERY_RESULT, &amp;outCount);
+
+swap(Buffer0A, Buffer0B);
+swap(Buffer1A, Buffer1B);
+
+glDisable(GL_RASTERIZER_DISCARD);
+glBindBuffer(GL_ARRAY_BUFFER, Buffer0A);
+glVertexAttribPointer(...);
+glBindBuffer(GL_ARRAY_BUFFER, Buffer1A);
+glVertexAttribPointer(...);
+glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
+          </td>
+          <td style="width:10%"></td>
+          <td rowspan="2">
+            <object type="image/svg+xml" class="figure"
+                    data="images/Pipeline4.svg">
+            </object>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="tk-museo-sans"
+                 style="position:absolute; display: block;
+                        left:550px; bottom:50px;
+                        font-size:200%;
+                        font-weight:800;">
+              <span>Old</span> Transform Feedback (Separate)
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- NEW Transform Feedback -->
+    <div class="slide">
+      <table>
+        <tr style="width:100%;height:100%">
+          <td>
+            <div class="codewrapper" style="font-size:80%;width:100%">
+              <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
+const char* varyings[4] = { "vPosition", "<span class="HIGH">gl_NextBuffer</span>", "vBirthTime", "vVelocity" };
+glTransformFeedbackVaryings(programHandle, 4, varyings,
+                            <span class="HIGH">GL_INTERLEAVED_ATTRIBS</span>);
+
+// Create a query object for transform feedback:
+glGenQueries(1, &amp;PrimsWritten);
+
+// Create VBO for input on even frames and output on odd frames:
+glGenBuffers(1, &amp;BufferA);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), &amp;seed_data[0], GL_STREAM_DRAW);
+
+// Create VBO for output on even frames and input on odd frames:
+glGenBuffers(1, &amp;BufferB);
+glBindBuffer(GL_ARRAY_BUFFER, BufferB);
+glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), 0, GL_STREAM_DRAW);</code></pre>
+            </div>
+            <div class="codewrapper" style="font-size:80%;width:100%">
+              <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);                     // Source VBO
+glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, BufferB); // Dest VBO
+glBeginTransformFeedback(GL_POINTS);
+glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, PrimsWritten);
+glDrawArrays(GL_POINTS, 0, inCount);
+glEndTransformFeedback();
+glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
+glGetQueryObjectuiv(Query, GL_QUERY_RESULT, &amp;outCount);
+
+swap(BufferA, BufferB);
+
+glDisable(GL_RASTERIZER_DISCARD);
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
+          </td>
+          <td style="width:10%"></td>
+          <td rowspan="2">
+            <object type="image/svg+xml" class="figure"
+                    data="images/Pipeline5.svg">
+            </object>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="tk-museo-sans" style="font-size:300%;font-weight:800;text-align:center">
+              <span>New</span> Transform Feedback
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+
     <!-- WORDLE.NET
          Font: SteelFish or Coolvetica, Color: Kindled, Layout: Horizontal -->
     <!--div class="noprint">
@@ -994,6 +994,73 @@ Fork off TextureLoader and ProgramCompiler into Separate C file
 Get rid of packednormal, etc
 Remove Spiral6a
 Combine 2 and 3 into Spiral2ab
+
+</pre>
+    </div>
+
+    <div class="noprint tk-museo-sans" style="font-size:100%;font-weight:800;margin:20px">
+<pre>
+
+D - done
+T - to be done
+* - needs work
+: - on deck
+
+Use #include's somehow
+Remove gmail, simplenote, and stray Notes file.  This is the new authority!
+
+D Title
+D Outline
+D Circa 2004
+D Circa 2009
+* Circa 2012
+D Core Profile
+D Religion: Old vs New
+
+T No more immed mode or DL's - ShareLists
+T Draw Calls, including DrawArraysIndirect and DrawAuto
+T Instancing
+T VAOs
+T Integer Formats
+T Uberbuffers (will talk about PBO's more later)
+
+T Subroutines
+D Table of GLSL Types
+D Blocks
+D Binding Vertex Attribs
+D Binding Fragment Outputs
+
+D Old Fragment Ouputs - Don't use!
+D Dealing with Depth
+T Read and Draw FBO Binding Points
+T New Blending Funcs
+
+D Transform Feedback: Old Style - Interleaved - UsesQuery - StreamOut
+D Transform Feedback: Old Style - Separate - UsesQuery
+: Transform Feedback: New Style - Mixed - QueryFree - DrawAuto
+T Transform Feedback MultiStream
+T Transform Feedback for Debugging
+
+T Texture Lookups in GLSL
+T Texturing in the C API - LUMINANCE -> RED etc
+T Texturing in the C API - Compressed formats
+T Texturing in the C API - 16-32 Float / sRGB / Integer
+T Texturing in the C API - Texture Buffers
+
+T Pixel Buffer Objects (great for streaming; explain double-buffering). Explain ReadPixels-with-null.
+T Uniform Locations
+T Uniform Blocks
+T Uniform Buffers
+     
+T Queries
+T Two ways of doing MRT - Individual color attachments, or individual FBOs
+
+T FBO - Definition - collection of renderbuffers (complicates context sharing)
+T FBO - 2 ways of allocating - From texture, From renderbuffer. Z-only is valid (and FAST)
+T FBO - Layered / Mipmapped.
+
+T Image Load/Store
+T NV Bindless extensions
 
 </pre>
     </div>
