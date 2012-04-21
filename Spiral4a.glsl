@@ -17,20 +17,21 @@ void main()
 
 uniform float TessLevel = 2;
 
-layout(vertices = 3) out;
+layout(vertices = 4) out;
 in vec3 vPosition[];
 out vec3 tcPosition[];
 
 void main()
 {
     tcPosition[gl_InvocationID] = vPosition[gl_InvocationID];
-    gl_TessLevelInner[0] = gl_TessLevelOuter[0] =
-    gl_TessLevelOuter[1] = gl_TessLevelOuter[2] = TessLevel;
+    gl_TessLevelInner[0] = gl_TessLevelInner[0] = TessLevel;
+    gl_TessLevelOuter[0] = gl_TessLevelOuter[1] = TessLevel;
+    gl_TessLevelOuter[2] = gl_TessLevelOuter[3] = TessLevel;
 }
 
 -- TES
 
-layout(triangles, equal_spacing, ccw) in;
+layout(quads, equal_spacing, ccw) in;
 
 in vec3 tcPosition[];
 out vec3 tePosition;
@@ -40,10 +41,10 @@ uniform mat4 Modelview;
 
 void main()
 {
-    vec3 p0 = gl_TessCoord.x * tcPosition[0];
-    vec3 p1 = gl_TessCoord.y * tcPosition[1];
-    vec3 p2 = gl_TessCoord.z * tcPosition[2];
-    tePosition = (p0 + p1 + p2);
+    float u = gl_TessCoord.x, v = gl_TessCoord.y;
+    vec3 a = mix(tcPosition[0], tcPosition[1], u);
+    vec3 b = mix(tcPosition[2], tcPosition[3], u);
+    tePosition = mix(a, b, v);
     teDistance = gl_TessCoord.xz;
     gl_Position = Projection * Modelview * vec4(tePosition, 1);
 }
@@ -124,6 +125,6 @@ void main()
     if (gl_FrontFacing)
         lighting += sf * SpecularMaterial;
 
-    float d = min(gDistance.x, gDistance.y);
+    float d = 1;//min(gDistance.x, gDistance.y);
     FragColor = amplify(d, lighting);
 }

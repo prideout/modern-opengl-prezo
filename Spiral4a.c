@@ -58,12 +58,10 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
         float v = slice * TwoPi / slices;
         for (int stack = 0; stack < stacks; stack++) {
             float u = stack * TwoPi / stacks;
-            
-            float alpha = 0.8;   // 0.15 for horn, 1.0 for snail
+            float alpha = 0.8; // 0.15 for horn, 1.0 for snail
             float beta = 1;
             float gamma = 0.1; // tightness
             float n = 2;       // twists
-
             Point3 p = ParametricHorn(u, v, alpha, beta, gamma, n);
             *position++ = p.x;
             *position++ = p.y;
@@ -78,10 +76,9 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
     glEnableVertexAttribArray(a("Position"));
     glVertexAttribPointer(a("Position"), 3, GL_FLOAT, GL_FALSE,
                           vertexStride, 0);
-
     free(positions);
 
-    Scene.IndexCount = (slices-1) * stacks * 6;
+    Scene.IndexCount = (slices-1) * stacks * 4;
     size = Scene.IndexCount * sizeof(GLushort);
     GLushort* indices = (GLushort*) malloc(size);
     GLushort* index = indices;
@@ -89,8 +86,10 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
     for (int i = 0; i < slices - 1; i++) {
         for (int j = 0; j < stacks; j++) {
             int next = (j + 1) % stacks;
-            *index++ = v+next+stacks; *index++ = v+next; *index++ = v+j;
-            *index++ = v+j; *index++ = v+j+stacks; *index++ = v+next+stacks;
+            *index++ = v+j;
+            *index++ = v+j+stacks;
+            *index++ = v+next;
+            *index++ = v+next+stacks;
         }
         v += stacks;
     }
@@ -152,7 +151,7 @@ void PezRender()
     glUniformMatrix3fv(u("NormalMatrix"), 1, 0, pNormalMatrix);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glPatchParameteri(GL_PATCH_VERTICES, 3);
+    glPatchParameteri(GL_PATCH_VERTICES, 4);
     glDrawElements(GL_PATCHES, Scene.IndexCount, GL_UNSIGNED_SHORT, 0);
 }
 
