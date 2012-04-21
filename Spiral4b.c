@@ -36,7 +36,7 @@ static void CreateTorus(float major, float minor, int slices, int stacks)
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
-    int vertexCount = slices * stacks * 3;
+    int vertexCount = slices * stacks;
     int vertexStride = sizeof(float) * 2;
     GLsizeiptr size = vertexCount * vertexStride;
     GLfloat* positions = (GLfloat*) malloc(size);
