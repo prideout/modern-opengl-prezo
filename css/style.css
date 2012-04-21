@@ -165,6 +165,14 @@ div.codewrapper {
     padding-right: 48px;
 }
 
+.listitems {
+    font-size: 48px;
+    font-weight: 900;
+    background-color: #eee;
+    list-style: none;
+    /*list-style-image:url('sqpurple.gif');*/
+    padding-right: 48px;
+}
 
 .title-line {
     position: absolute;
