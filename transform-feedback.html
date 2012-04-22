@@ -7,10 +7,10 @@
     Transform Feedback
   </div>
   <ul class="listitems tk-museo-sans">
-    <li>1  Old-Style: uses a query object</li>
-    <li>2  Ditto with multiple VBOs</li>
-    <li>3  New-Style: uses TF objects</li>
-    <li>4  Multistream</li>
+    <li>1  Old-Style: query objects</li>
+    <li>2  Ditto, with multiple VBOs</li>
+    <li>3  New-Style: trans feedback objects</li>
+    <li>4  Multistream and Pause/Resume</li>
     <li>5  Getting data back to the CPU</li>
   </ul>
 </div>
@@ -126,7 +126,8 @@ glBindBuffer(GL_ARRAY_BUFFER, Buffer0A);
 glVertexAttribPointer(...);
 glBindBuffer(GL_ARRAY_BUFFER, Buffer1A);
 glVertexAttribPointer(...);
-glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
+glDrawArrays(GL_POINTS, 0, outCount);
+</code></pre></div>
       </td>
       <td style="width:10%"></td>
       <td rowspan="2">
@@ -234,7 +235,11 @@ glTransformFeedbackVaryings(programHandle, 2, varyings,
 glBindBuffer(GL_ARRAY_BUFFER, BufferA);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
 glBeginTransformFeedback(GL_POINTS);
-glDrawArrays(GL_POINTS, 0, inCount);
+glDrawArrays(GL_POINTS, offset0, count0);
+glPauseTransformFeedback();
+glDrawArrays(GL_POINTS, offset1, count1);
+glResumeTransformFeedback();
+glDrawArrays(GL_POINTS, offset2, count2);
 glEndTransformFeedback();
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
       </td>
@@ -247,8 +252,8 @@ glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
     </tr>
     <tr>
       <td>
-        <div class="tk-museo-sans" style="font-size:300%;font-weight:800;text-align:center">
-          Multiple Streams
+        <div class="tk-museo-sans" style="font-size:150%;font-weight:800;text-align:center">
+          Multiple Streams / Pause / Resume
         </div>
       </td>
       <td></td>
