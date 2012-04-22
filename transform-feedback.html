@@ -68,7 +68,7 @@ glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
     <tr>
       <td>
         <div class="tk-museo-sans" style="font-size:200%;font-weight:800;text-align:center">
-          <span>Old</span> Transform Feedback (Interleaved)
+          <span>Old</span> Transform Feedback (Interleaved VBO)
         </div>
       </td>
       <td></td>
@@ -142,7 +142,7 @@ glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
                     left:550px; bottom:50px;
                     font-size:200%;
                     font-weight:800;">
-          <span>Old</span> Transform Feedback (Separate)
+          <span>Old</span> Transform Feedback (Separate VBOs)
         </div>
       </td>
       <td></td>
@@ -173,9 +173,9 @@ glBufferData(GL_ARRAY_BUFFER, sizeof(seed_data), 0, GL_STREAM_DRAW);
 // Create a transform feedback object:
 GLuint Feedback = 0;
 glGenTransformFeedbacks(1, &Feedback);
-glBindTransformFeedbacks(GL_TRANSFORM_FEEDBACK, Feedback);
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, Feedback);
 glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, BufferA);
-glBindTransformFeedbacks(GL_TRANSFORM_FEEDBACK, 0);</code></pre>
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre>
         </div>
         <div class="codewrapper" style="font-size:80%;width:100%">
           <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
@@ -210,4 +210,48 @@ glDrawTransformFeedback(GL_POINTS, TransformFeedback); // similar to glDrawArray
   </table>
 </div>
 
-<!-- Streams! -->
+<!-- Streams -->
+<div class="slide">
+  <table>
+    <tr style="width:100%;height:100%">
+      <td>
+        <br>
+        <div class="codewrapper" style="font-size:120%;width:100%">
+          <pre><code class="glsl">// Assign streams in geometry shader
+(layout out = 0) out vec4 vPosition;
+(layout out = 1) out vec4 vBirthTime
+(layout out = 1) out vec4 vVelocity;</code></pre>
+        </div>
+        <br>
+        <div class="codewrapper" style="font-size:120%;width:100%">
+          <pre><code class="glsl">// Assign varyings to "record" during initialization
+const char* varyings[4] = { "vBirthTime", "vVelocity" };
+glTransformFeedbackVaryings(programHandle, 2, varyings,
+                            GL_INTERLEAVED_ATTRIBS);</code></pre></div>
+        <br>
+        <div class="codewrapper" style="font-size:120%;width:100%">
+          <pre><code class="glsl">// This time, don't discard rasterization
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
+glBeginTransformFeedback(GL_POINTS);
+glDrawArrays(GL_POINTS, 0, inCount);
+glEndTransformFeedback();
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
+      </td>
+      <td style="width:10%"></td>
+      <td rowspan="2">
+        <object type="image/svg+xml" class="figure"
+                data="images/Pipeline5.svg">
+        </object>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="tk-museo-sans" style="font-size:300%;font-weight:800;text-align:center">
+          Multiple Streams
+        </div>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+</div>
