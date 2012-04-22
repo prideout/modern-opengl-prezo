@@ -10,17 +10,17 @@
           <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
 
 out MyBlock {
-vec3 Position;
-vec3 Color[2];
-float Opacity;
+    vec3 Position;
+    vec3 Color[2];
+    float Opacity;
 } Out;
 
 <span class="DIVIDER">-- Geometry Shader</span>
 
 in MyBlock {
-vec3 Position;
-vec3 Color[2];
-float Opacity;
+    vec3 Position;
+    vec3 Color[2];
+    float Opacity;
 } In[];</code></pre></div>
       </td>
       <td>
@@ -29,19 +29,19 @@ float Opacity;
 
 // Built-ins:
 out gl_PerVertex {
-vec4 gl_Position;
-float gl_PointSize;
-float gl_ClipDistance[];
+    vec4 gl_Position;
+    float gl_PointSize;
+    float gl_ClipDistance[];
 };
 
 // User-defined:
 in MyBlock {
-float w;
+    float w;
 } In;
 
 void main()
 {
-gl_Position = vec4(1, 0, 0, In.w);
+    gl_Position = vec4(1, 0, 0, In.w);
 }
 </code></pre></div>
       </td>
