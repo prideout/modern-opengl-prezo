@@ -1,0 +1,47 @@
+// dot -Tpdf -oPipeline6.pdf Pipeline6.dot
+// dot -Tsvg -oPipeline6.svg Pipeline6.dot
+
+digraph Pipeline6 {
+
+  // bgcolor="#5F534C";
+  // rankdir = LR;
+
+  node [shape="box",
+        style="rounded,filled",
+        color="black",
+        fontname="helvetica",
+        fillcolor="#bcd5b0",
+        fontcolor="#000000"];
+
+  VS;
+  FS;
+  GS;
+  TCS;
+  TES;
+
+  node [shape="box",
+        style="filled",
+        fillcolor="#dc8888"];
+
+  Rast;
+  Blend;
+  Tess;
+
+  node [shape="box",
+        style="filled",
+        fillcolor="#8888dc"];
+  CPU;
+
+  edge [color="#000000"]
+
+  VS -> TCS;
+  TCS -> Tess;
+  Tess -> TES;
+  TES -> GS;
+  GS -> Rast;
+  Rast -> FS;
+  FS -> Blend;
+
+  edge [penwidth=2.5,color="#505050"]
+  GS:w -> CPU
+}

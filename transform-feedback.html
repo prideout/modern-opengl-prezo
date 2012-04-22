@@ -181,6 +181,7 @@ glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre>
         <div class="codewrapper" style="font-size:80%;width:100%">
           <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
 glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glVertexAttribPointer(...);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
 glBeginTransformFeedback(GL_POINTS);
 glDrawArrays(GL_POINTS, 0, inCount);
@@ -191,6 +192,7 @@ swap(BufferA, BufferB);
 
 glDisable(GL_RASTERIZER_DISCARD);
 glBindBuffer(GL_ARRAY_BUFFER, BufferA);
+glVertexAttribPointer(...);
 glDrawTransformFeedback(GL_POINTS, TransformFeedback); // similar to glDrawArrays</code></pre></div>
       </td>
       <td style="width:10%"></td>
@@ -220,7 +222,7 @@ glDrawTransformFeedback(GL_POINTS, TransformFeedback); // similar to glDrawArray
         <div class="codewrapper" style="font-size:120%;width:100%">
           <pre><code class="glsl">// Assign streams in geometry shader
 (layout out = 0) out vec4 vPosition;
-(layout out = 1) out vec4 vBirthTime
+(layout out = 1) out vec4 vBirthTime;
 (layout out = 1) out vec4 vVelocity;</code></pre>
         </div>
         <br>
@@ -232,7 +234,6 @@ glTransformFeedbackVaryings(programHandle, 2, varyings,
         <br>
         <div class="codewrapper" style="font-size:120%;width:100%">
           <pre><code class="glsl">// This time, don't discard rasterization
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
 glBeginTransformFeedback(GL_POINTS);
 glDrawArrays(GL_POINTS, offset0, count0);
@@ -254,6 +255,56 @@ glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
       <td>
         <div class="tk-museo-sans" style="font-size:150%;font-weight:800;text-align:center">
           Multiple Streams / Pause / Resume
+        </div>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+
+<!-- Send to CPU -->
+<div class="slide">
+  <table>
+    <tr style="width:100%;height:100%">
+      <td>
+        <div class="codewrapper" style="font-size:110%;width:100%">
+          <pre><code class="glsl">GLuint RecordBuffer, DrawBuffer; // VBOs
+GLuint Feedback;                 // TFO
+
+// ...
+
+glGenTransformFeedbacks(1, &Feedback);
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, Feedback);
+glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, RecordBuffer);
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
+        <br>
+        <div class="codewrapper" style="font-size:110%;width:100%">
+          <pre><code class="glsl">glBindBuffer(GL_ARRAY_BUFFER, DrawBuffer);
+glVertexAttribPointer(...);
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
+glBeginTransformFeedback(GL_POINTS);
+glDrawArrays(GL_POINTS, offset, count);
+glEndTransformFeedback();
+glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
+        <br>
+        <div class="codewrapper" style="font-size:110%;width:100%">
+          <pre><code class="glsl">glBindBuffer(GL_ARRAY_BUFFER, RecordBuffer);
+void* rawdata = glMapBuffer( GL_ARRAY_BUFFER, GL_READ_ONLY);
+// ...do stuff here...
+glUnmapBuffer(rawData);
+glBindBuffer(GL_ARRAY_BUFFER, 0);</code></pre></div>
+      </td>
+      <td style="width:10%"></td>
+      <td rowspan="2">
+        <object type="image/svg+xml" class="figure"
+                data="images/Pipeline6.svg">
+        </object>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="tk-museo-sans" style="font-size:200%;font-weight:800;text-align:center">
+          Send back to CPU
         </div>
       </td>
       <td></td>
