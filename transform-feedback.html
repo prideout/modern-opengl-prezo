@@ -157,7 +157,7 @@ glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
       <td>
         <div class="codewrapper" style="font-size:80%;width:100%">
           <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
-const char* varyings[4] = { "vPosition", "gl_NextBuffer", "vBirthTime", "vVelocity" };
+const char* varyings[4] = { "vPosition", "<span class="HIGH">gl_NextBuffer</span>", "vBirthTime", "vVelocity" };
 glTransformFeedbackVaryings(programHandle, 4, varyings, GL_INTERLEAVED_ATTRIBS);
 
 // Create VBO for input on even frames and output on odd frames:
@@ -179,7 +179,7 @@ glBindTransformFeedbacks(GL_TRANSFORM_FEEDBACK, 0);</code></pre>
         </div>
         <div class="codewrapper" style="font-size:80%;width:100%">
           <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
-glBindBuffer(GL_ARRAY_BUFFER, BufferA);                     // Source VBO
+glBindBuffer(GL_ARRAY_BUFFER, BufferA);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
 glBeginTransformFeedback(GL_POINTS);
 glDrawArrays(GL_POINTS, 0, inCount);
@@ -190,7 +190,7 @@ swap(BufferA, BufferB);
 
 glDisable(GL_RASTERIZER_DISCARD);
 glBindBuffer(GL_ARRAY_BUFFER, BufferA);
-glDrawTransformFeedback(GL_POINTS, TransformFeedback);</code></pre></div>
+glDrawTransformFeedback(GL_POINTS, TransformFeedback); // similar to glDrawArrays</code></pre></div>
       </td>
       <td style="width:10%"></td>
       <td rowspan="2">
