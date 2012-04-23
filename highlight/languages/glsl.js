@@ -11,6 +11,7 @@ hljs.LANGUAGES.glsl = function(){
       'out': 1,
       'varying': 1,
       'uniform': 1,
+      'subroutine': 1,
       'sampler2D': 1,
       'vec4': 1,
       'vec3': 1,

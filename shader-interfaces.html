@@ -177,3 +177,83 @@ glDrawBuffers(2, &buffers[0]);</code></pre>
     </tr>
   </table>
 </div>
+
+<!-- Subroutines -->
+<div class="slide">
+  <div  class="tk-museo-sans"
+        style="font-size:300%;
+               font-weight:900;
+               color:#333;
+               text-align:center">
+    Subroutines
+  </div>
+  <table style="width:95%">
+    <tr>
+      <td style="width:45%">
+        <div class="codewrapper">
+          <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
+
+subroutine vec3 IlluminationFunc(vec3 N, vec3 L);
+
+subroutine(IlluminationFunc)
+vec3 diffuse(vec3 N, vec3 L)
+{
+    return max(0, dot(N, L));
+}
+
+subroutine(IlluminationFunc)
+vec3 specular(vec3 N, vec3 L)
+{
+    vec3 E = vec3(0, 0, 1);
+    vec3 H = normalize(L + E);
+    return pow(dot(N, H), Shininess);
+}
+
+uniform float Shininess = 1.0;
+subroutine uniform IlluminationFunc IlluminationVar;
+
+out vec4 vColor;
+void main()
+{
+    vec3 n = vec3(0, 0, 1);
+    vec3 p = vec3(3, 1, 4);
+    vec3 c = IlluminationVar(n, p);
+    vColor = vec4(c, 1);
+}
+
+<span class="DIVIDER">-- Geometry Shader</span>
+
+// normal uniforms are scoped to the program object:
+uniform float Shininess = 1.0;
+
+// subroutines are scoped to the shader stage:
+subroutine vec3 IlluminationFunc(float foo);
+subroutine uniform IlluminationFunc IlluminationVar;
+
+</code></pre></div></td>
+      <td>
+        <div class="codewrapper">
+          <pre><code class="cpp">GLuint prog;
+glGetIntegerv(GL_CURRENT_PROGRAM, &prog);
+
+GLenum vs = GL_VERTEX_SHADER;
+
+GLuint illum = glGetSubroutineUniformLocation(prog, vs,
+                                              "IlluminationVar");
+
+GLuint diffuse = glGetSubroutineIndex(prog, vs, "diffuse");
+GLuint specular = glGetSubroutineIndex(prog, vs, "specular");
+
+// This sets per-context state:
+GLuint indices[MAX_SUBROUTINE_VARIABLES];
+indices[illum] = diffuse;
+glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, indices);
+
+// This sets per-program state:
+GLuint shiny = glGetUniformLocation(prog, "Shininess");
+glUniform1f(prog, shiny, 1.0);</code></pre></div>
+      </td>
+    </tr>
+  </table>
+
+</div>
