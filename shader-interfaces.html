@@ -1,3 +1,5 @@
+<!-- ******************************************** -->
+<!-- ******************************************** -->
 <!-- BLOCKS -->
 <div class="slide">
   <object type="image/svg+xml" class="figure"
@@ -57,6 +59,8 @@ GLuint i = glGetAttribLocation(program, "MyBlock.w");
   </table>
 </div>
 
+<!-- ******************************************** -->
+<!-- ******************************************** -->
 <!-- BINDING VERTEX ATTRIBS -->
 <div class="slide" style="font-size:120%">
   <table style="width:90%;margin:auto">
@@ -121,6 +125,8 @@ glEnableVertexAttribArray(foo);</code></pre></div>
   </table>
 </div>
 
+<!-- ******************************************** -->
+<!-- ******************************************** -->
 <!-- Fragment Outputs -->
 <div class="slide" style="font-size:120%">
   <table style="width:90%;margin:auto">
@@ -178,6 +184,8 @@ glDrawBuffers(2, &buffers[0]);</code></pre>
   </table>
 </div>
 
+<!-- ******************************************** -->
+<!-- ******************************************** -->
 <!-- Subroutines -->
 <div class="slide">
   <div  class="tk-museo-sans"
@@ -228,9 +236,7 @@ uniform float Shininess = 1.0;
 
 // subroutines are scoped to the shader stage:
 subroutine vec3 IlluminationFunc(float foo);
-subroutine uniform IlluminationFunc IlluminationVar;
-
-</code></pre></div></td>
+subroutine uniform IlluminationFunc IlluminationVar;</code></pre></div></td>
       <td>
         <div class="codewrapper">
           <pre><code class="cpp">GLuint prog;
@@ -256,4 +262,76 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
     </tr>
   </table>
 
+</div>
+
+
+<!-- ******************************************** -->
+<!-- ******************************************** -->
+<!-- Old-School Linking -->
+<div class="slide">
+  <div class="codewrapper" style="width:90%;font-size:105%;margin:auto">
+    <pre><code class="glsl">static GLuint LoadProgram(const char* vsSource, const char* gsSource, const char* fsSource)
+{
+    GLuint programHandle = glCreateProgram();
+    GLuint vsHandle = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vsHandle, 1, &vsSource, 0);
+    glCompileShader(vsHandle);
+    glAttachShader(programHandle, vsHandle);
+    if (gsSource != NULL) {
+        GLuint gsHandle = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(gsHandle, 1, &gsSource, 0);
+        glCompileShader(gsHandle);
+        glAttachShader(programHandle, gsHandle);
+    }
+    if (fsSource != NULL) {
+        GLuint fsHandle = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fsHandle, 1, &fsSource, 0);
+        glCompileShader(fsHandle);
+        glAttachShader(programHandle, fsHandle);
+    }
+    <span class="DIVIDER">glProgramParameteri(programHandle, GL_PROGRAM_SEPARABLE, GL_TRUE);</span>
+    glLinkProgram(programHandle);
+    GLint linkSuccess;
+    glGetProgramiv(programHandle, GL_LINK_STATUS, &linkSuccess);
+    if (!linkSuccess) {
+        GLchar spew[256];
+        glGetProgramInfoLog(programHandle, sizeof(spew), 0, spew);
+        fprintf(stderr, "Can't link shaders:\n%s", spew);
+        return 0;
+    }
+    glUseProgram(programHandle);
+    return programHandle;
+}</code>
+    </pre>
+  </div>
+</div>
+
+
+<!-- ******************************************** -->
+<!-- ******************************************** -->
+<!-- New-School Linking -->
+<div class="slide">
+  <div class="codewrapper" style="width:90%;font-size:105%;margin:auto">
+    <pre><code class="glsl">static GLuint LoadPipeline(const char* vsSource, const char* gsSource, const char* fsSource)
+{
+    GLuint vsProgram = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vsSource);
+    GLuint gsProgram = glCreateShaderProgramv(GL_GEOMETRY_SHADER, 1, &gsSource);
+    GLuint fsProgram = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fsSource);
+
+    GLuint pipeline;
+    glGenProgramPipelines(1, &pipeline);
+    glBindProgramPipeline(pipeline);
+
+    glUseProgramStages(pipeline, GL_VERTEX_SHADER_BIT, vsProgram);
+    glUseProgramStages(pipeline, GL_GEOMETRY_SHADER_BIT, gsProgram);
+    glUseProgramStages(pipeline, GL_FRAGMENT_SHADER_BIT, fsProgram);
+
+    // glUniform* now heed the "active" shader program rather than glUseProgram
+    glActiveShaderProgram(pipeline, vsProgram);
+    glUniform1f(fooLocation, 1.0f);
+
+    return pipeline;
+}</code>
+    </pre>
+  </div>
 </div>
