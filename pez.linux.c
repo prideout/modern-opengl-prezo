@@ -16,6 +16,15 @@
 #include <X11/Xutil.h>
 #include <X11/Xmd.h>
 
+#define GLX_CONTEXT_MAJOR_VERSION_ARB 0x2091
+#define GLX_CONTEXT_MINOR_VERSION_ARB 0x2092
+#define GLX_CONTEXT_FLAGS_ARB 0x2094
+//#define GLX_CONTEXT_DEBUG_BIT_ARB 0x0001
+//#define GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x0002
+#define GLX_CONTEXT_PROFILE_MASK_ARB 0x9126
+#define GLX_CONTEXT_CORE_PROFILE_BIT_ARB 0x00000001
+#define GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x00000002
+
 typedef struct PlatformContextRec
 {
     Display* MainDisplay;
@@ -139,6 +148,7 @@ int main(int argc, char** argv)
             GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
             GLX_CONTEXT_MINOR_VERSION_ARB, 0,
             GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+            GLX_CONTEXT_PROFILE_MASK_ARB, GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
             0
         };
         glcontext = glXCreateContextAttribs(context.MainDisplay, fbc[0], NULL, True, attribs);
