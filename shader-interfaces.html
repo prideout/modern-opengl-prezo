@@ -67,7 +67,7 @@ GLuint i = glGetAttribLocation(program, "MyBlock.w");
     <tr>
       <td style="width:50%">
         <div class="centerwrapper">
-          <pre><code class="cpp">// Let the compiler decide
+          <pre><code class="cpp">// Worst: let the compiler decide
 GLuint foo = glGetAttribLocation(program, "MyBlock.w");              </code></pre>
         </div>
       </td>
@@ -78,7 +78,7 @@ GLuint foo = glGetAttribLocation(program, "MyBlock.w");              </code></pr
     <tr>
       <td style="width:50%">
         <div class="centerwrapper">
-          <pre><code class="cpp">// Specify in application code
+          <pre><code class="cpp">// Better: Specify in application code
 GLuint foo = 3;
 
 glCompileShader(vsHandle);
@@ -94,9 +94,9 @@ glLinkProgram(programHandle);              </code></pre>
     <tr>
       <td style="width:50%">
         <div class="centerwrapper">
-          <pre><code class="glsl">// Declare in GLSL
+          <pre><code class="glsl">// Best: Declare in GLSL
 in MyBlock {
-layout(location = 3) vec3 w;
+    layout(location = 3) vec3 w;
 }              </code></pre>
         </div>
       </td>

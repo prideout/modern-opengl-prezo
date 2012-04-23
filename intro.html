@@ -273,10 +273,10 @@ QGLWidget *myWidget = new QGLWidget(format);</code></pre>
         </div>
         <div class="codewrapper" style="font-size:120%;width:90%;text-align:left;margin-top:50px">
           <pre><code class="cpp">int attribs[] = {
-GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
-GLX_CONTEXT_MINOR_VERSION_ARB, 0,
-GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
-NULL
+    GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
+    GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+    GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+    NULL
 };
 GLXContext glc = glXCreateContextAttribs(diplay, config, NULL, True, attribs);</code></pre>
         </div>
