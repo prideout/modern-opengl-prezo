@@ -304,6 +304,16 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
 }</code>
     </pre>
   </div>
+  <div class="tk-museo-sans"
+       style="position:absolute; display: block;
+              font-size:750%;
+              color:#ccc;
+              font-weight:900;
+              left:570px; top:280px;
+              -webkit-transform-origin: 570 280;
+              -webkit-transform: rotate(90deg);">
+    OLD SCHOOL
+  </div>
 </div>
 
 
@@ -311,8 +321,11 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
 <!-- ******************************************** -->
 <!-- New-School Linking -->
 <div class="slide">
-  <div class="codewrapper" style="width:90%;font-size:105%;margin:auto">
-    <pre><code class="glsl">static GLuint LoadPipeline(const char* vsSource, const char* gsSource, const char* fsSource)
+  <div class="codewrapper" style="width:90%;font-size:115%;margin:auto">
+    <pre><code class="glsl">static GLuint LoadPipeline(
+        const char* vsSource,
+        const char* gsSource,
+        const char* fsSource)
 {
     GLuint vsProgram = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vsSource);
     GLuint gsProgram = glCreateShaderProgramv(GL_GEOMETRY_SHADER, 1, &gsSource);
@@ -331,7 +344,43 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
     glUniform1f(fooLocation, 1.0f);
 
     return pipeline;
-}</code>
-    </pre>
+}</code></pre></div>
+  <div  class="tk-museo-sans"
+        style="font-size:500%;
+               font-weight:900;
+               color:#333;
+               text-align:center">
+    Separable Programs
+  </div>
+</div>
+
+<!-- Binaries -->
+<div class="slide">
+  <div class="codewrapper" style="width:90%;font-size:125%;margin:auto">
+    <pre>
+      <code class="glsl">...
+
+glProgramParameteri(programHandle, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_TRUE);
+glLinkProgram(programHandle);
+
+GLuint bufSize;
+glGetProgramiv(programHandle, GL_PROGRAM_BINARY_LENGTH, &bufSize);
+
+std::vector<char> buffer(bufSize);
+
+GLenum binaryFormat;
+glGetProgramBinary(programHandle, bufSize, NULL, &binaryFormat, &buffer[0]);
+    </code></pre>
+  </div>
+  <div class="codewrapper" style="width:90%;font-size:125%;margin:auto">
+    <pre>
+      <code class="glsl">// use a cached program on subsequent runs:
+glProgramBinary(programHandle, binaryFormat, &buffer[0], bufSize);</code></pre></div>
+  <div  class="tk-museo-sans"
+        style="font-size:700%;
+               font-weight:900;
+               color:#333;
+               text-align:center">
+    Binaries!
   </div>
 </div>

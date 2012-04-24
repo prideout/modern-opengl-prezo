@@ -66,10 +66,10 @@ varying vec4 vPosition;
 varying vec2 vTexCoord;
 varying vec3 vNormal;
 void main() {
-vPosition = gl_ModelViewMatrix * gl_Vertex;
-vNormal = gl_NormalMatrix * gl_Normal;
-vTexCoord = gl_MultiTexCoord0.st;
-gl_Position = ftransform();
+    vPosition = gl_ModelViewMatrix * gl_Vertex;
+    vNormal = gl_NormalMatrix * gl_Normal;
+    vTexCoord = gl_MultiTexCoord0.st;
+    gl_Position = ftransform();
 }</code></pre>
         </div>
         <div class="codewrapper">
@@ -79,9 +79,9 @@ uniform vec3 LightDir;
 varying vec2 vTexCoord;
 varying vec3 vNormal;
 void main() {
-float df = dot(LightDir,vNormal);
-vec3 c = df * texture2D(Baboon, vTexCoord).rgb;
-gl_FragColor = vec4(c, 1);
+    float df = dot(LightDir,vNormal);
+    vec3 c = df * texture2D(Baboon, vTexCoord).rgb;
+    gl_FragColor = vec4(c, 1);
 }</code></pre>
         </div>
       </td>
@@ -109,9 +109,9 @@ in vec2 TexCoord;
 out vec2 vTexCoord;
 uniform mat4 ModelViewMatrix, MVP;
 void main() {
-vPosition = ModelViewMatrix * Position;
-vTexCoord = TexCoord;
-gl_Position = MVP * Position;
+    vPosition = ModelViewMatrix * Position;
+    vTexCoord = TexCoord;
+    gl_Position = MVP * Position;
 }</code></pre>
         </div>
         <div class="codewrapper">
@@ -125,16 +125,16 @@ out vec2 gTexCoord;
 
 void main()
 {
-vec3 A = vPosition[2] - vPosition[0];
-vec3 B = vPosition[1] - vPosition[0];
-gNormal = normalize(cross(A, B));
+    vec3 A = vPosition[2] - vPosition[0];
+    vec3 B = vPosition[1] - vPosition[0];
+    gNormal = normalize(cross(A, B));
 
-for (int j = 0; j &lt; 3; j++) {
-    gTexCoord = vTexCoord[j];
-    gl_Position = gl_in[j].gl_Position;
-    EmitVertex();
-}
-EndPrimitive();
+    for (int j = 0; j &lt; 3; j++) {
+        gTexCoord = vTexCoord[j];
+        gl_Position = gl_in[j].gl_Position;
+        EmitVertex();
+    }
+    EndPrimitive();
 }</code></pre>
         </div>
       </td>
@@ -146,9 +146,9 @@ uniform vec3 LightDir <span class="HIGH">= vec3(0,0,1)</span>;
 in vec2 gTexCoord;
 in vec3 gNormal;
 void main() {
-float df = dot(LightDir,gNormal);
-vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
-gl_FragColor = vec4(c, 1);
+    float df = dot(LightDir,gNormal);
+    vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
+    gl_FragColor = vec4(c, 1);
 }</code></pre>
         </div>
       </td>
@@ -175,9 +175,9 @@ out vec4 vPosition;
 out vec2 vTexCoord;
 uniform mat4 ModelViewMatrix, MVP;
 void main() {
-vPosition = ModelViewMatrix * Position;
-vTexCoord = TexCoord;
-gl_Position = MVP * Position;
+    vPosition = ModelViewMatrix * Position;
+    vTexCoord = TexCoord;
+    gl_Position = MVP * Position;
 }</code></pre>
         </div>
         <div class="codewrapper">
@@ -206,9 +206,9 @@ in vec2 gTexCoord;
 in vec3 gNormal;
 
 void main() {
-float df = dot(vec3(0,0,1),gNormal);
-vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
-gl_FragColor = vec4(c, 1);
+    float df = dot(vec3(0,0,1),gNormal);
+    vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
+    gl_FragColor = vec4(c, 1);
 }</code></pre>
         </div>
       </td>
@@ -224,16 +224,16 @@ out vec2 gTexCoord;
 
 void main()
 {
-vec3 A = vPosition[2] - vPosition[0];
-vec3 B = vPosition[1] - vPosition[0];
-gNormal = normalize(cross(A, B));
+    vec3 A = vPosition[2] - vPosition[0];
+    vec3 B = vPosition[1] - vPosition[0];
+    gNormal = normalize(cross(A, B));
 
-for (int j = 0; j &lt; 3; j++) {
-    gTexCoord = vTexCoord[j];
-    gl_Position = gl_in[j].gl_Position;
-    EmitVertex();
-}
-EndPrimitive();
+    for (int j = 0; j &lt; 3; j++) {
+        gTexCoord = vTexCoord[j];
+        gl_Position = gl_in[j].gl_Position;
+        EmitVertex();
+    }
+    EndPrimitive();
 }</code></pre>
         </div>
         <div class="codewrapper">
@@ -246,9 +246,9 @@ uniform vec3 LightDir = vec3(0,0,1);
 in vec2 gTexCoord;
 in vec3 gNormal;
 void main() {
-float df = dot(LightDir,gNormal);
-vec3 c = df*<span class="HIGH">texture</span>(Baboon, gTexCoord).rgb;
-gl_FragColor = vec4(c, 1);
+    float df = dot(LightDir,gNormal);
+    vec3 c = df*<span class="HIGH">texture</span>(Baboon, gTexCoord).rgb;
+    gl_FragColor = vec4(c, 1);
 }</code></pre>
         </div>
       </td>
