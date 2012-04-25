@@ -187,72 +187,63 @@ void main() {
         </div>
         <div class="codewrapper">
           <pre><code class="glsl">// Tessellation Control Shader
-layout(triangles) in;
-layout(triangle_strip, max_vertices = 3) out;
-
-<span class="HIGH">in VSOut {
-    vec4 Position;
-    vec2 TexCoord;
-} In[3];</span>
-
-vec3 tcNormal;
-vec2 tcTexCoord;
-
-void main()
-{
-    // ...
-}</code></pre>
+// ...
+</code></pre>
         </div>
         <div class="codewrapper">
           <pre><code class="glsl">// Tessellation Evaluation Shader
+...
+</code></pre>
+        </div>
+        <div class="codewrapper">
+          <pre><code class="glsl">// Fragment Shader
+uniform sampler2D Baboon;
+uniform vec3 LightDir = vec3(0,0,1);
+out vec4 CrazyColorChannel;
+
+in GSOut {
+    vec3 Normal;
+    vec2 TexCoord;
+} In;
 
 void main() {
-    // ...
+    float df = dot(LightDir, In.Normal);
+    vec3 c = df * <span class="HIGH">texture</span>(Baboon, In.TexCoord).rgb;
+    CrazyColorChannel = vec4(c, 1);
 }</code></pre>
         </div>
       </td>
       <td style="width:40%">
         <div class="codewrapper">
           <pre><code class="glsl">// Geometry Shader
-# TODO: Invocations
-layout(triangles) in;
+# TODO: Subroutines
+
+layout(triangles, <span class="HIGH">invocations = 3</span>) in;
 layout(triangle_strip, max_vertices = 3) out;
 
 in TEOut {
     vec2 TexCoord;
     vec3 Normal;
+    float Luminance[2];
 } In[3];
 
 out GSOut {
     vec3 Normal;
     vec2 TexCoord;
-} Out[3];
+} Out;
 
 void main()
 {
     vec3 A = In[2].Position - In[0].Position;
-    vec3 B = In[1].vPosition - In[0].Position;
+    vec3 B = In[1].Position - In[0].Position;
     Out.Normal = normalize(cross(A, B));
 
-    for (int j = 0; j &lt; 3; j++) {
-        Out.TexCoord = In.TexCoord[j];
-        gl_Position = gl_in[j].gl_Position;
-        EmitVertex();
-    }
+    int j = gl_InvocationID;
+    Out.TexCoord = In.TexCoord[j];
+    gl_Position = gl_in[j].gl_Position;
+
+    EmitVertex(); # is this still required?
     EndPrimitive();
-}</code></pre>
-        </div>
-        <div class="codewrapper">
-          <pre><code class="glsl">// Fragment Shader
-# TODO: Subroutines
-uniform sampler2D Baboon;
-uniform vec3 LightDir = vec3(0,0,1);
-in vec2 gTexCoord;
-in vec3 gNormal;
-void main() {
-    float df = dot(LightDir,gNormal);
-    vec3 c = df*<span class="HIGH">texture</span>(Baboon, gTexCoord).rgb;
-    gl_FragColor = vec4(c, 1);
 }</code></pre>
         </div>
       </td>
