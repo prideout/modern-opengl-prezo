@@ -59,9 +59,10 @@
 <div class="slide">
   <table style="width:100%;height:100%">
     <tr>
-      <td style="width:40%">
+      <td>
         <div class="codewrapper">
-          <pre><code class="glsl">// Vertex Shader
+          <pre><code class="glsl"
+                     style="font-size:150%;">// Vertex Shader
 varying vec4 vPosition;
 varying vec2 vTexCoord;
 varying vec3 vNormal;
@@ -73,7 +74,8 @@ void main() {
 }</code></pre>
         </div>
         <div class="codewrapper">
-          <pre><code class="glsl">// Fragment Shader
+          <pre><code class="glsl"
+                     style="font-size:150%;">// Fragment Shader
 uniform sampler2D Baboon;
 uniform vec3 LightDir;
 varying vec2 vTexCoord;
@@ -84,10 +86,14 @@ void main() {
     gl_FragColor = vec4(c, 1);
 }</code></pre>
         </div>
+        <div class="codewrapper">
+          <pre><code class="cpp"
+                     style="font-size:150%;">// Application
+glTexCoordPointer(2, GL_FLOAT, sizeof(float)*2, &coords[0]);
+glMatrixMode(GL_MODELVIEW);</code></pre>
+        </div>
       </td>
-      <td style="width:40%">
-      </td>
-      <td>
+      <td style="width:30%">
         <object type="image/svg+xml" class="figure"
                 data="images/Pipeline1.svg">
         </object>
@@ -103,9 +109,9 @@ void main() {
       <td style="width:40%">
         <div class="codewrapper">
           <pre><code class="glsl">// Vertex Shader
-<span class="HIGH">in</span> vec4 Position;
+<b>in</b> vec4 Position;
 in vec2 TexCoord;
-<span class="HIGH">out</span> vec4 vPosition;
+<b>out</b> vec4 vPosition;
 out vec2 vTexCoord;
 uniform mat4 ModelViewMatrix, MVP;
 void main() {
@@ -116,15 +122,14 @@ void main() {
         </div>
         <div class="codewrapper">
           <pre><code class="glsl">// Geometry Shader
-<span class="HIGH">layout</span>(triangles) in;
+<b>layout</b>(triangles) in;
 layout(triangle_strip, max_vertices = 3) out;
 in vec3 vPosition[3];
 in vec2 vTexCoord[3];
 out vec3 gNormal;
 out vec2 gTexCoord;
 
-void main()
-{
+void main() {
     vec3 A = vPosition[2] - vPosition[0];
     vec3 B = vPosition[1] - vPosition[0];
     gNormal = normalize(cross(A, B));
@@ -142,7 +147,7 @@ void main()
         <div class="codewrapper">
           <pre><code class="glsl">// Fragment Shader
 uniform sampler2D Baboon;
-uniform vec3 LightDir <span class="HIGH">= vec3(0,0,1)</span>;
+uniform vec3 LightDir <b>= vec3(0,0,1)</b>;
 in vec2 gTexCoord;
 in vec3 gNormal;
 void main() {
@@ -169,13 +174,13 @@ void main() {
       <td style="width:40%">
         <div class="codewrapper">
           <pre><code class="glsl">// Vertex Shader
-layout(location<span class="HIGH"> = 0</span>) in vec4 Position;
-layout(location<span class="HIGH"> = 1</span>) in vec2 TexCoord;
+layout(location<b> = 0</b>) in vec4 Position;
+layout(location = 1) in vec2 TexCoord;
 
-<span class="HIGH">out VSOut {
+<b>out VSOut {
     vec4 Position;
     vec2 TexCoord;
-} Out;</span>
+} Out;</b>
 
 uniform mat4 ModelViewMatrix, MVP;
 
@@ -208,7 +213,7 @@ in GSOut {
 
 void main() {
     float df = dot(LightDir, In.Normal);
-    vec3 c = df * <span class="HIGH">texture</span>(Baboon, In.TexCoord).rgb;
+    vec3 c = df*<b>texture</b>(Baboon, In.TexCoord).rgb;
     CrazyColorChannel = vec4(c, 1);
 }</code></pre>
         </div>
@@ -216,9 +221,7 @@ void main() {
       <td style="width:40%">
         <div class="codewrapper">
           <pre><code class="glsl">// Geometry Shader
-# TODO: Subroutines
-
-layout(triangles, <span class="HIGH">invocations = 3</span>) in;
+layout(triangles) in;
 layout(triangle_strip, max_vertices = 3) out;
 
 in TEOut {
@@ -232,17 +235,29 @@ out GSOut {
     vec2 TexCoord;
 } Out;
 
-void main()
-{
+<b>subroutine</b> vec3 NormFunc(vec3, vec3);
+subroutine uniform NormFunc NormVar;
+
+subroutine(NormFunc)
+vec3 RobustNormal(vec3 A, vec3 B) {
+    return normalize(cross(A, B));
+}
+
+subroutine(NormFunc)
+vec3 CheapNormal(vec3 A, vec3 B) {
+    return cross(A, B);
+}
+
+void main() {
     vec3 A = In[2].Position - In[0].Position;
     vec3 B = In[1].Position - In[0].Position;
-    Out.Normal = normalize(cross(A, B));
+    Out.Normal = NormVar(A, B);
 
-    int j = gl_InvocationID;
-    Out.TexCoord = In.TexCoord[j];
-    gl_Position = gl_in[j].gl_Position;
-
-    EmitVertex(); # is this still required?
+    for (int j = 0; j &lt; 3; j++) {
+        Out.TexCoord = In[j].TexCoord;
+        gl_Position = gl_in[j].gl_Position;
+        EmitVertex();
+    }
     EndPrimitive();
 }</code></pre>
         </div>
@@ -262,14 +277,14 @@ void main()
     <tr><td align="center">
         <div class="codewrapper" style="font-size:120%;width:90%;text-align:left;margin-top:50px">
           <pre><code class="cpp">QGLFormat format;
-format.setVersion(4,0);
+format.setVersion(4,2);
 format.setProfile(QGLFormat::CoreProfile);
 QGLWidget *myWidget = new QGLWidget(format);</code></pre>
         </div>
         <div class="codewrapper" style="font-size:120%;width:90%;text-align:left;margin-top:50px">
           <pre><code class="cpp">int attribs[] = {
     GLX_CONTEXT_MAJOR_VERSION_ARB, 4,
-    GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+    GLX_CONTEXT_MINOR_VERSION_ARB, 2,
     GLX_CONTEXT_PROFILE_MASK_ARB, GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
     NULL
 };

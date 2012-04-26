@@ -121,6 +121,14 @@ code {
     // border: 2px solid #76a68b;
 }
 
+code.glsl {
+    border:solid 8px #24a;
+}
+
+code.cpp {
+    border:solid 8px #a42;
+}
+
 span.HIGH {
     padding-top:2px;border:solid 1px #aa0;background-color:#440;
 }

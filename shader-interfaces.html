@@ -51,8 +51,7 @@ void main()
     <tr>
       <td colspan="2">
         <div class="codewrapper">
-          <pre><code class="cpp"><span class="DIVIDER">// Application code</span>
-GLuint i = glGetAttribLocation(program, "MyBlock.w");
+          <pre><code class="cpp">GLuint i = glGetAttribLocation(program, "MyBlock.w");
 </code></pre></div>
       </td>
     </tr>
@@ -62,23 +61,20 @@ GLuint i = glGetAttribLocation(program, "MyBlock.w");
 <!-- ******************************************** -->
 <!-- ******************************************** -->
 <!-- BINDING VERTEX ATTRIBS -->
-<div class="slide" style="font-size:120%">
+<div class="slide">
   <table style="width:90%;margin:auto">
     <tr>
       <td style="width:50%">
         <div class="centerwrapper">
-          <pre><code class="cpp">// Worst: let the compiler decide
+          <pre><code class="cpp" style="font-size:110%">// Worst: let the compiler decide
 GLuint foo = glGetAttribLocation(program, "MyBlock.w");              </code></pre>
-        </div>
-      </td>
-    </tr>
+        </div></td></tr>
   </table>
-
   <table style="width:90%;margin:auto">
     <tr>
       <td style="width:50%">
         <div class="centerwrapper">
-          <pre><code class="cpp">// Better: Specify in application code
+          <pre><code class="cpp" style="font-size:110%">// Better: Specify in application code
 GLuint foo = 3;
 
 glCompileShader(vsHandle);
@@ -89,12 +85,11 @@ glLinkProgram(programHandle);              </code></pre>
       </td>
     </tr>
   </table>
-
   <table style="width:90%;margin:auto">
     <tr>
       <td style="width:50%">
         <div class="centerwrapper">
-          <pre><code class="glsl">// Best: Declare in GLSL
+          <pre><code class="glsl" style="font-size:110%">// Best: Declare in GLSL
 in MyBlock {
     layout(location = 3) vec3 w;
 }              </code></pre>
@@ -270,7 +265,9 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
 <!-- Old-School Linking -->
 <div class="slide">
   <div class="codewrapper" style="width:90%;font-size:105%;margin:auto">
-    <pre><code class="glsl">static GLuint LoadProgram(const char* vsSource, const char* gsSource, const char* fsSource)
+    <pre><code class="cpp">static GLuint LoadProgram(const char* vsSource,
+                          const char* gsSource,
+                          const char* fsSource)
 {
     GLuint programHandle = glCreateProgram();
     GLuint vsHandle = glCreateShader(GL_VERTEX_SHADER);
@@ -283,7 +280,58 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
         glCompileShader(gsHandle);
         glAttachShader(programHandle, gsHandle);
     }
-    if (fsSource != NULL) {
+    GLuint fsHandle = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fsHandle, 1, &fsSource, 0);
+    glCompileShader(fsHandle);
+    glAttachShader(programHandle, fsHandle);
+    glLinkProgram(programHandle);
+    GLint linkSuccess;
+    glGetProgramiv(programHandle, GL_LINK_STATUS, &linkSuccess);
+    if (!linkSuccess) {
+        GLchar spew[256];
+        glGetProgramInfoLog(programHandle, sizeof(spew), 0, spew);
+        fprintf(stderr, "Can't link shaders:\n%s", spew);
+        return 0;
+    }
+    glUseProgram(programHandle);
+    return programHandle;
+}</code>
+    </pre>
+  </div>
+  <div class="tk-museo-sans"
+       style="position:absolute; display: block;
+              font-size:750%;
+              color:#ccc;
+              font-weight:900;
+              left:570px; top:200px;
+              -webkit-transform-origin: 570 200;
+              -webkit-transform: rotate(90deg);">
+    OLD SCHOOL
+  </div>
+</div>
+
+
+<!-- ******************************************** -->
+<!-- ******************************************** -->
+<!-- New but Verbose -->
+<div class="slide">
+  <div class="codewrapper" style="width:90%;font-size:100%;margin:auto">
+    <pre><code class="cpp">static GLuint LoadProgram(const char* vsSource, const char* gsSource, const char* fsSource)
+{
+    GLuint programHandle = glCreateProgram();
+    <b>if (vsSource != NULL) {</b>
+        GLuint vsHandle = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vsHandle, 1, &vsSource, 0);
+        glCompileShader(vsHandle);
+        glAttachShader(programHandle, vsHandle);
+    }
+    if (gsSource != NULL) {
+        GLuint gsHandle = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(gsHandle, 1, &gsSource, 0);
+        glCompileShader(gsHandle);
+        glAttachShader(programHandle, gsHandle);
+    }
+    <b>if (fsSource != NULL) {</b>
         GLuint fsHandle = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fsHandle, 1, &fsSource, 0);
         glCompileShader(fsHandle);
@@ -312,17 +360,16 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
               left:570px; top:280px;
               -webkit-transform-origin: 570 280;
               -webkit-transform: rotate(90deg);">
-    OLD SCHOOL
+    <!-- OLD SCHOOL -->
   </div>
 </div>
-
 
 <!-- ******************************************** -->
 <!-- ******************************************** -->
 <!-- New-School Linking -->
 <div class="slide">
-  <div class="codewrapper" style="width:90%;font-size:115%;margin:auto">
-    <pre><code class="glsl">static GLuint LoadPipeline(
+  <div class="codewrapper" style="width:96%;font-size:115%;margin:auto">
+    <pre><code class="cpp">static GLuint LoadPipeline(
         const char* vsSource,
         const char* gsSource,
         const char* fsSource)
@@ -356,9 +403,9 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
 
 <!-- Binaries -->
 <div class="slide">
-  <div class="codewrapper" style="width:90%;font-size:125%;margin:auto">
+  <div class="codewrapper" style="width:90%;font-size:110%;margin:auto">
     <pre>
-      <code class="glsl">...
+      <code class="cpp">...
 
 glProgramParameteri(programHandle, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_TRUE);
 glLinkProgram(programHandle);
@@ -374,7 +421,7 @@ glGetProgramBinary(programHandle, bufSize, NULL, &binaryFormat, &buffer[0]);
   </div>
   <div class="codewrapper" style="width:90%;font-size:125%;margin:auto">
     <pre>
-      <code class="glsl">// use a cached program on subsequent runs:
+      <code class="cpp">// use a cached program on subsequent runs:
 glProgramBinary(programHandle, binaryFormat, &buffer[0], bufSize);</code></pre></div>
   <div  class="tk-museo-sans"
         style="font-size:700%;

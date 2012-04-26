@@ -85,7 +85,7 @@ glDrawArrays(GL_POINTS, 0, outCount);</code></pre></div>
           <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
 const char* varyings[2] = { "vPosition", "vBirthTime" };
 glTransformFeedbackVaryings(programHandle, 2, varyings,
-                        <span class="HIGH">GL_SEPARATE_ATTRIBS</span>);
+                        <b>GL_SEPARATE_ATTRIBS</b>);
 
 // Create a query object for transform feedback:
 glGenQueries(1, &amp;PrimsWritten);
@@ -157,8 +157,8 @@ glDrawArrays(GL_POINTS, 0, outCount);
     <tr style="width:100%;height:100%">
       <td>
         <div class="codewrapper" style="font-size:80%;width:100%">
-          <pre><code class="glsl">// This goes after glCompileShader but before glLinkProgram...
-const char* varyings[4] = { "vPosition", "<span class="HIGH">gl_NextBuffer</span>", "vBirthTime", "vVelocity" };
+          <pre><code class="cpp">// This goes after glCompileShader but before glLinkProgram...
+const char* varyings[4] = { "vPosition", "<b>gl_NextBuffer</b>", "vBirthTime", "vVelocity" };
 glTransformFeedbackVaryings(programHandle, 4, varyings, GL_INTERLEAVED_ATTRIBS);
 
 // Create VBO for input on even frames and output on odd frames:
@@ -179,7 +179,7 @@ glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, BufferA);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre>
         </div>
         <div class="codewrapper" style="font-size:80%;width:100%">
-          <pre><code class="glsl">glEnable(GL_RASTERIZER_DISCARD);
+          <pre><code class="cpp">glEnable(GL_RASTERIZER_DISCARD);
 glBindBuffer(GL_ARRAY_BUFFER, BufferA);
 glVertexAttribPointer(...);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
@@ -218,22 +218,22 @@ glDrawTransformFeedback(GL_POINTS, TransformFeedback); // similar to glDrawArray
   <table>
     <tr style="width:100%;height:100%">
       <td>
-        <br>
         <div class="codewrapper" style="font-size:120%;width:100%">
           <pre><code class="glsl">// Assign streams in geometry shader
 (layout out = 0) out vec4 vPosition;
 (layout out = 1) out vec4 vBirthTime;
-(layout out = 1) out vec4 vVelocity;</code></pre>
+(layout out = 1) out vec4 vVelocity;
+...
+EmitStreamVertex(0);
+EmitStreamPrimitive(0);</code></pre>
         </div>
-        <br>
         <div class="codewrapper" style="font-size:120%;width:100%">
-          <pre><code class="glsl">// Assign varyings to "record" during initialization
+          <pre><code class="cpp">// Assign varyings to "record" during initialization
 const char* varyings[4] = { "vBirthTime", "vVelocity" };
 glTransformFeedbackVaryings(programHandle, 2, varyings,
                             GL_INTERLEAVED_ATTRIBS);</code></pre></div>
-        <br>
         <div class="codewrapper" style="font-size:120%;width:100%">
-          <pre><code class="glsl">// This time, don't discard rasterization
+          <pre><code class="cpp">// This time, don't discard rasterization
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
 glBeginTransformFeedback(GL_POINTS);
 glDrawArrays(GL_POINTS, offset0, count0);
@@ -268,7 +268,7 @@ glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
     <tr style="width:100%;height:100%">
       <td>
         <div class="codewrapper" style="font-size:110%;width:100%">
-          <pre><code class="glsl">GLuint RecordBuffer, DrawBuffer; // VBOs
+          <pre><code class="cpp">GLuint RecordBuffer, DrawBuffer; // VBOs
 GLuint Feedback;                 // TFO
 
 // ...
@@ -277,18 +277,16 @@ glGenTransformFeedbacks(1, &Feedback);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, Feedback);
 glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, RecordBuffer);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
-        <br>
         <div class="codewrapper" style="font-size:110%;width:100%">
-          <pre><code class="glsl">glBindBuffer(GL_ARRAY_BUFFER, DrawBuffer);
+          <pre><code class="cpp">glBindBuffer(GL_ARRAY_BUFFER, DrawBuffer);
 glVertexAttribPointer(...);
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, TransformFeedback);
 glBeginTransformFeedback(GL_POINTS);
 glDrawArrays(GL_POINTS, offset, count);
 glEndTransformFeedback();
 glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);</code></pre></div>
-        <br>
         <div class="codewrapper" style="font-size:110%;width:100%">
-          <pre><code class="glsl">glBindBuffer(GL_ARRAY_BUFFER, RecordBuffer);
+          <pre><code class="cpp">glBindBuffer(GL_ARRAY_BUFFER, RecordBuffer);
 void* rawdata = glMapBuffer( GL_ARRAY_BUFFER, GL_READ_ONLY);
 // ...do stuff here...
 glUnmapBuffer(rawData);
