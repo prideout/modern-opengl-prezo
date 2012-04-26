@@ -35,6 +35,7 @@ Spiral8 -> Spiral9
     Use Zero-Vert VBO.
     Animated.  Instanced.  Fogged.
     http://glsl.heroku.com/e#2214.0
+    Use a subroutine to swap to an animated bezier patch?
 
 For tessellation shaders, we'll demo instead of slides.
 
@@ -89,7 +90,7 @@ D Transform Feedback for Debugging
 
 # tessellation-shaders
 P Show demo
-P Vertex-free drawing (fullscreen tri etc)
+P VBO-free drawing (fullscreen tri etc)
 
 # tbd
 T Texture Lookups in GLSL
@@ -112,7 +113,7 @@ T FBO - Layered / Mipmapped.
 # tbd
 T Debug Log
 T DSA glProgramUniform instead of glUniform etc direct_state_access.txt
-T Image Load/Store
+T Image Load/Store -- look up COHERENT in glsl spec
 T NV Bindless extensions
 T Queries
 T Two ways of doing MRT - Individual color attachments, or individual FBOs
