@@ -145,6 +145,30 @@ div.codewrapper {
     margin-left:10px;
 }
 
+div.slidetitle {
+    font-size:600%;
+    text-align:center;
+    font-weight:900;
+}
+
+div.slidenote {
+    font-size:300%;
+    text-align:center;
+    font-weight:300;
+}
+
+pre.simplewrapper {
+    width:90%;
+    font-size:120%;
+    margin:auto;
+}
+
+pre.simplewrapper150 {
+    width:90%;
+    font-size:150%;
+    margin:auto;
+}
+
 .CodePair-Left {
     position: absolute;
     font-size: 100%;

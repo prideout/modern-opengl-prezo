@@ -472,6 +472,14 @@ var hljs = new function() {
     if (useBR) {
       value = value.replace(/\n/g, '<br>');
     }
+    if (value.length > 5 && value.substr(0, 5) == 'TRIM8') {
+        value = value.substr(6, value.length - 13);
+        value = value.replace(/^\s{8}/mg, '');
+    }
+    if (value.length > 5 && value.substr(0, 5) == 'TRIM6') {
+        value = value.substr(6, value.length - 11);
+        value = value.replace(/^\s{6}/mg, '');
+    }
     return value;
   }
 

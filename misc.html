@@ -1,0 +1,28 @@
+<!-- Direct State Access -->
+<div class="slide">
+  <div class="slidetitle">
+    Direct State Access
+  </div>
+
+  <pre class="simplewrapper150">
+    <code class="cpp">TRIM6
+      // Old way
+      glUseProgram(prog1);
+      glUniform3f(loc1, 3.14, 2.72, 0.577);
+      glUseProgram(prog2);
+      glUniform3f(loc2, 3.14, 2.72, 0.577);
+      
+      // New way
+      glProgramUniform3f(prog1, loc1, 3.14, 2.72, 0.577);
+      glProgramUniform3f(prog2, loc2, 3.14, 2.72, 0.577);
+    </code>
+  </pre>
+
+  <div class="slidenote">
+    also check out
+    <a href="http://www.opengl.org/registry/specs/EXT/direct_state_access.txt">
+      EXT_direct_state_access
+    </a>
+  </div>
+  
+</div>

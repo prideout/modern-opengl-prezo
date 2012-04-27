@@ -1,43 +1,16 @@
 <div class="noprint tk-museo-sans" style="font-size:100%;font-weight:800;margin:20px">
-
-Live Demo
-
 <pre>
-Spiral1  -- facet normals in GS
-Spiral2  -- lines in GS
-Spiral3  -- AA lines
-Spiral4a -- Pass-Through Tess Shaders
-Sprial4b -- Parametric Eval in Tess Shaders
-Spiral5a -- Animation in Tess Shaders
-Spiral5b -- Instancing in TessShaders http://glsl.heroku.com/e#2214.0
-Spiral6a -- Make it big, Add texture loader
-Spiral6b -- Displacement Mapping
+Slide: state/UniformBlocks
 
-TODO
-----
-Propagate quads from 4a to other examples + sympy
-Fork off TextureLoader and ProgramCompiler into Separate C file
-Get rid of packednormal, etc
-Remove Spiral6a
-Combine 2 and 3 into Spiral2ab
-
-</pre>
-</div>
-
-<div class="noprint tk-museo-sans" style="font-size:100%;font-weight:800;margin:20px">
-
-Slides
-
-<pre>
-
-Spiral8 -> Spiral9
-
+Spiral7.
     Use Zero-Vert VBO.
     Animated.  Instanced.  Fogged.
     http://glsl.heroku.com/e#2214.0
     Use a subroutine to swap to an animated bezier patch?
 
-For tessellation shaders, we'll demo instead of slides.
+For layered FBOs, we'll demo FluidSim?
+
+For tessellation shaders, we'll demo instead of slides?
 
 D - done
 T - to be done
@@ -99,24 +72,50 @@ T Texturing in the C API - Compressed formats
 T Texturing in the C API - 16-32 Float / sRGB / Integer
 T Texturing in the C API - Texture Buffers
 
-# tbd
-T Pixel Buffer Objects (great for streaming; explain double-buffering). Explain ReadPixels-with-null.
-T Uniform Locations
+# state
+D glProgramUniform & direct_state_access.txt
 T Uniform Blocks
 T Uniform Buffers
+T Pixel Buffer Objects (great for streaming; explain double-buffering). Explain ReadPixels-with-null.
+T Queries
      
 # tbd
 T FBO - Definition - collection of renderbuffers (complicates context sharing)
 T FBO - 2 ways of allocating - From texture, From renderbuffer. Z-only is valid (and FAST)
 T FBO - Layered / Mipmapped.
 
-# tbd
-T Debug Log
-T DSA glProgramUniform instead of glUniform etc direct_state_access.txt
+# misc
+T Conditional rendering
 T Image Load/Store -- look up COHERENT in glsl spec
-T NV Bindless extensions
-T Queries
+T NV Bindless extensions, sampler*
 T Two ways of doing MRT - Individual color attachments, or individual FBOs
+T Debug Log
+
+</pre>
+</div>
+
+<div class="noprint tk-museo-sans" style="font-size:100%;font-weight:800;margin:20px">
+
+Live Demo
+
+<pre>
+Spiral1  -- facet normals in GS
+Spiral2  -- lines in GS
+Spiral3  -- AA lines
+Spiral4a -- Pass-Through Tess Shaders
+Sprial4b -- Parametric Eval in Tess Shaders
+Spiral5a -- Animation in Tess Shaders
+Spiral5b -- Instancing in TessShaders http://glsl.heroku.com/e#2214.0
+Spiral6a -- Make it big, Add texture loader
+Spiral6b -- Displacement Mapping
+
+TODO
+----
+Propagate quads from 4a to other examples + sympy
+Fork off TextureLoader and ProgramCompiler into Separate C file
+Get rid of packednormal, etc
+Remove Spiral6a
+Combine 2 and 3 into Spiral2ab
 
 </pre>
 </div>
