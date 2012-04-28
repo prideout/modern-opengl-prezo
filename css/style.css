@@ -122,11 +122,16 @@ code {
 }
 
 code.glsl {
-    border:solid 8px #24a;
+    /* border:solid 8px #24a; */
+    border:solid 8px #BF79DB; /* monokai purple */
 }
 
 code.cpp {
-    border:solid 8px #a42;
+    /* border:solid 8px #a42; */
+    /*border:solid 8px #A6E22E;*/ /* monokai green */
+    /*border:solid 8px #F92672;*/   /* monokai hot pink */
+    /*border:solid 8px #272822;*/   /* monokai gray */
+    border:solid 8px #79BFDB; /* seablue, derived from monokai purple */
 }
 
 span.HIGH {
@@ -137,6 +142,12 @@ span.DIVIDER {
     color: #2080b0;
     font-weight: 900;
     font-style: italic;
+}
+
+dt { font-weight: bold; }
+dl {
+    font-size:120%;
+    margin-left:70px;
 }
 
 div.codewrapper {
@@ -160,6 +171,12 @@ div.slidenote {
 pre.simplewrapper {
     width:90%;
     font-size:120%;
+    margin:auto;
+}
+
+pre.smallwrapper {
+    width:90%;
+    font-size:100%;
     margin:auto;
 }
 

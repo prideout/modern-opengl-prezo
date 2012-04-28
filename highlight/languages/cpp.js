@@ -5,7 +5,13 @@ Language: C++
 hljs.LANGUAGES.cpp = function(){
   var CPP_KEYWORDS = {
     'keyword': {
-      'false': 1, 'int': 1, 'float': 1, 'while': 1, 'private': 1, 'char': 1,
+      'false': 1, 'int': 1,
+
+      'GLuint': 1,
+      'GLint': 1,
+      'GLenum': 1,
+
+      'float': 1, 'while': 1, 'private': 1, 'char': 1,
       'catch': 1, 'export': 1, 'virtual': 1, 'operator': 2, 'sizeof': 2,
       'dynamic_cast': 2, 'typedef': 2, 'const_cast': 2, 'const': 1,
       'struct': 1, 'for': 1, 'static_cast': 2, 'union': 1, 'namespace': 1,

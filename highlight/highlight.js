@@ -477,7 +477,7 @@ var hljs = new function() {
         value = value.replace(/^\s{8}/mg, '');
     }
     if (value.length > 5 && value.substr(0, 5) == 'TRIM6') {
-        value = value.substr(6, value.length - 11);
+        value = value.substr(6, value.length - 9);
         value = value.replace(/^\s{6}/mg, '');
     }
     return value;

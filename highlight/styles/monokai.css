@@ -84,7 +84,9 @@ pre .deletion,
 pre .shebang,
 pre .apache .sqbracket,
 pre .tex .formula {
-  color: #75715E;
+/*  color: #75715E; */
+  color: #a5a18E;
+  font-style: italic;
 }
 
 pre .keyword,

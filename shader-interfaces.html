@@ -60,8 +60,94 @@ void main()
 
 <!-- ******************************************** -->
 <!-- ******************************************** -->
+<!-- Uniform Blocks -->
+<div class="slide">
+  <div class="slidetitle">
+    Uniform Blocks
+  </div>
+  <pre class="simplewrapper"><code class="glsl">TRIM6
+      uniform float Deformation;
+      
+      uniform Crazy80s {
+          float Madonna;
+          int DuranDuran;
+      };
+      
+      uniform Transform {
+          mat4 ModelViewMatrix;
+          float Scale;
+      } transforms[4];
+      
+      ...
+      
+      float a = Deformation;
+      float b = Madonna;
+      float c = transforms[2].Scale;
+  </code></pre>
+  <br>
+  <pre class="simplewrapper"><code class="cpp">TRIM6
+      GLuint loc = glGetUniformLocation(prog, "Deformation");
+      glUniform1f(loc, 3.14159f);
+      
+      GLuint idx = glGetUniformBlockIndex(prog, "Transform[2]");
+  </code></pre>
+</div>
+
+<!-- ******************************************** -->
+<!-- ******************************************** -->
+<!-- Uniform Buffers -->
+<div class="slide">
+  <div class="slidetitle">
+    Uniform Buffers
+  </div>
+  <dl class="tk-museo-sans">
+
+    <dt>UBO handle (aka name)</dt>
+    <dd>passed to <tt>glBufferData</tt> and <tt>glBindBufferBase</tt></dd>
+
+    <dt>block index</dt>
+    <dd>queried from the shader via <tt>glGetUniformBlockIndex</tt></dd>
+
+    <dt>binding point</dt>
+    <dd>passed to <tt>glBindBufferBase</tt> to affect subsequent <tt>glBufferData</tt>, <tt>glMapBuffer</tt>, etc</dd>
+    <dd>passed to <tt>glUniformBlockBinding</tt> to "link" the UBO to the uniform block</dd>
+    <dd>can be specified in GLSL rather than <tt>glUniformBlockBinding</tt></dd>
+
+  </dl>
+  <pre class="smallwrapper"><code class="glsl">TRIM6
+      layout(std140) uniform Crazy80s { float Madonna[2]; };
+  </code></pre>
+  <br>
+  <pre class="smallwrapper"><code class="cpp">TRIM6
+      GLuint ubo;
+      glGenBuffers(1, &ubo);
+      
+      // Choose a binding point in the UBO; must be < GL_MAX_UNIFORM_BUFFER_BINDINGS
+      GLuint bp = 7;
+      
+      // Fill the buffer with data at the chosen binding point
+      glBindBufferBase(GL_UNIFORM_BUFFER, bp, ubo);
+      float data[2] = { 3.142f, 2.712f }
+      glBufferData(GL_UNIFORM_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+      
+      // Query the shader the for block index of Crazy80s and hook it up
+      GLuint idx = glGetUniformBlockIndex(prog, "Crazy80s");
+      glUniformBlockBinding(prog, GL_UNIFORM_BUFFER, idx, bp);
+  </code></pre>
+</div>
+
+<!-- ******************************************** -->
+<!-- ******************************************** -->
 <!-- BINDING VERTEX ATTRIBS -->
 <div class="slide">
+  <br>
+  <div  class="tk-museo-sans"
+        style="font-size:240%;
+               font-weight:900;
+               color:#333;
+               text-align:center">
+    Binding Vertex Attributes
+  </div>
   <table style="width:90%;margin:auto">
     <tr>
       <td style="width:50%">
@@ -97,14 +183,6 @@ in MyBlock {
       </td>
     </tr>
   </table>
-  <div  class="tk-museo-sans"
-        style="font-size:240%;
-               font-weight:900;
-               color:#333;
-               text-align:center">
-    Binding Vertex Attributes
-  </div>
-
   <table style="width:90%;margin:auto">
     <tr>
       <td style="width:50%">
@@ -124,6 +202,14 @@ glEnableVertexAttribArray(foo);</code></pre></div>
 <!-- ******************************************** -->
 <!-- Fragment Outputs -->
 <div class="slide" style="font-size:120%">
+  <br>
+  <div  class="tk-museo-sans"
+        style="font-size:240%;
+               font-weight:900;
+               color:#333;
+               text-align:center">
+    Binding Fragment Outputs
+  </div>
   <table style="width:90%;margin:auto">
     <tr>
       <td style="width:50%">
@@ -157,13 +243,6 @@ layout(location = 3) out vec4 factor;</code></pre>
       </td>
     </tr>
   </table>
-  <div  class="tk-museo-sans"
-        style="font-size:240%;
-               font-weight:900;
-               color:#333;
-               text-align:center">
-    Binding Fragment Outputs
-  </div>
   <table style="width:90%;margin:auto">
     <tr>
       <td style="width:50%">

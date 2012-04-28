@@ -2,13 +2,13 @@
 <pre>
 Slide: state/UniformBlocks
 
-Spiral7.
+Spiral7 -- branch and refactor
     Use Zero-Vert VBO.
     Animated.  Instanced.  Fogged.
     http://glsl.heroku.com/e#2214.0
     Use a subroutine to swap to an animated bezier patch?
 
-For layered FBOs, we'll demo FluidSim?
+FluidSim -- branch and refactor
 
 For tessellation shaders, we'll demo instead of slides?
 
@@ -34,12 +34,15 @@ P Instancing
 T VAOs
 T Integer Formats
 T Uberbuffers (will talk about PBO's more later)
+T "Indexed" Buffers - BindBufferRange and BindBufferBase
 
 # types-table
 D Table of GLSL Types
 
 # shader-interfaces
 D Blocks
+D Uniform Blocks
+D Uniform Buffers --------> Move this?
 D Binding Vertex Attribs
 D Binding Fragment Outputs
 D Subroutines
@@ -73,23 +76,21 @@ T Texturing in the C API - 16-32 Float / sRGB / Integer
 T Texturing in the C API - Texture Buffers
 
 # state
-D glProgramUniform & direct_state_access.txt
-T Uniform Blocks
-T Uniform Buffers
 T Pixel Buffer Objects (great for streaming; explain double-buffering). Explain ReadPixels-with-null.
 T Queries
      
-# tbd
-T FBO - Definition - collection of renderbuffers (complicates context sharing)
-T FBO - 2 ways of allocating - From texture, From renderbuffer. Z-only is valid (and FAST)
-T FBO - Layered / Mipmapped.
-
 # misc
+D glProgramUniform & direct_state_access.txt
 T Conditional rendering
 T Image Load/Store -- look up COHERENT in glsl spec
 T NV Bindless extensions, sampler*
 T Two ways of doing MRT - Individual color attachments, or individual FBOs
 T Debug Log
+
+# tbd
+T FBO - Definition - collection of renderbuffers (complicates context sharing)
+T FBO - 2 ways of allocating - From texture, From renderbuffer. Z-only is valid (and FAST)
+P FBO - Layered / Mipmapped.
 
 </pre>
 </div>
