@@ -11,6 +11,8 @@ hljs.LANGUAGES.cpp = function(){
       'GLint': 1,
       'GLenum': 1,
       'uint': 1,
+      'ubyte': 1,
+      'GLubyte': 1,
       'sizei': 1,
       'GLsizei': 1,
 

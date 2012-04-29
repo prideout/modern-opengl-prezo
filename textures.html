@@ -253,7 +253,7 @@
   <div class="slidetitle">
     Pixel Buffers
   </div>
-  <pre class="simplewrapper"><code class="cpp">TRIM6
+  <pre class="smallwrapper"><code class="cpp">TRIM6
       GLuint bufObj, texObj;
       
       glGenBuffers(1, &bufObj);
@@ -264,8 +264,25 @@
       glBindTexture(GL_TEXTURE_2D, texObj);
       glTexImage2D(..., NULL);
   </code></pre>
-  <!--  TODO double buffering -->
-  http://www.songho.ca/opengl/gl_pbo.html
+  <br>
+  <pre class="smallwrapper"><code class="cpp">TRIM6
+      // Render with PBO 'A' while uploading PBO 'B'
+      glBindTexture(GL_TEXTURE_2D, texObj);
+      glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboA);
+      glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+      
+      glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboB);
+      glBufferData(GL_PIXEL_UNPACK_BUFFER, byteCount, 0, GL_STREAM_DRAW);
+      
+      GLubyte* data = glMapBufferRange(GL_PIXEL_UNPACK_BUFFER, 0, byteCount, GL_MAP_WRITE_BIT);
+      // write stuff to 'data' here...
+      glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER); // see also: glFlushMappedBufferRange
+      
+      glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+      std::swap(pboA, pboB);
+      
+      // render here...
+  </code></pre>
 </div>
 
 <!-- Buffer Objects -->
