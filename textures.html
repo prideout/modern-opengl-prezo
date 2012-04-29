@@ -1,6 +1,6 @@
 <!-- Texture Formats -->
 <div class="slide">
-  <div class="slidetitle">
+  <div class="slidetitle400">
     Texture Formats
   </div>
   <pre class="simplewrapper"><code class="cpp">TRIM6
@@ -10,7 +10,7 @@
       GLenum type = GL_UNSIGNED_BYTE;
       glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, data);
   </code></pre>
-  <h2 class="tk-museo-sans" style="margin-left:20px">
+  <h2 class="tk-museo-sans smallheader">
     INTERNAL FORMATS
   </h2>
   <div id="unsized" class="wrap-items" style="margin-left:20px">
@@ -34,8 +34,8 @@
       display:inline-block;
       width:100px;
       background-color:#eee;
-      margin-top:4px;
-      font-size:70%;
+
+      font-size:40%;
       }
     </style>
     R8
@@ -103,14 +103,80 @@
     RGBA32I
     RGBA32UI
   </div>
-  <h2 class="tk-museo-sans" style="margin-left:20px">
+  <h2 class="tk-museo-sans smallheader">
     FORMATS
   </h2>
-  TBD
-  <h2 class="tk-museo-sans" style="margin-left:20px">
+  <div id="easy-formats" class="wrap-items" style="margin-left:20px">
+    <style>
+      #easy-formats > span {
+      font-weight:800;
+      width:120px;
+      background-color:#89cfeb;
+      }
+    </style>
+    DEPTH_COMPONENT
+    DEPTH_STENCIL
+    RED
+    RG
+    RGB
+    RGBA
+  </div>
+  <div id="formats-list" class="wrap-items" style="margin-left:20px">
+    <style>
+      #formats-list > span { width:150px; }
+    </style>
+    STENCIL_INDEX
+    GREEN
+    BLUE
+    BGR
+    BGRA
+    RED_INTEGER
+    GREEN_INTEGER
+    BLUE_INTEGER
+    RG_INTEGER
+    RGB_INTEGER
+    RGBA_INTEGER
+    BGR_INTEGER
+    BGRA_INTEGER
+  </div>
+  <h2 class="tk-museo-sans smallheader">
     TYPES
   </h2>
-  TBD
+  <div id="types-list" class="wrap-items" style="margin-left:20px">
+    <style>
+      #types-list > span {
+          width:200px;
+          font-size:40%;
+      }
+    </style>
+    UNSIGNED_BYTE
+    BYTE
+    UNSIGNED_SHORT
+    SHORT
+    UNSIGNED_INT
+    INT
+    HALF_FLOAT
+    FLOAT
+    UNSIGNED_SHORT_4_4_4_4
+    UNSIGNED_INT_8_8_8_8
+    UNSIGNED_INT_8_8_8_8_REV
+    UNSIGNED_INT_10_10_10_2
+    etc...
+    <!--
+    UNSIGNED_BYTE_3_3_2
+    UNSIGNED_BYTE_2_3_3_REV
+    UNSIGNED_SHORT_5_6_5
+    UNSIGNED_SHORT_5_6_5_REV
+    UNSIGNED_SHORT_4_4_4_4_REV
+    UNSIGNED_SHORT_5_5_5_1
+    UNSIGNED_SHORT_1_5_5_5_REV
+    UNSIGNED_INT_2_10_10_10_REV
+    UNSIGNED_INT_24_8
+    UNSIGNED_INT_10F_11F_11F_REV
+    UNSIGNED_INT_5_9_9_9_REV
+    FLOAT_32_UNSIGNED_INT_24_8_REV
+    -->
+  </div>
 </div>
 
 <div class="slide">

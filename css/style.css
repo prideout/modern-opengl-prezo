@@ -162,6 +162,11 @@ div.slidetitle {
     font-weight:900;
 }
 
+h2.smallheader {
+    margin-left:20px;
+    margin-bottom:0px;
+}
+
 div.slidetitle400 {
     font-size:440%;
     text-align:center;
