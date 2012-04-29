@@ -12,6 +12,7 @@ hljs.LANGUAGES.cpp = function(){
       'GLenum': 1,
       'uint': 1,
       'sizei': 1,
+      'GLsizei': 1,
 
       'float': 1, 'while': 1, 'private': 1, 'char': 1,
       'catch': 1, 'export': 1, 'virtual': 1, 'operator': 2, 'sizeof': 2,
