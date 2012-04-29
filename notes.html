@@ -1,6 +1,7 @@
 <div class="noprint tk-museo-sans" style="font-size:100%;font-weight:800;margin:20px">
 <pre>
-Slide: state/UniformBlocks
+Finish vertex-submission
+Do an HTML cleanup, recentering, gen PDF etc
 
 Spiral7 -- branch and refactor
     Use Zero-Vert VBO.
@@ -29,11 +30,13 @@ D Core Profile
 D Religion - Old vs New
 
 # vertex-submission
-T No more immed mode or DL's - ShareLists
-T Draw Calls, including DrawArraysIndirect and DrawAuto
+D No more immed mode or DL's - ShareLists
+D Newer vertex submission (mention integer formats)
+: Vertex Array Objects
+T Table of Draw Calls, including DrawArraysIndirect and DrawAuto
+D Primitive Restart
 P Instancing, VertexAttribDivisor
-T VAOs
-T Integer Formats
+T DEMO 
 ? Uberbuffers (will talk about PBO's more later)
 ? "Indexed" Buffers - BindBufferRange and BindBufferBase
 
@@ -87,7 +90,8 @@ T Conditional rendering
 T Image Load/Store -- look up COHERENT in glsl spec
 T atomic counters
 T NV Bindless extensions, sampler*
-T Debug Log
+? Debug Log
+? Contexts, Context Sharing
 
 # tbd
 T FBO - Definition - collection of renderbuffers (complicates context sharing)
