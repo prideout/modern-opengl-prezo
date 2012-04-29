@@ -180,6 +180,12 @@ pre.smallwrapper {
     margin:auto;
 }
 
+pre.tinywrapper {
+    width:95%;
+    font-size:85;
+    margin:auto;
+}
+
 pre.simplewrapper150 {
     width:90%;
     font-size:150%;
@@ -223,6 +229,12 @@ pre.simplewrapper150 {
     padding-right: 48px;
 }
 
+.draw-c { color: #A6E22E; }
+.draw-i { color: #A6E22E; }
+.draw-tf { color: #A6E22E; }
+.draw-itf { color: #A6E22E; }
+.draw-m { color: #A6E22E; }
+
 .title-line {
     position: absolute;
     display: block;
@@ -232,6 +244,50 @@ pre.simplewrapper150 {
 }
 
 
+table.bordered {
+margin:auto;
+margin-top:100px;
+font-size:150%;
+color: #555555;
+}
+
+.bordered tr:hover {
+background: #fbf8e9;
+}    
+
+.bordered td, .bordered th {
+padding: 10px;
+text-align: center;    
+border-radius: 0px 0px 0 0;
+}
+
+.bordered th:first-child {
+border-radius: 16px 0 0 0;
+}
+
+.bordered th:last-child {
+border-radius: 0 16px 0 0;
+}
+
+.bordered th {
+background-color: #dce9f9;
+color: #111111;
+}
+
+.bordered tr {
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+border-bottom: 1px solid #ccc;
+}
+
+.bordered thead > tr:first-child {
+border-left: none;
+border-right: none;
+}
+
+.bordered tr > td:first-child {
+font-weight: 700;
+}
 
 
 

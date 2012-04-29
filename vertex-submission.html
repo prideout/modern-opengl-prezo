@@ -67,7 +67,23 @@
   </div>
   <br>
   <pre class="simplewrapper150"><code class="cpp">TRIM6
-      lovely party, pity I wasn't invited.
+      const GLuint PositionSlot = 0;
+      const GLuint NormalSlot = 1;
+      
+      GLuint vao;
+      glGenVertexArrays(1, &vao);
+      glBindVertexArray(vao);
+      
+      glEnableVertexAttribArray(PositionSlot);
+      glEnableVertexAttribArray(NormalSlot);
+      
+      glBindBuffer(GL_ARRAY_BUFFER, positionsVbo);
+      glVertexAttribPointer(PositionSlot, 3, GL_FLOAT, GL_FALSE,
+                            sizeof(float)*3, 0);
+      
+      glBindBuffer(GL_ARRAY_BUFFER, normalsVbo);
+      glVertexAttribPointer(NormalSlot, 3, GL_FLOAT, GL_FALSE,
+                            sizeof(float)*3, 0);
   </code></pre>
 </div>
 
@@ -94,7 +110,69 @@
   </code></pre>
 </div>
 
-<!-- Primitive Restart -->
+<!-- glDraw* -->
+<div class="slide">
+  <div class="slidetitle">
+    glDraw*
+  </div>
+  <pre class="tinywrapper"><code class="cpp"><span class="draw-c">glDrawArrays</span>(enum mode, int first, sizei count)
+<span class="draw-c">glDrawElements</span>(enum mode, sizei count, enum type, const void *indices)
+
+<span class="draw-m">glDrawRangeElements</span>(enum mode, uint start, uint end, sizei count, enum type, const void *indices)
+<span class="draw-i">glDrawArraysInstanced</span>(enum mode, int first, sizei count, sizei primcount)
+<span class="draw-i">glDrawElementsInstanced</span>(enum mode, sizei count, enum type, const void *indices, sizei primcount)
+<span class="draw-m">glDrawElementsBaseVertex</span>(enum mode, sizei count, enum type, const void *indices, int basevertex)
+<span class="draw-m">glDrawRangeElementsBaseVertex</span>(enum mode, uint start, uint end, sizei count, enum type, ...
+
+<span class="draw-itf">glDrawArraysInstancedBaseInstance</span>(enum mode, int first, sizei count, sizei primcount, uint baseinstance)
+<span class="draw-itf">glDrawArraysIndirect</span>(enum mode, const void *indirect) // GL_DRAW_INDIRECT_BUFFER
+
+<span class="draw-itf">glDrawElementsInstancedBaseVertex</span>(enum mode, sizei count, enum type, const void *indices, ...
+<span class="draw-i"  >glDrawElementsInstancedBaseInstance</span>(enum mode, sizei count, enum type, const void *indices, ...
+<span class="draw-i"  >glDrawElementsInstancedBaseVertexBaseInstance</span>(enum mode, sizei count, enum type, ...
+<span class="draw-itf">glDrawElementsIndirect</span>(enum mode, enum type, const void *indirect) // GL_DRAW_INDIRECT_BUFFER
+
+<span class="draw-tf">glDrawTransformFeedback</span>(enum mode, uint id)
+<span class="draw-tf">glDrawTransformFeedbackStream</span>(enum mode, uint id, uint stream)
+<span class="draw-itf">glDrawTransformFeedbackInstanced</span>(enum mode, uint id, sizei primcount)
+<span class="draw-itf">glDrawTransformFeedbackStreamInstanced</span>(enum mode, uint id, uint stream, sizei primcount)</code></pre>
+
+</div>
+
+<!-- Indirect Draw Calls -->
+<div class="slide">
+  <div class="slidetitle">
+    Indirect Drawing
+  </div>
+  <pre class="simplewrapper"><code class="cpp">TRIM6
+      GLuint mydrawcall[] = {
+          62, /* count */
+          12, /* primcount */
+          0,  /* first */
+          0,  /* baseInstance */
+      };
+      
+      // Get parameters from CPU memory:
+      glDrawArraysInstancedBaseInstance(GL_TRIANGLES, 62, 12, 0, 0);
+      glDrawArraysIndirect(GL_TRIANGLES, mydrawcall);
+      
+      // Get parameters from GPU memory:
+      GLuint bufObj;
+      glGenBuffers(1, &bufObj);
+      glBindBuffer(GL_DRAW_INDIRECT_BUFFER, bufObj);
+      glBufferData(GL_DRAW_INDIRECT_BUFFER, sizeof(mydrawcall), mydrawcall, GL_STATIC_DRAW);
+      glDrawArraysIndirect(GL_TRIANGLES, 0);
+      
+      // Generate parameters from OpenCL:
+      glGenBuffers(1, &bufObj);
+      glBindBuffer(GL_DRAW_INDIRECT_BUFFER, bufObj);
+      glBufferData(GL_DRAW_INDIRECT_BUFFER, sizeof(mydrawcall), NULL, GL_STATIC_DRAW);
+      clCreateFromGLBuffer(context, CL_MEM_READ_WRITE, bufObj, &err); 
+
+  </code></pre>
+</div>
+
+<!-- DEMO TIME ! -->
 <div class="slide">
   <div class="slidetitle">
     D E M O
