@@ -162,6 +162,12 @@ div.slidetitle {
     font-weight:900;
 }
 
+div.slidetitle400 {
+    font-size:440%;
+    text-align:center;
+    font-weight:800;
+}
+
 div.slidenote {
     font-size:300%;
     text-align:center;

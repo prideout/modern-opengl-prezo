@@ -27,10 +27,15 @@
       GL_QUAD_STRIP, GL_QUADS, GL_POLYGON
   </code></pre>
   <div style="position:absolute;width:100%;height:100%;top:0px;left:0px">
-    <img src="images/no-smoking.svg"
+    <object type="image/svg+xml"
+            style="margin:auto; margin-top:150px; width:70%; display:block"
+            data="images/no-smoking-plain.svg">
+    </object>
+  <!-- Avoid img since it causes rasterization when Chrome prints to PDF?
+    <img src="images/no-smoking-plain.svg"
          alt="disallowed"
          style="margin:auto; margin-top:150px; width:70%; display:block">
-  </div>
+  </div>-->
 </div>
 
 <!-- Newer Vertex Submission -->
@@ -92,9 +97,14 @@
   <div class="slidetitle">
     Primitive Restart
   </div>
+  <object type="image/svg+xml"
+          style="margin:auto; margin-top:50px; display:block"          
+          data="images/SphereTessPlain.svg">
+  </object>
+  <!-- Avoid img since it causes rasterization when Chrome prints to PDF?
   <img src="images/SphereTess.svg"
        alt="Sphere Tessellation"
-       style="margin:auto; margin-top:50px; display:block">
+       style="margin:auto; margin-top:50px; display:block" -->
   <br>
   <pre class="simplewrapper150"><code class="cpp">TRIM6
       glEnable(GL_PRIMITIVE_RESTART);
