@@ -236,6 +236,16 @@
       int coord = ...;
       vec4 color = texelFetch(Foo, coord);
   </code></pre>
+  <br>
+  <pre class="simplewrapper"><code class="cpp">TRIM6
+      glBindBuffer(GL_ARRAY_BUFFER, vbo);   // source
+      glBindBuffer(GL_TEXTURE_BUFFER, tbo); // destination
+      glBufferData(GL_TEXTURE_BUFFER, 16384, 0, GL_STREAM); // give it a size
+      
+      GLintptr readoffset = 0, writeoffset = 0;
+      glCopyBufferSubData(GL_ARRAY_BUFFER, GL_TEXTURE_BUFFER,
+                          readoffset, writeoffset, 16384);
+  </code></pre>
 </div>
 
 <!-- Pixel Buffers -->
@@ -253,7 +263,14 @@
       glGenTextures(1, &texObj);
       glBindTexture(GL_TEXTURE_2D, texObj);
       glTexImage2D(..., NULL);
-      glGenerateMipmap(GL_TEXTURE_2D); // <-- hmm.
   </code></pre>
+  <!--  TODO double buffering -->
+</div>
 
-<div>
+<!-- Buffer Objects -->
+<div class="slide">
+  <div class="slidetitle">
+    Buffer Objects
+  </div>
+  <!-- TODO -->
+</div>
