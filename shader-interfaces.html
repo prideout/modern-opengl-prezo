@@ -130,7 +130,7 @@ void main()
       float data[2] = { 3.142f, 2.712f }
       glBufferData(GL_UNIFORM_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
       
-      // Query the shader the for block index of Crazy80s and hook it up
+      // Query the shader for block index of 'Crazy80s' and hook it up
       GLuint idx = glGetUniformBlockIndex(prog, "Crazy80s");
       glUniformBlockBinding(prog, GL_UNIFORM_BUFFER, idx, bp);
   </code></pre>

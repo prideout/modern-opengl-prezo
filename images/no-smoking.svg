@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="640"
+   height="480"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="no-smoking.svg">
+  <defs
+     id="defs19">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 240 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="640 : 240 : 1"
+       inkscape:persp3d-origin="320 : 160 : 1"
+       id="perspective21" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1899"
+     inkscape:window-height="1308"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="0.69532167"
+     inkscape:cx="123.08326"
+     inkscape:cy="253.20259"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <title
+     id="title4">no smoking</title>
+  <metadata
+     id="metadata7">image/svg+xmlNo Smoking Sign2008-01-30Felix Eckhofer<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+  </cc:Work>
+</rdf:RDF>
+</metadata>
+  <path
+     stroke-miterlimit="4"
+     d="M 423.64401,426.07236 C 320.15692,484.62988 188.79661,448.30292 130.10039,344.89444 71.404151,241.48599 107.55494,110.07713 210.88455,51.242256 314.2142,-7.592654 445.67154,28.381916 504.64493,131.6326 c 58.97335,103.25063 23.17508,234.75601 -79.99634,293.8678"
+     id="path2160"
+     style="fill:none;stroke:#e70000;stroke-width:32.61486816;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:0" />
+  <path
+     stroke-miterlimit="4"
+     id="path3134"
+     d="M 171.65834,92.086914 477.37262,397.80118"
+     style="fill:none;stroke:#e70000;stroke-width:40;stroke-miterlimit:4" />
+</svg>

@@ -17,6 +17,7 @@ T - to be done
 * - needs work
 : - on deck
 P - punt
+? - existence is tentative
 
 # intro
 D Title
@@ -27,14 +28,14 @@ D Circa 2012
 D Core Profile
 D Religion - Old vs New
 
-# tbd
+# vertex-submission
 T No more immed mode or DL's - ShareLists
 T Draw Calls, including DrawArraysIndirect and DrawAuto
-P Instancing
+P Instancing, VertexAttribDivisor
 T VAOs
 T Integer Formats
-T Uberbuffers (will talk about PBO's more later)
-T "Indexed" Buffers - BindBufferRange and BindBufferBase
+? Uberbuffers (will talk about PBO's more later)
+? "Indexed" Buffers - BindBufferRange and BindBufferBase
 
 # types-table
 D Table of GLSL Types
@@ -55,6 +56,7 @@ D Old Fragment Ouputs - Don't use!
 D Dealing with Depth
 T Read and Draw FBO Binding Points (search gmail for "Color Index")
 T New Blending Funcs
+T Two ways of doing MRT - Individual color attachments, or individual FBOs
 
 # transform-feedback
 D Transform Feedback Title slide
@@ -79,12 +81,12 @@ T Texturing in the C API - Texture Buffers
 T Pixel Buffer Objects (great for streaming; explain double-buffering). Explain ReadPixels-with-null.
 T Queries
      
-# misc
+# misc / future
 D glProgramUniform & direct_state_access.txt
 T Conditional rendering
 T Image Load/Store -- look up COHERENT in glsl spec
+T atomic counters
 T NV Bindless extensions, sampler*
-T Two ways of doing MRT - Individual color attachments, or individual FBOs
 T Debug Log
 
 # tbd
