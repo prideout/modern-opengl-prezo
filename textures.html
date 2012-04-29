@@ -265,12 +265,107 @@
       glTexImage2D(..., NULL);
   </code></pre>
   <!--  TODO double buffering -->
+  http://www.songho.ca/opengl/gl_pbo.html
 </div>
 
 <!-- Buffer Objects -->
 <div class="slide">
+  <style scoped="true">
+    td {
+       background-color: #eee;
+       border: solid 1px #000;
+       padding-right: 10px;
+    }
+    ul { list-style-type: none }
+    table {
+       margin: auto;
+    }
+  </style>
   <div class="slidetitle">
     Buffer Objects
   </div>
-  <!-- TODO -->
+  <table id="bufferobj" class="tk-museo-sans">
+    <tr style="background-color:#777">
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          All Buffer Targets
+        </h2>
+        <ul>
+          <li>glBufferData</li>
+          <li>glBufferSubData</li>
+          <li>glMapBufferRange​</li>
+          <li>glCopyBufferSubData</li>
+        </ul>
+      </td>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_PIXEL_PACK_BUFFER​
+        </h2>
+        <ul>
+          <li>glTexImage*</li>
+          <li>glTexSubImage*​</li>
+          <li>glDrawPixels</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_PIXEL_UNPACK_BUFFER​
+        </h2>
+        <ul>
+          <li>glGetTexImage*</li>
+          <li>glGetTexSubImage*</li>
+          <li>glReadPixels​</li>
+        </ul>
+      </td>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_ARRAY_BUFFER
+        </h2>
+        <ul>
+          <li>glDrawArrays (etc)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_ELEMENT_ARRAY_BUFFER
+        </h2>
+        <ul>
+          <li>glDrawElements (etc)</li>
+        </ul>
+      </td>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_DRAW_INDIRECT_BUFFER​
+        </h2>
+        <ul>
+          <li>glDrawArraysIndirect</li>
+          <li>glDrawElementsIndirect</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_UNIFORM_BUFFER​
+        </h2>
+        <ul>
+          <li>glUniformBlockBinding</li>
+        </ul>
+      </td>
+      <td>
+      </td>
+    </tr>
+  </table>
 </div>
+
+<!-- Indexed Buffer Objects
+<div class="slide">
+  <div class="slidetitle">
+    Indexed Buffer Objects
+  </div>
+  <!-- TODO
+</div-->
