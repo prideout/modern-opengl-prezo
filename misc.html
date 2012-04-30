@@ -97,32 +97,43 @@
 </div>
 
 <!-- Sorry Folks -->
-<div class="slide">
+<div class="slide tk-museo-sans">
   <div class="slidetitle400 tk-museo-sans">
     Stuff I missed...
   </div>
-  <div style="color:#f00;font-size:300px;text-align:center">
-    Atomic Counters
-    GL_ARB_debug_output
-    Viewport Arrays
-    Dual Source Blending
-    <a href="http://developer.download.nvidia.com/opengl/tutorials/bindless_graphics.pdf">
-      Bindless Graphics
-    </a>
-    <ul>
-      <li>
-        <a href="http://developer.download.nvidia.com/opengl/specs/GL_NV_bindless_texture.txt">
-          NV_bindless_texture
-        </a>
-      </li>
-      <li>
-        GL_NV_shader_buffer_load
-      </li>
-      <li>
-        GL_NV_vertex_buffer_unified_memory
-      </li>
-    </ul>
-    <code>uniform sampler2D* foo;</code>
-    <code>glMakeTextureHandleResidentNV(...)</code>
-  </div>
+  <ul>
+    <li style="font-size:150%">Atomic Counters</li>
+    <li style="font-size:150%">GL_ARB_debug_output</li>
+    <li style="font-size:150%">Viewport Arrays</li>
+    <li style="font-size:150%">Dual Source Blending</li>
+    <hr>
+    <li>
+      <span style="font-size:200%">
+        Bindless Graphics
+      </span>
+      <a href="http://developer.download.nvidia.com/opengl/tutorials/bindless_graphics.pdf">
+        nv prezo
+      </a>
+      <ul>
+        <li>
+          <a href="http://developer.download.nvidia.com/opengl/specs/GL_NV_bindless_texture.txt">
+            NV_bindless_texture
+          </a>
+        </li>
+        <li>
+          NV_shader_buffer_load
+        </li>
+        <li>
+          NV_vertex_buffer_unified_memory
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <pre class="simplewrapper150"><code class="glsl">TRIM6
+      uniform sampler2D* foo;
+  </code></pre>
+  <br>
+  <pre class="simplewrapper150"><code class="cpp">TRIM6
+      glMakeTextureHandleResidentNV(...);
+  </code></pre>
 </div>
