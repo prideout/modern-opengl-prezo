@@ -62,3 +62,67 @@
     <li>GL_QUERY_BY_REGION_WAIT, GL_QUERY_BY_REGION_NO_WAIT</li>
   </ul>
 </div>
+
+<!-- Image Objects -->
+<div class="slide">
+  <div class="slidetitle400 tk-museo-sans">
+    Image Load / Store
+  </div>
+  <pre class="simplewrapper150"><code class="glsl">TRIM6
+      uniform image2D alphaImage;
+      uniform iimage1D betaImage;
+      ...
+      vec4 color = ...;
+      ivec2 coord = ...;
+      imageStore(alphaImage, coord, color);
+      ...
+      color = imageLoad(alphaImage, coord); 
+      ...
+      int i = ...; // 1D coordinate
+      int foo = imageAtomicAdd(betaImage, i, 17)
+  </code></pre>
+  <br>
+  <!-- p 263 of spec (and p101)-->
+  <pre class="simplewrapper"><code class="cpp">TRIM6
+      GLuint imageLoc = glGetUniformLocation(prog, "alphaImage");
+      glUniform1i(imageLoc, 3); // must be < GL_MAX_IMAGE_UNITS
+      
+      glBindImageTexture(3, texObj, miplevel,
+                         GL_FALSE, 0, // <-- for layered textures
+                         GL_READ_WRITE, GL_RGBA8);
+  </code></pre>
+  <ul class="tk-museo-sans">
+    <li>see also: coherent volatile restrict readonly writeonly memoryBarrier()</li>
+  </ul>
+</div>
+
+<!-- Sorry Folks -->
+<div class="slide">
+  <div class="slidetitle400 tk-museo-sans">
+    Stuff I missed...
+  </div>
+  <div style="color:#f00;font-size:300px;text-align:center">
+    Atomic Counters
+    GL_ARB_debug_output
+    Viewport Arrays
+    Dual Source Blending
+    <a href="http://developer.download.nvidia.com/opengl/tutorials/bindless_graphics.pdf">
+      Bindless Graphics
+    </a>
+    <ul>
+      <li>
+        <a href="http://developer.download.nvidia.com/opengl/specs/GL_NV_bindless_texture.txt">
+          NV_bindless_texture
+        </a>
+      </li>
+      <li>
+        GL_NV_shader_buffer_load
+      </li>
+      <li>
+        GL_NV_vertex_buffer_unified_memory
+      </li>
+    </ul>
+    <code>uniform sampler2D* foo;</code>
+    <code>glMakeTextureHandleResidentNV(...)</code>
+  </div>
+</div>

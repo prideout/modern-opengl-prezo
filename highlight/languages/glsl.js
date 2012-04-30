@@ -19,6 +19,7 @@ hljs.LANGUAGES.glsl = function(){
       'vec4': 1,
       'vec3': 1,
       'vec2': 1,
+      'ivec2': 1,
 
       'false': 1, 'int': 1, 'float': 1, 'while': 1, 'private': 1, 'char': 1,
       'catch': 1, 'export': 1, 'virtual': 1, 'operator': 2, 'sizeof': 2,
