@@ -29,3 +29,36 @@
     </a>
   </div>
 </div>
+
+<!-- Conditional Rendering -->
+<div class="slide">
+  <style scoped="true">
+    ul { list-style-type: none }
+  </style>
+  <div class="slidetitle400 tk-museo-sans">
+    Conditional Rendering
+  </div>
+  <pre class="simplewrapper150"><code class="cpp">TRIM6
+      GLuint query;
+      glGenQueries(1, &query);
+      ...
+      glColorMaski(0, GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+      glDepthMask(GL_FALSE);
+      glBeginQuery(GL_ANY_SAMPLES_PASSED, query);
+      // ...render bounding box...
+      glEndQuery(...);
+      glEndQuery(GL_ANY_SAMPLES_PASSED);
+      glColorMaski(0, GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+      glDepthMask(GL_TRUE);
+      
+      // ...render various stuff while waiting for results...
+      
+      glBeginConditionalRender(query, GL_QUERY_WAIT);
+      // ...render full geometry...
+      glEndConditionalRender();
+  </code></pre>
+  <ul class="tk-museo-sans">
+    <li>GL_QUERY_NO_WAIT</li>
+    <li>GL_QUERY_BY_REGION_WAIT, GL_QUERY_BY_REGION_NO_WAIT</li>
+  </ul>
+</div>
