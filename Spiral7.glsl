@@ -31,8 +31,7 @@ void main()
 -- TES
 
 layout(triangles, equal_spacing, ccw) in;
-
-layout(binding=0) uniform sampler2D DispMap;
+uniform sampler2D DispMap;
 
 in vec2 tcPosition[];
 out vec3 tePosition;
