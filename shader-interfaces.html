@@ -272,7 +272,7 @@ glDrawBuffers(2, &buffers[0]);</code></pre>
   <table style="width:95%">
     <tr>
       <td style="width:45%">
-        <div class="codewrapper">
+        <div class="codewrapper" style="font-size:75%">
           <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
 
 subroutine vec3 IlluminationFunc(vec3 N, vec3 L);
@@ -345,8 +345,8 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
 <div class="slide">
   <div class="codewrapper" style="width:90%;font-size:105%;margin:auto">
     <pre><code class="cpp">static GLuint LoadProgram(const char* vsSource,
-                          const char* gsSource,
-                          const char* fsSource)
+                           const char* gsSource,
+                           const char* fsSource)
 {
     GLuint programHandle = glCreateProgram();
     GLuint vsHandle = glCreateShader(GL_VERTEX_SHADER);

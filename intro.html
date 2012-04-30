@@ -47,11 +47,23 @@
 </div-->
 
 <!-- Summary -->
-<div class="slide">
+<!--div class="slide">
   <ul class="items tk-museo-sans">
     <li>1  Evolution of the OpenGL Pipe</li>
     <li>2  Whirlwind Tour of OpenGL 4.2</li>
     <li>3  Demos & Code Walkthroughs</li>
+  </ul>
+</div-->
+<div class="slide">
+  <ul class="longitems tk-museo-sans">
+    <li>Evolution of the OpenGL Pipe</li>
+    <li>GLSL, Shader Interfaces</li>
+    <li>Vertex Submission</li>
+    <li>Demo: Instancing, Layered FBOs</li>
+    <li>Demo: Tessellation Shaders</li>
+    <li>Transform Feedback</li>
+    <li>Textures, Buffer Objects</li>
+    <li>Misc 4.2 Features / Extensions</li>
   </ul>
 </div>
 
@@ -82,8 +94,8 @@ varying vec2 vTexCoord;
 varying vec3 vNormal;
 void main() {
     float df = dot(LightDir,vNormal);
-    vec3 c = df * texture2D(Baboon, vTexCoord).rgb;
-    gl_FragColor = vec4(c, 1);
+    vec4 c = df * texture2D(Baboon, vTexCoord);
+    gl_FragColor = vec4(c.rgb, 1);
 }</code></pre>
         </div>
         <div class="codewrapper">
@@ -152,8 +164,8 @@ in vec2 gTexCoord;
 in vec3 gNormal;
 void main() {
     float df = dot(LightDir,gNormal);
-    vec3 c = df*texture2D(Baboon, gTexCoord).rgb;
-    gl_FragColor = vec4(c, 1);
+    vec3 c = df * texture2D(Baboon, gTexCoord);
+    gl_FragColor = vec4(c.rgb, 1);
 }</code></pre>
         </div>
       </td>
@@ -213,8 +225,8 @@ in GSOut {
 
 void main() {
     float df = dot(LightDir, In.Normal);
-    vec3 c = df*<b>texture</b>(Baboon, In.TexCoord).rgb;
-    CrazyColorChannel = vec4(c, 1);
+    vec4 c = df * <b>texture</b>(Baboon, In.TexCoord);
+    CrazyColorChannel = vec4(c.rgb, 1);
 }</code></pre>
         </div>
       </td>
