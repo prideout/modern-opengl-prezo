@@ -3,11 +3,6 @@
 in vec2 Position;
 out vec2 vPosition;
 
-uniform mat4 Projection;
-uniform mat4 Modelview;
-uniform mat4 ViewMatrix;
-uniform mat4 ModelMatrix;
-
 void main()
 {
     vPosition = Position;
@@ -37,11 +32,15 @@ in vec2 tcPosition[];
 out vec3 tePosition;
 out vec3 teNormal;
 out float teDisp;
-uniform mat4 Projection;
-uniform mat4 Modelview;
-const float pi = atan(1) * 4;
+
+//uniform Transform {
+uniform    mat4 Projection;
+uniform    mat4 Modelview;
+//};
 
 uniform float Alpha = 0.8;
+const float Scale = 1.25;
+const float pi = 4*atan(1);
 
 // u and v in [0,2π] 
 // x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
@@ -67,11 +66,12 @@ vec3 ForwardDifference(float u, float v, vec3 A)
 
 vec3 AnalyticNormal(float u, float v, vec3 A)
 {
-    float v2 = v*v;
-    float pi2 = pi*pi;
-    float x = -Alpha*(-v/(2*pi) + 1)*(-Alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*sin(2*v) - Alpha*(-v/(2*pi) + 1)*(2*Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*cos(2*v) - Alpha*(cos(u) + 1)*sin(2*v)/(2*pi) + 0.2*cos(2*v))*cos(u);
-    float y = Alpha*(-v/(2*pi) + 1)*(-Alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*cos(2*v) + Alpha*(-v/(2*pi) + 1)*(-2*Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) - Alpha*(cos(u) + 1)*cos(2*v)/(2*pi) - 0.2*sin(2*v))*cos(u);
-    float z = Alpha*(-0.5*Alpha*v2*cos(u) - 0.5*Alpha*v2 + 2.0*pi*Alpha*v*cos(u) + 2.0*pi*Alpha*v - 2.0*pi2*Alpha*cos(u) - 2.0*pi2*Alpha + 0.1*pi*v - 0.2*pi2)*sin(u)/pi2;
+    float v2 = v*v;    float pi2 = pi*pi;
+    float su = sin(u); float s2v = sin(2*v);
+    float cu = cos(u); float c2v = cos(2*v);
+    float x = -Alpha*(-v/(2*pi) + 1)*(-Alpha*su/(2*pi) + 1/(2*pi))*su*s2v - Alpha*(-v/(2*pi) + 1)*(2*Alpha*(-v/(2*pi) + 1)*(cu + 1)*c2v - Alpha*(cu + 1)*s2v/(2*pi) + 0.2*c2v)*cu;
+    float y = Alpha*(-v/(2*pi) + 1)*(-Alpha*su/(2*pi) + 1/(2*pi))*su*c2v + Alpha*(-v/(2*pi) + 1)*(-2*Alpha*(-v/(2*pi) + 1)*(cu + 1)*s2v - Alpha*(cu + 1)*c2v/(2*pi) - 0.2*s2v)*cu;
+    float z = Alpha*(-0.5*Alpha*v2*cu - 0.5*Alpha*v2 + 2.0*pi*Alpha*v*cu + 2.0*pi*Alpha*v - 2.0*pi2*Alpha*cu - 2.0*pi2*Alpha + 0.1*pi*v - 0.2*pi2)*su/pi2;
     return normalize(vec3(x, y, z));
 }
 
@@ -80,8 +80,6 @@ vec3 HornNormal(float u, float v, vec3 A)
     //return ForwardDifference(u, v, A);
     return AnalyticNormal(u, v, A);
 }
-
-const float Scale = 1.25;
 
 void main()
 {
