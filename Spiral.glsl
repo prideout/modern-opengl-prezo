@@ -41,39 +41,57 @@ uniform mat4 Projection;
 uniform mat4 Modelview;
 const float pi = atan(1) * 4;
 
+uniform float Alpha = 0.8;
+
 // u and v in [0,2π] 
 // x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
 // y(u,v) = α (1-v/(2π)) sin(n v) (1 + cos(u)) + γ sin(n v)
 // z(u,v) = α (1-v/(2π)) sin(u) + β v/(2π)
-vec3 ParametricHorn(float u, float v, float alpha)
+vec3 ParametricHorn(float u, float v)
 {
-    float x = alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*cos(2*v) + 0.1*cos(2*v);
-    float y = alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) + 0.1*sin(2*v);
-    float z = alpha*(-v/(2*pi) + 1)*sin(u) + v/(2*pi);
+    float x = Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*cos(2*v) + 0.1*cos(2*v);
+    float y = Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) + 0.1*sin(2*v);
+    float z = Alpha*(-v/(2*pi) + 1)*sin(u) + v/(2*pi);
     return vec3(x, y, z);
 }
 
-vec3 HornNormal(float u, float v, float alpha, vec3 A)
+subroutine vec3 ComputeNormal(float u, float v, vec3 A);
+
+vec3 ForwardDifference(float u, float v, vec3 A)
 {
     float du = 0.0001; float dv = 0.0001;
-    vec3 C = ParametricHorn(u + du, v, alpha);
-    vec3 B = ParametricHorn(u, v + dv, alpha);
+    vec3 C = ParametricHorn(u + du, v);
+    vec3 B = ParametricHorn(u, v + dv);
     return normalize(cross(B - A, C - A));
+}
+
+vec3 AnalyticNormal(float u, float v, vec3 A)
+{
+    float v2 = v*v;
+    float pi2 = pi*pi;
+    float x = -Alpha*(-v/(2*pi) + 1)*(-Alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*sin(2*v) - Alpha*(-v/(2*pi) + 1)*(2*Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*cos(2*v) - Alpha*(cos(u) + 1)*sin(2*v)/(2*pi) + 0.2*cos(2*v))*cos(u);
+    float y = Alpha*(-v/(2*pi) + 1)*(-Alpha*sin(u)/(2*pi) + 1/(2*pi))*sin(u)*cos(2*v) + Alpha*(-v/(2*pi) + 1)*(-2*Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) - Alpha*(cos(u) + 1)*cos(2*v)/(2*pi) - 0.2*sin(2*v))*cos(u);
+    float z = Alpha*(-0.5*Alpha*v2*cos(u) - 0.5*Alpha*v2 + 2.0*pi*Alpha*v*cos(u) + 2.0*pi*Alpha*v - 2.0*pi2*Alpha*cos(u) - 2.0*pi2*Alpha + 0.1*pi*v - 0.2*pi2)*sin(u)/pi2;
+    return normalize(vec3(x, y, z));
+}
+
+vec3 HornNormal(float u, float v, vec3 A)
+{
+    //return ForwardDifference(u, v, A);
+    return AnalyticNormal(u, v, A);
 }
 
 const float Scale = 1.25;
 
 void main()
 {
-    float alpha = 0.8;
-
     vec2 p0 = gl_TessCoord.x * tcPosition[0];
     vec2 p1 = gl_TessCoord.y * tcPosition[1];
     vec2 p2 = gl_TessCoord.z * tcPosition[2];
     vec2 p = (p0 + p1 + p2);
 
-    tePosition = ParametricHorn(p.x, p.y, alpha);
-    teNormal = HornNormal(p.x, p.y, alpha, tePosition);
+    tePosition = ParametricHorn(p.x, p.y);
+    teNormal = HornNormal(p.x, p.y, tePosition);
 
     const float DispPresence = 0.05;
     vec2 uv = vec2(p.x/(2*pi), p.y/(2*pi));

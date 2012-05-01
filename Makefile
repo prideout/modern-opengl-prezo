@@ -3,6 +3,7 @@ CFLAGS=-std=c99 -Wall -c -Wc++-compat -O3 -fextended-identifiers
 LIBS=-lX11 -lGL -lpng
 DEMOS=\
 	Spiral \
+	Simple \
 
 SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=
