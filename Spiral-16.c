@@ -1,4 +1,5 @@
 // TODO list
+// - quadbased, 0-vert, tess
 // - Alpha animation
 // - uniform blocks
 // - subroutines
@@ -91,7 +92,7 @@ void PezRender()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPatchParameteri(GL_PATCH_VERTICES, 4);
-    glDrawArrays(GL_PATCHES, 0, 256 * 4); // chop a grid into 16 x 16 cells
+    glDrawArrays(GL_PATCHES, 0, 256 * 4);
 }
 
 static GLuint CurrentProgram()

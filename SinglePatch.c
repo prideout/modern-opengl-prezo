@@ -1,12 +1,3 @@
-// TODO list
-// - quadbased, 0-vert, tess
-// - Alpha animation
-// - uniform blocks
-// - subroutines
-// - DSA uniform settings
-// - separable programs
-// - explicit attrib,uniform bindings
-
 #include <stdlib.h>
 #include <png.h>
 #include "pez.h"
