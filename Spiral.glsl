@@ -39,9 +39,13 @@ uniform    mat4 Projection;
 uniform    mat4 Modelview;
 //};
 
-uniform float Alpha = 0.8;
-const float Scale = 1.25;
-const float pi = 4*atan(1);
+uniform float Time;
+
+const float Pi = 4*atan(1);
+const float Pi2 = Pi*Pi;
+const float Deform = abs(0.25 * sin(1.5 * Time));
+const float Alpha = 0.8 - 2.0 * Deform;
+const float Scale = 1.25 + Deform * 1.0;
 
 // u and v in [0,2π] 
 // x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
@@ -49,9 +53,9 @@ const float pi = 4*atan(1);
 // z(u,v) = α (1-v/(2π)) sin(u) + β v/(2π)
 vec3 ParametricHorn(float u, float v)
 {
-    float x = Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*cos(2*v) + 0.1*cos(2*v);
-    float y = Alpha*(-v/(2*pi) + 1)*(cos(u) + 1)*sin(2*v) + 0.1*sin(2*v);
-    float z = Alpha*(-v/(2*pi) + 1)*sin(u) + v/(2*pi);
+    float x = Alpha*(-v/(2*Pi) + 1)*(cos(u) + 1)*cos(2*v) + 0.1*cos(2*v);
+    float y = Alpha*(-v/(2*Pi) + 1)*(cos(u) + 1)*sin(2*v) + 0.1*sin(2*v);
+    float z = Alpha*(-v/(2*Pi) + 1)*sin(u) + v/(2*Pi);
     return vec3(x, y, z);
 }
 
@@ -67,12 +71,12 @@ vec3 ForwardDifference(float u, float v, vec3 A)
 
 vec3 AnalyticNormal(float u, float v, vec3 A)
 {
-    float v2 = v*v;    float pi2 = pi*pi;
+    float v2 = v*v;
     float su = sin(u); float s2v = sin(2*v);
     float cu = cos(u); float c2v = cos(2*v);
-    float x = -Alpha*(-v/(2*pi) + 1)*(-Alpha*su/(2*pi) + 1/(2*pi))*su*s2v - Alpha*(-v/(2*pi) + 1)*(2*Alpha*(-v/(2*pi) + 1)*(cu + 1)*c2v - Alpha*(cu + 1)*s2v/(2*pi) + 0.2*c2v)*cu;
-    float y = Alpha*(-v/(2*pi) + 1)*(-Alpha*su/(2*pi) + 1/(2*pi))*su*c2v + Alpha*(-v/(2*pi) + 1)*(-2*Alpha*(-v/(2*pi) + 1)*(cu + 1)*s2v - Alpha*(cu + 1)*c2v/(2*pi) - 0.2*s2v)*cu;
-    float z = Alpha*(-0.5*Alpha*v2*cu - 0.5*Alpha*v2 + 2.0*pi*Alpha*v*cu + 2.0*pi*Alpha*v - 2.0*pi2*Alpha*cu - 2.0*pi2*Alpha + 0.1*pi*v - 0.2*pi2)*su/pi2;
+    float x = -Alpha*(-v/(2*Pi) + 1)*(-Alpha*su/(2*Pi) + 1/(2*Pi))*su*s2v - Alpha*(-v/(2*Pi) + 1)*(2*Alpha*(-v/(2*Pi) + 1)*(cu + 1)*c2v - Alpha*(cu + 1)*s2v/(2*Pi) + 0.2*c2v)*cu;
+    float y = Alpha*(-v/(2*Pi) + 1)*(-Alpha*su/(2*Pi) + 1/(2*Pi))*su*c2v + Alpha*(-v/(2*Pi) + 1)*(-2*Alpha*(-v/(2*Pi) + 1)*(cu + 1)*s2v - Alpha*(cu + 1)*c2v/(2*Pi) - 0.2*s2v)*cu;
+    float z = Alpha*(-0.5*Alpha*v2*cu - 0.5*Alpha*v2 + 2.0*Pi*Alpha*v*cu + 2.0*Pi*Alpha*v - 2.0*Pi2*Alpha*cu - 2.0*Pi2*Alpha + 0.1*Pi*v - 0.2*Pi2)*su/Pi2;
     return normalize(vec3(x, y, z));
 }
 
@@ -86,7 +90,7 @@ void main()
 {
     vec2 uv = (tcPosition + gl_TessCoord.xy) / 16.0;
     uv.y = 1 - uv.y;
-    vec2 p = uv * 2 * pi;
+    vec2 p = uv * 2 * Pi;
 
     tePosition = ParametricHorn(p.x, p.y);
     teNormal = HornNormal(p.x, p.y, tePosition);

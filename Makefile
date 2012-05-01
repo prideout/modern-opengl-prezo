@@ -4,7 +4,6 @@ LIBS=-lX11 -lGL -lpng
 DEMOS=\
 	Spiral \
 	SinglePatch \
-	Simple \
 
 SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=

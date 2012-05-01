@@ -1,5 +1,4 @@
 // TODO list
-// - Alpha animation
 // - uniform blocks
 // - subroutines
 // - DSA uniform settings
