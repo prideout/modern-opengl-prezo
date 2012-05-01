@@ -2,19 +2,13 @@ CC=gcc
 CFLAGS=-std=c99 -Wall -c -Wc++-compat -O3 -fextended-identifiers
 LIBS=-lX11 -lGL -lpng
 DEMOS=\
-	Spiral1 \
-	Spiral2 \
-	Spiral3 \
-	Spiral4a Spiral4b \
-	Spiral5a Spiral5b \
-	Spiral6a Spiral6b \
-	Spiral7 \
+	Spiral \
 
 SHARED=pez.o bstrlib.o pez.linux.o
 PREFIX=
 
-run: Spiral7
-	./Spiral7
+run: Spiral
+	./Spiral
 
 all: $(DEMOS)
 
