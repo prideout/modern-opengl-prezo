@@ -4,6 +4,7 @@
 // - DSA uniform settings
 // - separable programs
 // - explicit attrib,uniform bindings
+// - make a list (note to self is IMPORTANT)
 
 #include <stdlib.h>
 #include <png.h>
