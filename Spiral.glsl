@@ -1,24 +1,24 @@
 -- VS
 
-out vec2 vPosition;
+out vec2 vGridCoord;
 
 void main()
 {
     int i = gl_VertexID / 4;
-    vPosition = vec2(i / 16, i % 16);
+    vGridCoord = vec2(i / 16, i % 16);
 }
 
 -- TCS
 
-in vec2 vPosition[];
+in vec2 vGridCoord[];
 
 layout(vertices = 4) out;
 
-patch out vec2 tcPosition;
+patch out vec2 tcGridCoord;
 
 void main()
 {
-    tcPosition = vPosition[gl_InvocationID];
+    tcGridCoord = vGridCoord[gl_InvocationID];
     gl_TessLevelInner[0] = gl_TessLevelInner[1] =
     gl_TessLevelOuter[0] = gl_TessLevelOuter[1] = 
     gl_TessLevelOuter[2] = gl_TessLevelOuter[3] = 32;
@@ -29,8 +29,8 @@ void main()
 layout(quads, equal_spacing, ccw) in;
 uniform sampler2D DispMap;
 
-patch in vec2 tcPosition;
-out vec3 tePosition;
+patch in vec2 tcGridCoord;
+out vec3 teGridCoord;
 out vec3 teNormal;
 out float teDisp;
 
@@ -88,19 +88,19 @@ vec3 HornNormal(float u, float v, vec3 A)
 
 void main()
 {
-    vec2 uv = (tcPosition + gl_TessCoord.xy) / 16.0;
+    vec2 uv = (tcGridCoord + gl_TessCoord.xy) / 16.0;
     uv.y = 1 - uv.y;
     vec2 p = uv * 2 * Pi;
 
-    tePosition = ParametricHorn(p.x, p.y);
-    teNormal = HornNormal(p.x, p.y, tePosition);
+    teGridCoord = ParametricHorn(p.x, p.y);
+    teNormal = HornNormal(p.x, p.y, teGridCoord);
 
     const float DispPresence = 0.05;
     vec2 tc = vec2(1,5) * uv;
     teDisp = texture(DispMap, tc).r;
-    tePosition += (1-uv.y) * DispPresence * teDisp * teNormal;
+    teGridCoord += (1-uv.y) * DispPresence * teDisp * teNormal;
 
-    gl_Position = Projection * Modelview * vec4(Scale * tePosition, 1);
+    gl_Position = Projection * Modelview * vec4(Scale * teGridCoord, 1);
 }
 
 -- GS
@@ -108,7 +108,7 @@ void main()
 out vec3 gNormal;
 out float gDisp;
 
-in vec3 tePosition[3];
+in vec3 teGridCoord[3];
 in vec3 teNormal[3];
 in float teDisp[3];
 
@@ -118,9 +118,9 @@ layout(triangle_strip, max_vertices = 3) out;
 
 void main()
 {
-    vec3 A = tePosition[0];
-    vec3 B = tePosition[1];
-    vec3 C = tePosition[2];
+    vec3 A = teGridCoord[0];
+    vec3 B = teGridCoord[1];
+    vec3 C = teGridCoord[2];
     gNormal = NormalMatrix * normalize(cross(B - A, C - A));
 
     for (int i = 0; i < 3; i++) {
