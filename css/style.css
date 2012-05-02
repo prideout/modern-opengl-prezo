@@ -232,10 +232,17 @@ pre.simplewrapper150 {
     padding-right: 48px;
 }
 
+.longitems {
+    font-size: 48px;
+    font-weight: 900;
+    background-color: #bba;
+    list-style: none;
+}
+
 .listitems {
     font-size: 48px;
     font-weight: 900;
-    background-color: #eee;
+    background-color: #bba;
     list-style: none;
     /*list-style-image:url('sqpurple.gif');*/
     padding-right: 48px;
