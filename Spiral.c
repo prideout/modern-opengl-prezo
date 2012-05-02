@@ -23,11 +23,8 @@ struct SceneParameters {
 } Scene;
 
 static GLuint LoadProgram(const char* vsKey, const char* tcsKey, const char* tesKey, const char* gsKey, const char* fsKey);
-static GLuint CurrentProgram();
 static GLuint LoadTexture(const char* filename);
 
-#define u(x) glGetUniformLocation(CurrentProgram(), x)
-#define a(x) glGetAttribLocation(CurrentProgram(), x)
 #define OpenGLError GL_NO_ERROR == glGetError(),                        \
         "%s:%d - OpenGL Error - %s", __FILE__, __LINE__, __FUNCTION__   \
 
@@ -132,8 +129,9 @@ void PezRender()
         GLuint anaNorm = glGetSubroutineIndex(prog, stage, "AnalyticNormal");
 
         // This sets per-context state:
-        GLuint index = fwdDiff;
-        glUniformSubroutinesuiv(stage, 1, &index);
+        GLuint indices[16];
+        indices[illum]= fwdDiff;
+        glUniformSubroutinesuiv(stage, 1, indices);
     }
 
     // old school way of updating uniforms:
@@ -149,13 +147,6 @@ void PezRender()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPatchParameteri(GL_PATCH_VERTICES, 4);
     glDrawArrays(GL_PATCHES, 0, 256 * 4);
-}
-
-static GLuint CurrentProgram()
-{
-    GLuint p;
-    glGetIntegerv(GL_CURRENT_PROGRAM, (GLint*) &p);
-    return p;
 }
 
 static GLuint LoadProgram(const char* vsKey, const char* tcsKey, const char* tesKey, const char* gsKey, const char* fsKey)
