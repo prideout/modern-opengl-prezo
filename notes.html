@@ -20,12 +20,13 @@ T - to be done
 : - on deck
 P - punt
 ? - existence is tentative
+C - done but cut from the deck
 
 # intro
 D Title
 D Outline
 D Circa 2004
-D Circa 2009
+C Circa 2009
 D Circa 2012
 D Core Profile
 D Religion - Old vs New
@@ -36,36 +37,35 @@ D Newer vertex submission (mention integer formats)
 D Vertex Array Objects
 D Table of Draw Calls, including DrawArraysIndirect and DrawAuto
 D Indirect Buffer Structure
-D Primitive Restart
+C Primitive Restart
 P Instancing, VertexAttribDivisor
 D DEMO 
 ? "Indexed" Buffers - BindBufferRange and BindBufferBase
 
 # types-table
-D Table of GLSL Types
+C Table of GLSL Types
 
 # shader-interfaces
 D Blocks
-D Uniform Blocks
-D Uniform Buffers --------> Move this?
+C Uniform Blocks
+C Uniform Buffers
+D Buffer Objects
 D Binding Vertex Attribs
+D Old Fragment Ouputs - Don't use!
+C Dealing with Depth
+T Read and Draw FBO Binding Points (search gmail for "Color Index")
+T New Blending Funcs and Dual Source Blending -- http://www.opengl.org/wiki/Blending#Dual_Source_Blending
+T Two ways of doing MRT - Individual color attachments, or individual FBOs
 D Binding Fragment Outputs
 D Subroutines
 D Old-style program compiling
 D Separable Programs
 D Shader Binaries
 
-# fragment-shaders
-D Old Fragment Ouputs - Don't use!
-D Dealing with Depth
-T Read and Draw FBO Binding Points (search gmail for "Color Index")
-T New Blending Funcs and Dual Source Blending -- http://www.opengl.org/wiki/Blending#Dual_Source_Blending
-T Two ways of doing MRT - Individual color attachments, or individual FBOs
-
 # transform-feedback
-D Transform Feedback Title slide
-D Transform Feedback Old Style - Interleaved - UsesQuery - StreamOut
-D Transform Feedback Old Style - Separate - UsesQuery
+C Transform Feedback Title slide
+C Transform Feedback Old Style - Interleaved - UsesQuery - StreamOut
+C Transform Feedback Old Style - Separate - UsesQuery
 D Transform Feedback New Style - Mixed - QueryFree
 D Transform Feedback MultiStream
 D Transform Feedback for Debugging
@@ -80,7 +80,6 @@ D Texturing in the C API - Compressed formats
 ? Texturing in the C API - 16-32 Float / sRGB / Integer
 D Texturing in the C API - Texture Buffers
 D Pixel Buffer Objects (great for streaming; explain double-buffering). Explain ReadPixels-with-null.
-D Buffer Objects
 ? Index Buffer Objects
 ? Texture Lookups in GLSL
 ? Mipmap Generation

@@ -88,7 +88,102 @@
   </code></pre>
 </div>
 
-<!-- Primitive Restart -->
+<!-- Buffer Objects -->
+<div class="slide">
+  <style>
+    .brow > td {
+       border: solid 1px #000;
+       padding-right: 10px;
+    }
+    ul { list-style-type: none }
+    table#bufferobj {
+       background-color: #ccc;
+       border: solid 10px #000;
+       margin: auto;
+    }
+  </style>
+  <div class="slidetitle">
+    Buffer Objects
+  </div>
+  <table id="bufferobj" class="tk-museo-sans">
+    <tr class="brow">
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          All Buffer Targets
+        </h2>
+        <ul>
+          <li>glBufferData</li>
+          <li>glBufferSubData</li>
+          <li>glMapBufferRange​</li>
+          <li>glCopyBufferSubData</li>
+        </ul>
+      </td>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_PIXEL_PACK_BUFFER​
+        </h2>
+        <ul>
+          <li>glTexImage*</li>
+          <li>glTexSubImage*​</li>
+          <li>glDrawPixels</li>
+        </ul>
+      </td>
+    </tr>
+    <tr class="brow">
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_PIXEL_UNPACK_BUFFER​
+        </h2>
+        <ul>
+          <li>glGetTexImage*</li>
+          <li>glGetTexSubImage*</li>
+          <li>glReadPixels​</li>
+        </ul>
+      </td>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_ARRAY_BUFFER
+        </h2>
+        <ul>
+          <li>glVertexAttrib*</li>
+        </ul>
+      </td>
+    </tr>
+    <tr class="brow">
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_ELEMENT_ARRAY_BUFFER
+        </h2>
+        <ul>
+          <li>glDrawElements (etc)</li>
+        </ul>
+      </td>
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_DRAW_INDIRECT_BUFFER​
+        </h2>
+        <ul>
+          <li>glDrawArraysIndirect</li>
+          <li>glDrawElementsIndirect</li>
+        </ul>
+      </td>
+    </tr>
+    <tr class="brow">
+      <td>
+        <h2 class="tk-museo-sans smallheader">
+          GL_UNIFORM_BUFFER​
+        </h2>
+        <ul>
+          <li>glUniformBlockBinding</li>
+        </ul>
+      </td>
+      <td>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- Primitive Restart --
 <div class="slide">
   <div class="slidetitle">
     Primitive Restart
@@ -110,9 +205,9 @@
       GLint counts[3] = ...;
       glMultiDrawArrays(GL_TRIANGLE_STRIP, starts, counts, 3);
   </code></pre>
-</div>
+</div>-->
 
-<!-- glDraw* -->
+<!-- glDraw* --
 <div class="slide">
   <div class="slidetitle">
     glDraw*
@@ -139,7 +234,7 @@
 <span class="draw-itf">glDrawTransformFeedbackInstanced</span>(enum mode, uint id, sizei primcount)
 <span class="draw-itf">glDrawTransformFeedbackStreamInstanced</span>(enum mode, uint id, uint stream, sizei primcount)</code></pre>
 
-</div>
+</div-->
 
 <!-- Indirect Draw Calls -->
 <div class="slide">
@@ -179,8 +274,8 @@
   <div class="slidetitle">
     D E M O
   </div>
-  <img src="images/FluidSim.png"
-       alt="GPU Fluid Simulation"
+  <img src="images/spiral.png"
+       alt="Displaced Parametric Surface"
        style="margin:auto; margin-top:50px; display:block">
 </div>
 
@@ -189,7 +284,7 @@
   <div class="slidetitle">
     D E M O
   </div>
-  <img src="images/spiral.png"
-       alt="Displaced Parametric Surface"
+  <img src="images/FluidSim.png"
+       alt="GPU Fluid Simulation"
        style="margin:auto; margin-top:50px; display:block">
 </div>
