@@ -1,9 +1,6 @@
 // TODO:
 //
-// - separable programs
-// - explicit attrib,uniform bindings
-// - can we have *real* normals?  if so, maybe go back to the 4-vert example?
-// - swap out the parametric function?
+// - more interface blocks
 // - make a list (note to self is IMPORTANT)
 //
 

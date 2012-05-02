@@ -31,9 +31,6 @@ layout(quads, equal_spacing, ccw) in;
 uniform sampler2D DispMap;
 
 patch in vec2 tcGridCoord;
-out vec3 teGridCoord;
-out vec3 teNormal;
-out float teDisp;
 
 layout(std140) uniform Transform {
     mat4 Projection;
@@ -100,21 +97,27 @@ vec3 AnalyticNormal(float u, float v, vec3 A)
     return normalize(vec3(x, y, z));
 }
 
+out PatchBundle {
+    vec3 GridCoord;
+    vec3 Normal;
+    float Disp;
+} Out;
+
 void main()
 {
     vec2 uv = (tcGridCoord + gl_TessCoord.xy) / 16.0;
     uv.y = 1 - uv.y;
     vec2 p = uv * 2 * Pi;
 
-    teGridCoord = EvalParametric(p.x, p.y);
-    teNormal = ComputeNormal(p.x, p.y, teGridCoord);
+    Out.GridCoord = EvalParametric(p.x, p.y);
+    Out.Normal = ComputeNormal(p.x, p.y, Out.GridCoord);
 
     const float DispPresence = 0.05;
     vec2 tc = vec2(1,5) * uv;
-    teDisp = texture(DispMap, tc).r;
-    teGridCoord += (1-uv.y) * DispPresence * teDisp * teNormal;
+    Out.Disp = texture(DispMap, tc).r;
+    Out.GridCoord += (1-uv.y) * DispPresence * Out.Disp * Out.Normal;
 
-    gl_Position = Projection * Modelview * vec4(Scale * teGridCoord, 1);
+    gl_Position = Projection * Modelview * vec4(Scale * Out.GridCoord, 1);
 }
 
 -- GS
@@ -122,9 +125,11 @@ void main()
 out vec3 gNormal;
 out float gDisp;
 
-in vec3 teGridCoord[3];
-in vec3 teNormal[3];
-in float teDisp[3];
+in PatchBundle {
+    vec3 GridCoord;
+    vec3 Normal;
+    float Disp;
+} In[3];
 
 uniform mat3 NormalMatrix;
 layout(triangles) in;
@@ -132,13 +137,13 @@ layout(triangle_strip, max_vertices = 3) out;
 
 void main()
 {
-    vec3 A = teGridCoord[0];
-    vec3 B = teGridCoord[1];
-    vec3 C = teGridCoord[2];
+    vec3 A = In[0].GridCoord;
+    vec3 B = In[1].GridCoord;
+    vec3 C = In[2].GridCoord;
     gNormal = NormalMatrix * normalize(cross(B - A, C - A));
 
     for (int i = 0; i < 3; i++) {
-        gDisp = teDisp[i];
+        gDisp = In[i].Disp;
         gl_Position = gl_in[i].gl_Position;
         EmitVertex();
     }
