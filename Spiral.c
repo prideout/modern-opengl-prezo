@@ -3,6 +3,7 @@
 // - separable programs
 // - explicit attrib,uniform bindings
 // - can we have *real* normals?  if so, maybe go back to the 4-vert example?
+// - swap out the parametric function?
 // - make a list (note to self is IMPORTANT)
 //
 
@@ -120,20 +121,6 @@ void PezRender()
         glUniformBlockBinding(prog, idx, bp);
     }
 
-    bool updateSubroutines = true;
-    if (updateSubroutines) {
-
-        GLenum stage = GL_TESS_EVALUATION_SHADER;
-        GLuint illum = glGetSubroutineUniformLocation(prog, stage, "ComputeNormal");
-        GLuint fwdDiff = glGetSubroutineIndex(prog, stage, "ForwardDifference");
-        GLuint anaNorm = glGetSubroutineIndex(prog, stage, "AnalyticNormal");
-
-        // This sets per-context state:
-        GLuint indices[16];
-        indices[illum]= fwdDiff;
-        glUniformSubroutinesuiv(stage, 1, indices);
-    }
-
     // old school way of updating uniforms:
     float* pNormalMatrix = (float*) &Scene.NormalMatrix;
     GLuint normalLoc = glGetUniformLocation(prog, "NormalMatrix");
@@ -142,6 +129,31 @@ void PezRender()
 
     // do it again in DSA style:
     glProgramUniformMatrix3fv(prog, normalLoc, 1, 0, pNormalMatrix);
+
+    bool updateSubroutines = true;
+    if (updateSubroutines) {
+
+        GLenum stage = GL_TESS_EVALUATION_SHADER;
+
+        GLuint illum = glGetSubroutineUniformLocation(prog, stage, "ComputeNormal");
+        GLuint fwdDiff = glGetSubroutineIndex(prog, stage, "ForwardDifference");
+        GLuint anaNorm = glGetSubroutineIndex(prog, stage, "AnalyticNormal");
+
+        GLuint surface = glGetSubroutineUniformLocation(prog, stage, "EvalParametric");
+        GLuint klein = glGetSubroutineIndex(prog, stage, "KleinBottle");
+        GLuint spiral = glGetSubroutineIndex(prog, stage, "Spiral");
+
+        // Make sure there are two subroutines we can pick:
+        int activeCount;
+        glGetProgramStageiv(prog, stage, GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS, &activeCount);
+        pezCheck(activeCount == 2);
+
+        // This sets per-context state:
+        GLuint indices[2];
+        indices[illum] = fwdDiff;
+        indices[surface] = spiral;
+        glUniformSubroutinesuiv(stage, 2, indices);
+    }
 
     // clear the screen and render 16x16 vertex-free patches:
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

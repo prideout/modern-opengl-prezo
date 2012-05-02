@@ -50,8 +50,12 @@ const float Scale = 1.25 + Deform * 1.0;
 subroutine vec3 ComputeNormalFunc(float u, float v, vec3 A);
 subroutine uniform ComputeNormalFunc ComputeNormal;
 
+subroutine vec3 EvalParametricFunc(float u, float v);
+subroutine uniform EvalParametricFunc EvalParametric;
+
 // u and v in [0,2π] 
-vec3 ParametricHorn(float u, float v)
+subroutine(EvalParametricFunc)
+vec3 Spiral(float u, float v)
 {
     float x = Alpha*(-v/(2*Pi) + 1)*(cos(u) + 1)*cos(2*v) + 0.1*cos(2*v);
     float y = Alpha*(-v/(2*Pi) + 1)*(cos(u) + 1)*sin(2*v) + 0.1*sin(2*v);
@@ -59,12 +63,28 @@ vec3 ParametricHorn(float u, float v)
     return vec3(x, y, z);
 }
 
+// u and v in [0,2π] 
+subroutine(EvalParametricFunc)
+vec3 KleinBottle(float u, float v)
+{
+    float x, y, z;
+    if (v < Pi) {
+        x = 3 * cos(v) * (1 + sin(v)) + (2 * (1 - cos(v) / 2)) * cos(v) * cos(u);
+        z = -8 * sin(v) - 2 * (1 - cos(v) / 2) * sin(v) * cos(u);
+    } else {
+        x = 3 * cos(v) * (1 + sin(v)) + (2 * (1 - cos(v) / 2)) * cos(u + Pi);
+        z = -8 * sin(v);
+    }
+    y = -2 * (1 - cos(v) / 2) * sin(u);
+    return 0.125 * vec3(x, y, z);
+}
+
 subroutine(ComputeNormalFunc)
 vec3 ForwardDifference(float u, float v, vec3 A)
 {
     float du = 0.0001; float dv = 0.0001;
-    vec3 C = ParametricHorn(u + du, v);
-    vec3 B = ParametricHorn(u, v + dv);
+    vec3 C = EvalParametric(u + du, v);
+    vec3 B = EvalParametric(u, v + dv);
     return normalize(cross(B - A, C - A));
 }
 
@@ -86,7 +106,7 @@ void main()
     uv.y = 1 - uv.y;
     vec2 p = uv * 2 * Pi;
 
-    teGridCoord = ParametricHorn(p.x, p.y);
+    teGridCoord = EvalParametric(p.x, p.y);
     teNormal = ComputeNormal(p.x, p.y, teGridCoord);
 
     const float DispPresence = 0.05;
