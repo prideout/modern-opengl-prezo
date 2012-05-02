@@ -1,7 +1,5 @@
 // TODO:
 //
-// - subroutines
-// - DSA uniform settings
 // - separable programs
 // - explicit attrib,uniform bindings
 // - can we have *real* normals?  if so, maybe go back to the 4-vert example?
@@ -125,6 +123,19 @@ void PezRender()
         glUniformBlockBinding(prog, idx, bp);
     }
 
+    bool updateSubroutines = true;
+    if (updateSubroutines) {
+
+        GLenum stage = GL_TESS_EVALUATION_SHADER;
+        GLuint illum = glGetSubroutineUniformLocation(prog, stage, "ComputeNormal");
+        GLuint fwdDiff = glGetSubroutineIndex(prog, stage, "ForwardDifference");
+        GLuint anaNorm = glGetSubroutineIndex(prog, stage, "AnalyticNormal");
+
+        // This sets per-context state:
+        GLuint index = fwdDiff;
+        glUniformSubroutinesuiv(stage, 1, &index);
+    }
+
     // old school way of updating uniforms:
     float* pNormalMatrix = (float*) &Scene.NormalMatrix;
     GLuint normalLoc = glGetUniformLocation(prog, "NormalMatrix");
@@ -149,7 +160,7 @@ static GLuint CurrentProgram()
 
 static GLuint LoadProgram(const char* vsKey, const char* tcsKey, const char* tesKey, const char* gsKey, const char* fsKey)
 {
-    GLchar spew[256];
+    GLchar spew[512];
     GLint compileSuccess;
     GLuint programHandle = glCreateProgram();
 

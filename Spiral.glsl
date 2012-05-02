@@ -27,6 +27,7 @@ void main()
 -- TES
 
 layout(quads, equal_spacing, ccw) in;
+
 uniform sampler2D DispMap;
 
 patch in vec2 tcGridCoord;
@@ -46,10 +47,10 @@ const float Deform = abs(0.25 * sin(1.5 * Time));
 const float Alpha = 0.8 - 2.0 * Deform;
 const float Scale = 1.25 + Deform * 1.0;
 
+subroutine vec3 ComputeNormalFunc(float u, float v, vec3 A);
+subroutine uniform ComputeNormalFunc ComputeNormal;
+
 // u and v in [0,2π] 
-// x(u,v) = α (1-v/(2π)) cos(n v) (1 + cos(u)) + γ cos(n v)
-// y(u,v) = α (1-v/(2π)) sin(n v) (1 + cos(u)) + γ sin(n v)
-// z(u,v) = α (1-v/(2π)) sin(u) + β v/(2π)
 vec3 ParametricHorn(float u, float v)
 {
     float x = Alpha*(-v/(2*Pi) + 1)*(cos(u) + 1)*cos(2*v) + 0.1*cos(2*v);
@@ -58,8 +59,7 @@ vec3 ParametricHorn(float u, float v)
     return vec3(x, y, z);
 }
 
-subroutine vec3 ComputeNormal(float u, float v, vec3 A);
-
+subroutine(ComputeNormalFunc)
 vec3 ForwardDifference(float u, float v, vec3 A)
 {
     float du = 0.0001; float dv = 0.0001;
@@ -68,6 +68,7 @@ vec3 ForwardDifference(float u, float v, vec3 A)
     return normalize(cross(B - A, C - A));
 }
 
+subroutine(ComputeNormalFunc)
 vec3 AnalyticNormal(float u, float v, vec3 A)
 {
     float v2 = v*v;
@@ -79,12 +80,6 @@ vec3 AnalyticNormal(float u, float v, vec3 A)
     return normalize(vec3(x, y, z));
 }
 
-vec3 HornNormal(float u, float v, vec3 A)
-{
-    //return ForwardDifference(u, v, A);
-    return AnalyticNormal(u, v, A);
-}
-
 void main()
 {
     vec2 uv = (tcGridCoord + gl_TessCoord.xy) / 16.0;
@@ -92,7 +87,7 @@ void main()
     vec2 p = uv * 2 * Pi;
 
     teGridCoord = ParametricHorn(p.x, p.y);
-    teNormal = HornNormal(p.x, p.y, teGridCoord);
+    teNormal = ComputeNormal(p.x, p.y, teGridCoord);
 
     const float DispPresence = 0.05;
     vec2 tc = vec2(1,5) * uv;
