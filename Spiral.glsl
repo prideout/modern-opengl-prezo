@@ -34,12 +34,11 @@ out vec3 teGridCoord;
 out vec3 teNormal;
 out float teDisp;
 
-//uniform Transform {
-uniform    mat4 Projection;
-uniform    mat4 Modelview;
-//};
-
-uniform float Time;
+layout(std140) uniform Transform {
+    mat4 Projection;
+    mat4 Modelview;
+    float Time;
+};
 
 const float Pi = 4*atan(1);
 const float Pi2 = Pi*Pi;
