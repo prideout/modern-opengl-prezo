@@ -225,7 +225,7 @@ in GSOut {
 
 void main() {
     float df = dot(LightDir, In.Normal);
-    vec4 c = df * <b>texture</b>(Baboon, In.TexCoord);
+    vec4 c = df * texture(Baboon, In.TexCoord);
     CrazyColorChannel = vec4(c.rgb, 1);
 }</code></pre>
         </div>
@@ -247,7 +247,7 @@ out GSOut {
     vec2 TexCoord;
 } Out;
 
-<b>subroutine</b> vec3 NormFunc(vec3, vec3);
+subroutine vec3 NormFunc(vec3, vec3);
 subroutine uniform NormFunc NormVar;
 
 subroutine(NormFunc)

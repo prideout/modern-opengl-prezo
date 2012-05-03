@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="62pt"
+   height="548pt"
+   viewBox="0 0 62 548"
+   id="svg2">
+  <defs
+     id="defs236" />
+  <rect
+     width="100.12012"
+     height="214.48032"
+     rx="0"
+     ry="6.4956312"
+     x="-19.002865"
+     y="57.624256"
+     id="rect3967"
+     style="fill:#ff8080;fill-opacity:1;stroke:#000000;stroke-width:3.94681168;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  <g
+     transform="translate(4,544)"
+     id="node1">
+    <title
+       id="title10">VS</title>
+    <polygon
+       points="7.10543e-15,-516 12,-504 42,-504 54,-516 54,-528 42,-540 42,-540 12,-540 1.42109e-14,-528 "
+       id="polygon12"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 12,-540 c -6,0 -12,6 -12,12"
+       id="path14"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 0,-516 c 0,6 6,12 12,12"
+       id="path16"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 42,-504 c 6,0 12,-6 12,-12"
+       id="path18"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 54,-528 c 0,-6 -6,-12 -12,-12"
+       id="path20"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline22"
+       points="42,-540 12,-540 " />
+    <path
+       d="m 12,-540 c -6,0 -12,6 -12,12"
+       id="path24"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline26"
+       points="1.42109e-14,-528 7.10543e-15,-516 " />
+    <path
+       d="m 0,-516 c 0,6 6,12 12,12"
+       id="path28"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline30"
+       points="12,-504 42,-504 " />
+    <path
+       d="m 42,-504 c 6,0 12,-6 12,-12"
+       id="path32"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline34"
+       points="54,-516 54,-528 " />
+    <path
+       d="m 54,-528 c 0,-6 -6,-12 -12,-12"
+       id="path36"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="27"
+       y="-518.90002"
+       id="text38"
+       style="font-size:14px;text-anchor:middle;fill:#000000;font-family:'Helvetica,sans-Serif'">VS</text>
+  </g>
+  <polygon
+     points="42,-432 54,-444 54,-456 42,-468 42,-468 12,-468 1.42109e-14,-456 7.10543e-15,-444 12,-432 "
+     transform="translate(4,544)"
+     id="polygon43"
+     style="fill:#bcd5b0;fill-opacity:1;stroke:#bcd5b0" />
+  <path
+     d="M 16,76 C 10,76 4,82 4,88"
+     id="path45"
+     style="fill:#ff7f2a;stroke:#bcd5b0;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="m 4,100 c 0,6 6,12 12,12"
+     id="path47"
+     style="fill:#ff7f2a;stroke:#bcd5b0;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="m 46,112 c 6,0 12,-6 12,-12"
+     id="path49"
+     style="fill:#ff7f2a;stroke:#bcd5b0;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="M 58,88 C 58,82 52,76 46,76"
+     id="path51"
+     style="fill:#ff7f2a;stroke:#bcd5b0;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="42,-468 12,-468 "
+     id="polyline53"
+     style="fill:#ff7f2a;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="M 16,76 C 10,76 4,82 4,88"
+     id="path55"
+     style="fill:#ff7f2a;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="1.42109e-14,-456 7.10543e-15,-444 "
+     id="polyline57"
+     style="fill:#ff7f2a;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="m 4,100 c 0,6 6,12 12,12"
+     id="path59"
+     style="fill:#ff7f2a;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="12,-432 42,-432 "
+     id="polyline61"
+     style="fill:#ff7f2a;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="m 46,112 c 6,0 12,-6 12,-12"
+     id="path63"
+     style="fill:#ff7f2a;fill-opacity:0;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="54,-444 54,-456 "
+     id="polyline65"
+     style="fill:#ff7f2a;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="M 58,88 C 58,82 52,76 46,76"
+     id="path67"
+     style="fill:#ff7f2a;stroke:#000000;stroke-width:5.23999977;stroke-miterlimit:4;stroke-dasharray:none" />
+  <text
+     x="31"
+     y="97.100006"
+     id="text69"
+     style="font-size:14px;text-anchor:middle;fill:#000000;font-family:'Helvetica,sans-Serif'">TCS</text>
+  <g
+     transform="translate(4,544)"
+     id="edge2">
+    <title
+       id="title72">VS-&gt;TCS</title>
+    <path
+       d="m 27,-503.831 c 0,7.7 0,16.857 0,25.414"
+       id="path74"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="30.5001,-478.413 30.5001,-478.413 27,-468.413 23.5001,-478.413 "
+       id="polygon76"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="node2">
+    <title
+       id="title79">FS</title>
+    <polygon
+       points="7.10543e-15,-84 12,-72 42,-72 54,-84 54,-96 42,-108 42,-108 12,-108 1.42109e-14,-96 "
+       id="polygon81"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 12,-108 c -6,0 -12,6 -12,12"
+       id="path83"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 0,-84 c 0,6 6,12 12,12"
+       id="path85"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 42,-72 c 6,0 12,-6 12,-12"
+       id="path87"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 54,-96 c 0,-6 -6,-12 -12,-12"
+       id="path89"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline91"
+       points="42,-108 12,-108 " />
+    <path
+       d="m 12,-108 c -6,0 -12,6 -12,12"
+       id="path93"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline95"
+       points="1.42109e-14,-96 7.10543e-15,-84 " />
+    <path
+       d="m 0,-84 c 0,6 6,12 12,12"
+       id="path97"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline99"
+       points="12,-72 42,-72 " />
+    <path
+       d="m 42,-72 c 6,0 12,-6 12,-12"
+       id="path101"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline103"
+       points="54,-84 54,-96 " />
+    <path
+       d="m 54,-96 c 0,-6 -6,-12 -12,-12"
+       id="path105"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="27"
+       y="-86.900002"
+       id="text107"
+       style="font-size:14px;text-anchor:middle;fill:#000000;font-family:'Helvetica,sans-Serif'">FS</text>
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="node7">
+    <title
+       id="title110">Blend</title>
+    <polygon
+       points="54,-3.55271e-15 54,-36 54,-36 2.13163e-14,-36 0,-1.77636e-14 "
+       id="polygon112"
+       style="fill:#dc8888;stroke:#000000" />
+    <text
+       x="27"
+       y="-14.9"
+       id="text114"
+       style="font-size:14px;text-anchor:middle;fill:#000000;font-family:'Helvetica,sans-Serif'">Blend</text>
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="edge14">
+    <title
+       id="title117">FS-&gt;Blend</title>
+    <path
+       d="m 27,-71.8314 c 0,7.7004 0,16.8571 0,25.4148"
+       id="path119"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="30.5001,-46.4132 30.5001,-46.4132 27,-36.4133 23.5001,-46.4133 "
+       id="polygon121"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="node3">
+    <title
+       id="title124">GS</title>
+    <polygon
+       points="7.10543e-15,-228 12,-216 42,-216 54,-228 54,-240 42,-252 42,-252 12,-252 1.42109e-14,-240 "
+       id="polygon126"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 12,-252 c -6,0 -12,6 -12,12"
+       id="path128"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 0,-228 c 0,6 6,12 12,12"
+       id="path130"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 42,-216 c 6,0 12,-6 12,-12"
+       id="path132"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <path
+       d="m 54,-240 c 0,-6 -6,-12 -12,-12"
+       id="path134"
+       style="fill:#bcd5b0;stroke:#bcd5b0" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline136"
+       points="42,-252 12,-252 " />
+    <path
+       d="m 12,-252 c -6,0 -12,6 -12,12"
+       id="path138"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline140"
+       points="1.42109e-14,-240 7.10543e-15,-228 " />
+    <path
+       d="m 0,-228 c 0,6 6,12 12,12"
+       id="path142"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline144"
+       points="12,-216 42,-216 " />
+    <path
+       d="m 42,-216 c 6,0 12,-6 12,-12"
+       id="path146"
+       style="fill:none;stroke:#000000" />
+    <polyline
+       style="fill:none;stroke:#000000"
+       id="polyline148"
+       points="54,-228 54,-240 " />
+    <path
+       d="m 54,-240 c 0,-6 -6,-12 -12,-12"
+       id="path150"
+       style="fill:none;stroke:#000000" />
+    <text
+       x="27"
+       y="-230.89999"
+       id="text152"
+       style="font-size:14px;text-anchor:middle;fill:#000000;font-family:'Helvetica,sans-Serif'">GS</text>
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="node6">
+    <title
+       id="title155">Rast</title>
+    <polygon
+       points="54,-144 54,-180 54,-180 2.13163e-14,-180 0,-144 "
+       id="polygon157"
+       style="fill:#dc8888;stroke:#000000" />
+    <text
+       x="27"
+       y="-158.89999"
+       id="text159"
+       style="font-size:14px;text-anchor:middle;fill:#000000;font-family:'Helvetica,sans-Serif'">Rast</text>
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="edge10">
+    <title
+       id="title162">GS-&gt;Rast</title>
+    <path
+       d="m 27,-215.831 c 0,7.7 0,16.857 0,25.414"
+       id="path164"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="30.5001,-190.413 30.5001,-190.413 27,-180.413 23.5001,-190.413 "
+       id="polygon166"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="node8"
+     style="stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none">
+    <title
+       id="title169">Tess</title>
+    <polygon
+       points="54,-360 54,-396 54,-396 2.13163e-14,-396 0,-360 "
+       id="polygon171"
+       style="fill:#dc8888;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+    <text
+       x="27"
+       y="-374.89999"
+       id="text173"
+       style="font-size:14px;text-anchor:middle;fill:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none;font-family:'Helvetica,sans-Serif'">Tess</text>
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="edge4">
+    <title
+       id="title176">TCS-&gt;Tess</title>
+    <path
+       d="m 27,-431.831 c 0,7.7 0,16.857 0,25.414"
+       id="path178"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="30.5001,-406.413 30.5001,-406.413 27,-396.413 23.5001,-406.413 "
+       id="polygon180"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <polygon
+     points="42,-288 54,-300 54,-312 42,-324 42,-324 12,-324 1.42109e-14,-312 7.10543e-15,-300 12,-288 "
+     transform="translate(4,544)"
+     id="polygon185"
+     style="fill:#bcd5b0;stroke:#bcd5b0;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="m 16,220 c -6,0 -12,6 -12,12"
+     id="path187"
+     style="fill:#bcd5b0;stroke:#bcd5b0;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="m 4,244 c 0,6 6,12 12,12"
+     id="path189"
+     style="fill:#bcd5b0;stroke:#bcd5b0;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="m 46,256 c 6,0 12,-6 12,-12"
+     id="path191"
+     style="fill:#bcd5b0;stroke:#bcd5b0;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     d="m 58,232 c 0,-6 -6,-12 -12,-12"
+     id="path193"
+     style="fill:#bcd5b0;stroke:#bcd5b0;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="42,-324 12,-324 "
+     id="polyline195"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="m 16,220 c -6,0 -12,6 -12,12"
+     id="path197"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="1.42109e-14,-312 7.10543e-15,-300 "
+     id="polyline199"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="m 4,244 c 0,6 6,12 12,12"
+     id="path201"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="12,-288 42,-288 "
+     id="polyline203"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="m 46,256 c 6,0 12,-6 12,-12"
+     id="path205"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <polyline
+     points="54,-300 54,-312 "
+     id="polyline207"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="translate(4,544)" />
+  <path
+     d="m 58,232 c 0,-6 -6,-12 -12,-12"
+     id="path209"
+     style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-miterlimit:4;stroke-dasharray:none" />
+  <text
+     x="31"
+     y="241.10001"
+     id="text211"
+     style="font-size:14px;text-anchor:middle;fill:#000000;font-family:'Helvetica,sans-Serif'">TES</text>
+  <g
+     transform="translate(4,544)"
+     id="edge8">
+    <title
+       id="title214">TES-&gt;GS</title>
+    <path
+       d="m 27,-287.831 c 0,7.7 0,16.857 0,25.414"
+       id="path216"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="30.5001,-262.413 30.5001,-262.413 27,-252.413 23.5001,-262.413 "
+       id="polygon218"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="edge12">
+    <title
+       id="title221">Rast-&gt;FS</title>
+    <path
+       d="m 27,-143.831 c 0,7.7 0,16.857 0,25.414"
+       id="path223"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="30.5001,-118.413 30.5001,-118.413 27,-108.413 23.5001,-118.413 "
+       id="polygon225"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+  <g
+     transform="translate(4,544)"
+     id="edge6">
+    <title
+       id="title228">Tess-&gt;TES</title>
+    <path
+       d="m 27,-359.831 c 0,7.7 0,16.857 0,25.414"
+       id="path230"
+       style="fill:none;stroke:#000000" />
+    <polygon
+       points="30.5001,-334.413 30.5001,-334.413 27,-324.413 23.5001,-334.413 "
+       id="polygon232"
+       style="fill:#000000;stroke:#000000" />
+  </g>
+</svg>
