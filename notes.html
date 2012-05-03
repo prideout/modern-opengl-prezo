@@ -1,14 +1,20 @@
 <!--
 
-> sudo /sbin/init 3
-> sudo /sbin/init 5
-> evince Fullscreen is nice cuz you can click without changing.
-> F11 to toggle fullscreen.
+ sudo /sbin/init 3
+ sudo /sbin/init 5
+ evince Fullscreen is nice cuz you can click without changing.
+ F11 to toggle fullscreen.
+ the QuickRef PDF, the prezo
+ large-font terminal with two tabs: spiral and fluid.
 
-The QuickRef PDF.
+------
+
 Real-time shading in 2004
 Real-time shading in 2012
-Core Profile.  Mention Mobile.
+Core Profile.
+     Profiles define subsets of OpenGL functionality targeted to specific application domains.
+     Context is an encapsulation of all OpenGL API state.
+     Mention Mobile.
 Word Clouds.  Although vendors...I personally advocate.
 Jurassic Vertices.
 Modern Vertices.  Explain suffixes.
@@ -20,32 +26,49 @@ Buffer Objects.  In the beginning there were vertex buffers.
         The classic example is GL_ARRAY_BUFFER.
    They're interchangeable and belong to one namespace.
    Some of the newer buffer target like UNIFORM have multiple binding points
-Blocks
-DEMO Tess
-   Uniform Block (GLSL) - Then, Uniform Buffer (C)
-   DSA
-   Subroutines - First the GLSL, then the C
-   Zero enabled attributes!
-   Tessellation Shaders - 
-       Emphasize parametric aspect.
-       Emphasize Show the "Patch", Show the Shaders.
+Blocks.  GO FAST HERE
+DEMO Tess.   Illustrative more than sexy.
+   - Run demo as-is.  Kind of interesting thing: 0 VBOs.
+                      The only data is sent to the card at every frame are a couple xform matrices and a float
+>    Spiral.c -- glDrawArrays -- I'm drawing 256 quads
+>    Spiral.glsl -- "1;" CHANGE TO 128
+   - Talk about tessellation:
+       - The relationship between the control shader and eval shader is confusing.
+       - Control shader operates on cage verts and sets level-of-detail.
+       - The eval shader operates AFTER new verts have been created
+       - The eval shader is where you decide on the final location of your verts.
+       - Control shader operates on *control* points
+       - Eval shader *evaluates* a parametric function.
+       - Typical example would be a bicubic patch, but in my case I'm creating this goofy horn
+         shape, which is easily defined with parametric function.
+       - It's important to realize that tessellation units do NOT perform progressive refinements
+         like classic Catmull-Clark
+       - The standard approach for render Catmull-Clark on the GPU is patch approximation,
+   - Subroutines - Swap to a klein bottle in C
+>    Spiral.c -- "[surface]" CHANGE to klein
+   - Talk about how to update uniforms
+>    Spiral.c -- ""NormalMatrix""
+     Old school, DSA, Then, Uniform Buffer
 Binding Vertex Attribs
 FragData
     Floating Point render target and representing something other than a vec4 color can be powerful, as you'll see in the next demo
+    prman analogy is AOV
 Binding Fragment Outputs
 DEMO Fluid
-    Show 3D texture, glFramebufferTexture
-    Show DrawInstanced
-    Show Fluid.glsl -- passing instance, picking layer
+    Introduction:
+       No OpenCL.  The power of floating-point textures: ping-pong it such that it's a texture, then a FBO, etc
+       It's re-creating a deep shadow map at every frame, raycasting a 3D texture, and it's performing 
+       a series of jaCOHbi iterations to solve navier-stokes
+    Show you where I'm generating a deep shadow map
+>      Fluid3d.cpp - "light cache" -- "glDrawArraysInstanced"
+>      Fluid.glsl -- "gl_InstanceID" -- "gl-Layer"
+
 Old Monolithic Program
 New Separable Programs
 Binaries!
 Transform Feedback
     Point out Discard.  No frag shader!   DrawTransformFeedback.
-Transform Feedback, multiple streams.
 Transform Feedback, get back to CPU.
-Textures - Quickly point out LUMINANCE is gone.
-Compressed Textures
 Texture Buffers
 Pixel Buffers
 DSA
