@@ -21,7 +21,7 @@ void main()
     tcGridCoord = vGridCoord[gl_InvocationID];
     gl_TessLevelInner[0] = gl_TessLevelInner[1] =
     gl_TessLevelOuter[0] = gl_TessLevelOuter[1] = 
-    gl_TessLevelOuter[2] = gl_TessLevelOuter[3] = 32;
+    gl_TessLevelOuter[2] = gl_TessLevelOuter[3] = 1;
 }
 
 -- TES
