@@ -123,7 +123,7 @@ code {
 
 code.glsl {
     /* border:solid 8px #24a; */
-    border:solid 8px #BF79DB; /* monokai purple */
+    border:solid 4px #BF79DB; /* monokai purple */
 }
 
 code.cpp {
@@ -131,7 +131,7 @@ code.cpp {
     /*border:solid 8px #A6E22E;*/ /* monokai green */
     /*border:solid 8px #F92672;*/   /* monokai hot pink */
     /*border:solid 8px #272822;*/   /* monokai gray */
-    border:solid 8px #79BFDB; /* seablue, derived from monokai purple */
+    border:solid 4px #79BFDB; /* seablue, derived from monokai purple */
 }
 
 span.HIGH {
