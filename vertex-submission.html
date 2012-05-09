@@ -32,6 +32,9 @@
             data="images/no-smoking-plain.svg">
     </object>
   </div>
+  <p class="tk-museo-sans" style="text-align:center">
+    Don't use any of this stuff -- it's old!
+  </p>
 </div>
 
 <!-- Newer Vertex Submission -->
@@ -61,6 +64,11 @@
   <pre class="simplewrapper150"><code class="cpp">TRIM6
       GL_PATCHES
   </code></pre>
+  <p class="tk-museo-sans" style="width:50%;margin:auto;margin-top:25px">
+    Note the optional capital letters (<b>I</b> and <b>L</b>) in the function signatures.
+    The capital letter denotes the width of stored data, while the small letter indicates the type of data you're passing in.
+    <br/><br/><b>GL_PATCHES</b> is used in lieu of GL_TRIANGLES when tessellation shaders are attached to the current program.
+  </p>
 </div>
 
 <!-- Vertex Array Objects -->
@@ -68,7 +76,11 @@
   <div class="slidetitle">
     Vertex Array Objects
   </div>
-  <br>
+  <p class="tk-museo-sans" style="width:75%;margin-left:auto;margin-right:auto;margin-top:5px;">
+    VAO's encapsulate the vertex attribute state that you need to change when rendering new geometry.
+    The default VAO has a handle of 0, which isn't valid in the core profile.
+    You <b>must</b> create a VAO in the core profile!
+  </p>
   <pre class="simplewrapper150"><code class="cpp">TRIM6
       const GLuint PositionSlot = 0;
       const GLuint NormalSlot = 1;
@@ -83,7 +95,6 @@
       glBindBuffer(GL_ARRAY_BUFFER, positionsVbo);
       glVertexAttribPointer(PositionSlot, 3, GL_FLOAT, GL_FALSE,
                             sizeof(float)*3, 0);
-      
       glBindBuffer(GL_ARRAY_BUFFER, normalsVbo);
       glVertexAttribPointer(NormalSlot, 3, GL_FLOAT, GL_FALSE,
                             sizeof(float)*3, 0);
@@ -104,7 +115,7 @@
        margin: auto;
     }
   </style>
-  <div class="slidetitle">
+  <div class="slidetitle" style="font-size:400%">
     Buffer Objects
   </div>
   <table id="bufferobj" class="tk-museo-sans">
@@ -189,6 +200,17 @@
       </td>
     </tr>
   </table>
+  <p class="tk-museo-sans" style="width:75%;margin:auto;margin-top:5px;font-size:80%;margin-bottom:0px">
+    In OpenGL, a <b>buffer object</b> is an unstructured blob of data.
+    The above categories are various <b>targets</b> to which you can bind a buffer.
+    For example, binding a buffer to <b>GL_ARRAY_BUFFER</b> effects subsequent calls to <b>glVertexAttrib*</b>.
+    Even though it contains vertex data, you can also bind that same buffer object to <b>GL_TEXTURE_BUFFER</b>.  Remember, buffers are just blobs!
+  </p>
+  <hr style="margin-top:0px;margin-bottom:0px">
+  <p class="tk-museo-sans" style="width:75%;margin:auto;margin-top:0px;font-size:80%">
+    Most buffers are bound using <b>glBindBuffer</b>. However, some targets, like <b>GL_UNIFORM_BUFFER</b>, have multiple binding points; these are called <b>indexed buffers</b>.
+    They're bound using <b>glBindBufferBase</b> or <b>glBindBufferRange</b> instead of glBindBuffer.
+  </p>
 </div>
 
 <!-- Primitive Restart -->

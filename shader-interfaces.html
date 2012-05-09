@@ -1,11 +1,17 @@
 <!-- BLOCKS -->
 <div class="slide">
+  <div class="slidetitle400 tk-museo-sans" style="font-size:200%">
+    Anatomy of a Block
+  </div>
+  <p class="tk-museo-sans" style="width:75%;margin:auto;margin-top:0px;font-size:80%">
+    blocks are not structs!
+  </p>
   <object type="image/svg+xml" class="figure"
           data="images/Blocks2.svg">
   </object>
   <table style="width:90%;margin:auto">
     <tr>
-      <td style="width:50%">
+      <td style="width:40%;padding-right:20px">
         <div class="codewrapper">
           <pre><code class="glsl"><span class="DIVIDER">-- Vertex Shader</span>
 
@@ -36,7 +42,7 @@ out gl_PerVertex {
 
 // User-defined:
 in MyBlock {
-    float w;
+    float w; // glGetAttribLocation(program, "MyBlock.w");
 } In;
 
 void main()
@@ -46,13 +52,13 @@ void main()
 </code></pre></div>
       </td>
     </tr>
-    <tr>
+    <!--tr>
       <td colspan="2">
         <div class="codewrapper">
           <pre><code class="cpp">GLuint i = glGetAttribLocation(program, "MyBlock.w");
 </code></pre></div>
       </td>
-    </tr>
+    </tr-->
   </table>
 </div>
 
