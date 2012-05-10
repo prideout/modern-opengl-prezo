@@ -134,7 +134,7 @@ void main()
       GLuint idx = glGetUniformBlockIndex(prog, "Crazy80s");
       glUniformBlockBinding(prog, idx, bp);
   </code></pre>
-</div-->
+</div>
 
 <!-- ******************************************** -->
 <!-- ******************************************** -->
@@ -199,18 +199,22 @@ glEnableVertexAttribArray(foo);</code></pre></div>
 </div>
 
 <!-- DODO BIRD -->
-<div class="slide tk-museo-sans"
-     style="font-size:500%;
-            font-weight:900;
-            text-align:center;
-            color:#333;">
+<div class="slide tk-museo-sans">
+  <br/>
+  <p class="tk-museo-sans" style="width:70%;margin:auto">
+    Don't use these built-ins; they're extinct!  Provide custom names & types for your fragment shader outputs according to what's actually being stored in your FBO.
+  </p>
+  <div style="font-size:500%;
+              font-weight:900;
+              text-align:center;
+              color:#333;">
   <br/>
   vec4 gl_FragColor
   <br/>
   vec4 gl_FragData[<i>n</i>]
   <br/><br/> 
   <img src="images/dodo-bird.gif" alt="extinct"/>
-
+  </div>
   <!--
   gl_SampleMask
   layout(early_fragment_tests) in;
@@ -235,7 +239,7 @@ glEnableVertexAttribArray(foo);</code></pre></div>
     <tr>
       <td style="width:50%">
         <div class="centerwrapper">
-          <pre><code class="cpp">// Let the compiler decide
+          <pre><code class="cpp">// Let the compiler decide (not recommended)
 GLuint colorNumber = glGetFragDataLocation(program, "MyColorVariable");
 </code></pre>
         </div>
@@ -281,12 +285,16 @@ glDrawBuffers(2, &buffers[0]);</code></pre>
 
 <!-- Depth -->
 <div class="slide tk-museo-sans"
-     style="font-size:200%;
-            font-weight:900;
-            color:#333;">
-  <table style="margin-left:150px;margin-top:170px"><tr><td>
+     style="color:#333;">
   <br/>
-  in vec4 gl_FragCoord;
+  <p class="tk-museo-sans" style="width:70%;margin:auto">
+    OpenGL lets you manipulate depth in your fragment shader.
+    However, for best performance you might want to let OpenGL perform depth testing earlier by using the <b>early_fragment_tests</b> flag.
+    You can also give it hints about how you're manipulating Z, e.g., <b>depth_greater</b>.
+  </p>
+  <table style="font-size:200%;font-weight:900;margin-left:150px;margin-top:170px"><tr><td>
+  <br/>
+  in vec4 gl_FragCoord; <i>// has a valid <b>z</b> value</i>
   <br/>
   <br/>
   out float gl_FragDepth;
@@ -310,6 +318,9 @@ glDrawBuffers(2, &buffers[0]);</code></pre>
                text-align:center">
     Subroutines
   </div>
+  <p class="tk-museo-sans" style="width:70%;margin:auto">
+    Subroutines act like function pointers, allowing you to hot-swap pieces of shader in and out.
+  </p>
   <table style="width:95%">
     <tr>
       <td style="width:45%">
@@ -381,7 +392,7 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
 
 <!-- ******************************************** -->
 <!-- ******************************************** -->
-<!-- Old-School Linking -->
+<!-- Old-School Linking --
 <div class="slide">
   <div class="codewrapper" style="width:90%;font-size:105%;margin:auto">
     <pre><code class="cpp">static GLuint LoadProgram(const char* vsSource,
@@ -427,7 +438,7 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
               -webkit-transform: rotate(90deg);">
     OLD SCHOOL
   </div>
-</div>
+</div-->
 
 
 <!-- ******************************************** -->
@@ -486,6 +497,9 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
 <!-- ******************************************** -->
 <!-- New-School Linking -->
 <div class="slide">
+  <p class="tk-museo-sans" style="width:70%;margin:auto;margin-top:10px">
+    Separable programs also allow you to hot-swap shaders, but at a higher level of granularity than subroutines.
+  </p>
   <div class="codewrapper" style="width:96%;font-size:115%;margin:auto">
     <pre><code class="cpp">static GLuint LoadPipeline(
         const char* vsSource,
@@ -511,7 +525,7 @@ glUniform1f(prog, shiny, 1.0);</code></pre></div>
     return pipeline;
 }</code></pre></div>
   <div  class="tk-museo-sans"
-        style="font-size:500%;
+        style="font-size:450%;
                font-weight:900;
                color:#333;
                text-align:center">
@@ -546,6 +560,10 @@ glProgramBinary(programHandle, binaryFormat, &buffer[0], bufSize);</code></pre><
                font-weight:900;
                color:#333;
                text-align:center">
-    Binaries!
+    Shader Binaries
   </div>
+  <p class="tk-museo-sans" style="width:70%;margin:auto;margin-top:10px">
+    Desktop OpenGL inherited this feature from OpenGL ES.  Beware however; the binary format isn't portable at all.
+    My personal preference is to avoid this feature unless I desperately need it.
+  </p>
 </div>
