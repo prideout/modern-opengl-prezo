@@ -103,7 +103,7 @@ void main()
   <dl class="tk-museo-sans">
 
     <dt>UBO handle (aka name)</dt>
-    <dd>passed to <tt>glBindBufferBase</tt></dd>
+    <dd>passed to <tt>glBindBufferBase</tt> to affect subsequent <tt>glBufferData</tt>, <tt>glMapBuffer</tt>, etc</dd>
 
     <dt>block index</dt>
     <dd>queried from the shader via <tt>glGetUniformBlockIndex</tt></dd>
@@ -111,7 +111,7 @@ void main()
     <dt>binding point</dt>
     <dd>passed to <tt>glBindBufferBase</tt> to affect subsequent <tt>glBufferData</tt>, <tt>glMapBuffer</tt>, etc</dd>
     <dd>passed to <tt>glUniformBlockBinding</tt> to "link" the UBO to the uniform block</dd>
-    <dd>can be specified in GLSL rather than <tt>glUniformBlockBinding</tt></dd>
+    <dd><b>note:</b>this can now be specified in GLSL using <b>layout</b> rather than <tt>glUniformBlockBinding</tt></dd>
 
   </dl>
   <pre class="smallwrapper"><code class="glsl">TRIM6

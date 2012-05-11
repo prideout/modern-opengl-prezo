@@ -195,7 +195,7 @@
           GL_TEXTURE_BUFFER​
         </h2>
         <ul>
-          <li>glUniformBlockBinding</li>
+          <li>glTexBuffer</li>
         </ul>
       </td>
     </tr>
@@ -278,10 +278,6 @@
           0,  /* first */
           0,  /* baseInstance */
       };
-      
-      // Get parameters from CPU memory:
-      glDrawArraysInstancedBaseInstance(GL_TRIANGLES, 62, 12, 0, 0);
-      glDrawArraysIndirect(GL_TRIANGLES, mydrawcall);
       
       // Get parameters from GPU memory:
       GLuint bufObj;
